@@ -20,11 +20,25 @@ try
 {
 	$conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$stmt = $conn->prepare("CREATE TABLE `camagru`.`users` ( `id` INT NOT NULL AUTO_INCREMENT , `username` VARCHAR(20) NOT NULL , `passwd` VARCHAR(50) NOT NULL , `email` VARCHAR(50) NOT NULL , `notifications` BOOLEAN NOT NULL DEFAULT TRUE , PRIMARY KEY (`id`)) ENGINE = InnoDB ");
+	$createdb = "CREATE TABLE `research`.`users` 
+				( `id` INT NOT NULL AUTO_INCREMENT , 
+				`username` VARCHAR(20) NOT NULL , 
+				`passwd` VARCHAR(255) NOT NULL , 
+				`email` VARCHAR(50) NOT NULL , 
+				`notifications` BOOLEAN NOT NULL DEFAULT TRUE , 
+				PRIMARY KEY (`id`)) ENGINE = InnoDB ";
+	$stmt = $conn->prepare($createdb);
 	$stmt->execute();
-
 	$stmt = NULL;
-	$stmt = $conn->prepare("CREATE TABLE `camagru`.`images` (`id` INT NOT NULL AUTO_INCREMENT , `location` TEXT NOT NULL, `author` VARCHAR(20) NOT NULL, `creation_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, `likes` TEXT NOT NULL, `comments` TEXT NOT NULL, PRIMARY KEY (`id`)) ENGINE = InnoDB");
+	$createtab = "CREATE TABLE `research`.`images` 
+				(`id` INT NOT NULL AUTO_INCREMENT , 
+				`location` TEXT NOT NULL,
+				`author` VARCHAR(20) NOT NULL, 
+				`creation_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+				`likes` TEXT NOT NULL, 
+				`comments` TEXT NOT NULL, 
+				PRIMARY KEY (`id`)) ENGINE = InnoDB";
+	$stmt = $conn->prepare($createtab);
 	$stmt->execute();
 	echo "Tables Created.<br>";
 }

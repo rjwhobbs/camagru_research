@@ -13,6 +13,7 @@ catch (PDOExeption $e)
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
+	//var_dump($_FILES); die;
 	if ($_POST['passwd'] == $_POST['confirm-passwd'])
 	{
 		$username = $_POST['username'];
@@ -61,7 +62,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Document</title>
+	<title>Landing Page</title>
 </head>
 <body>
 	<h1>Create an account</h1>
@@ -73,6 +74,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		<span>Confirm password:</span><input type="password" placeholder="confirm" name="confirm-passwd" required/><br />
 		<label>Choose a profile pic</label><input type="file" name="profile-pic" accept="image/*" /><br />
 		<input type="submit" name="submit" value="Register" />
+	</form>
+	<h1>Sign in</h1>
+	<form action="authenticate.php">
+		<input type="submit" value="Sign in"/>
 	</form>
 </body>
 </html>

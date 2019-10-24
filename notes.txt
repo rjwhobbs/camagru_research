@@ -1,0 +1,9 @@
+CREATE TABLE `test`.`prac` ( `id` INT NOT NULL AUTO_INCREMENT , `title` VARCHAR(255) NOT NULL , `body` TEXT NOT NULL , `author` VARCHAR(255) NOT NULL , `is_published` BOOLEAN NOT NULL DEFAULT TRUE , `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+INSERT INTO `prac` (`id`, `title`, `body`, `author`, `is_published`, `created_at`) VALUES (NULL, 'Post1', 'This is post one', 'Roger', '1', CURRENT_TIMESTAMP), (NULL, 'Post2', 'This is post 2', '', '1', CURRENT_TIMESTAMP);
+UPDATE `users` SET `name` = 'Pat' WHERE `users`.`id` = 2; 
+SELECT * FROM `prac` ORDER BY `prac`.`created_at` DESC; 
+SELECT * FROM `prac` ORDER BY `prac`.`id` ASC ;
+UPDATE `prac` SET `is_published` = '0' WHERE `prac`.`id` = 2;
+INSERT INTO `prac` (`id`, `title`, `body`, `author`, `is_published`, `created_at`) VALUES (NULL, 'Post4', 'Blah blah bla', 'Max', '1', CURRENT_TIMESTAMP);
+ALTER TABLE `users` ADD `profile-pic` VARCHAR(100) NOT NULL AFTER `notifications`; 
+ALTER TABLE `users` CHANGE `passwd` `passwd` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL; 
