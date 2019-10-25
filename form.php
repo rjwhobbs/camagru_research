@@ -6,6 +6,7 @@ try
 {
 	$conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+	
 }
 catch (PDOExeption $e)
 {
@@ -26,16 +27,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 			{
 				$_SESSION['username'] = $username;
 				$_SESSION['profile-pic'] = $profile_pic_path;
-				$sql = 'INSERT INTO `users` (`username`, `passwd`, `email`, `profile-pic` ) 
-						VALUES (?, ?, ?, ?)';
 				try
 				{
+					$sql = "INSERT INTO users (username, passwd, email, `profile-pic` ) VALUES (?, ?, ?, ?)";
 					$stmt = $conn->prepare($sql);
-					$stmt->execute([$username, $passwd, $email, $profile_pic_path]);
-					$_SESSION['message'] = 'Registration successful.'; 
+					//$sql = $conn->prepare("INSERT INTO users (username, passwd, email, `profile-pic` ) VALUES (?, ?, ?, ?)");	
+					$arr = array($username, $passwd, $email, $profile_pic_path);
+					//print_r($arr);
+					$sql->execute($arr);
+					//echo "here"	;	
+					$vercode=hash('sha1', 'verified');
+					$_SESSION['message'] = 'Registration successful.';
+					//send email here
+					header("location: email-varification.php?vercode=$vercode"); 
 				}
 				catch (PDOExeption $e)
 				{
+					echo $e;
 					$_SESSION['message'] = 'Sorry registration failed.';
 				}
 			}
@@ -54,7 +62,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		$_SESSION['message'] = 'Passwords do not match';
 	}
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -66,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 </head>
 <body>
 	<h1>Create an account</h1>
-	<form action="form.php" method="POST" autocomplete="off" enctype="multipart/form-data">
+	<form  action="form.php" method="POST" autocomplete="off" enctype="multipart/form-data">
 		<div><?= $_SESSION['message'] ?></div>
 		<span>Username:</span><input type="text" placeholder="username" name="username" required/><br />
 		<span>Email:</span><input type="text" placeholder="email address" name="email" required/><br />
