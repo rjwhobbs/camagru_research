@@ -1,7 +1,7 @@
 <?php
 $host		= 'localhost';
 $user		= 'test_root';
-$passwd		= 's55oQsBuoDvyr2HB';
+$passwd		= 's55oQsBuoDvyr2HB'; // Pushing passwords to a public repo is a bad idea.
 $db			= 'research';
 $dsn		= "mysql:host=$host;dbname=$db"; 
 //$query = '%This%';

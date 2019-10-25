@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Demo</title>
+</head>
+<body>
+	<h1>Do you even JS</h1>
+	<button type="button" onclick="document.getElementById('demo').innerHTML = Date()">Click me to get the date</button>
+		<p id="demo"></p>
+	<button type="button" onclick="document.getElementById('change').innerHTML = 'Yes, you can.'">Click me to change the paragraph</button>
+		<p id="change">Can you change this text?</p>
+	<button type="button" onclick="document.getElementById('switch').src = '../images/sleepyraccon.png'">Make Sal sleepy</button>
+	<button type="button" onclick="document.getElementById('switch').src = '../images/Racoon.png'">Wake her up again</button><br>
+		<img id="switch" src="../images/Racoon.png" style="width: 10%; height: 10%; "><br>
+	<button type="button" onclick="document.getElementById('style-change').style.color = 'red'">Chage color</button><br>
+		<p id="style-change">Change the color of this text.</p>
+	<button id="disappear" style="display: block;" type="button" onclick="document.getElementById('disappear').style.display = 'none'">What will this button do.</button><br>
+	<button type="button" onclick="document.getElementById('disappear').style.display = 'block'">Recover</button><br>
+</body>
+</html>

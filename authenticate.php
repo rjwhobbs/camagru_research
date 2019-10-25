@@ -1,4 +1,5 @@
 <?php
+// This file still needs protecion after the require feild.
 session_start();
 require_once('./setup.php');
 $_SESSION['message'] = "";
@@ -20,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	}
 	if($info === FALSE)
 	{
-		$_SESSION['message'] = "Incorrect username or password, please try again.";
+		$_SESSION['message'] = "Incorrect username or password, please try again."; // can someone use this message to figure out if they have a correct username?
 	}
 	else
 	{
@@ -46,8 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 <body>
 	<h1>Sign in</h1>
 	<form action="authenticate.php" method="POST">
-		<span>Username:</span><input type="text" placeholder="username" name="username" required/>
-		<span>Password:</span><input type="text" placeholder="password" name="passwd" required/>
+		<span>Username:</span><input type="text" placeholder="username" name="username" required/><br>
+		<span>Password:</span><input type="text" placeholder="password" name="passwd" required/><br>
 		<input type="submit" name="submit" value="Sign in">
 	</form>
 	<div><?= $_SESSION['message'] ?></div>
