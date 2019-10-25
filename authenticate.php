@@ -18,9 +18,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		echo $e->getMessage();
 	}
-	if (password_verify($_POST['passwd'], $info['passwd']))
+	if($info === FALSE)
 	{
-		$_SESSION['message'] = "Sign in successful";
+		$_SESSION['message'] = "Incorrect username or password, please try again.";
+	}
+	else
+	{
+		if (password_verify($_POST['passwd'], $info['passwd']))
+		{
+			$_SESSION['message'] = "Sign in successful";
+		}
+		else
+		{
+			$_SESSION['message'] = "Incorrect username or password, please try again.";
+		}
 	}
 }
 ?>
