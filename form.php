@@ -12,7 +12,7 @@ catch (PDOExeption $e)
 {
 	echo $e->getMessage;
 }
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 {
 	//var_dump($_FILES); die;
 	if ($_POST['passwd'] == $_POST['confirm-passwd'])
@@ -31,24 +31,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				{
 					$sql = "INSERT INTO users (username, passwd, email, `profile-pic` ) VALUES (?, ?, ?, ?)";
 					$stmt = $conn->prepare($sql);
-					//$sql = $conn->prepare("INSERT INTO users (username, passwd, email, `profile-pic` ) VALUES (?, ?, ?, ?)");	
 					$arr = array($username, $passwd, $email, $profile_pic_path);
-					//print_r($arr);
 					$stmt->execute($arr);
-					//echo "here"	;	
 					$vercode=hash('sha1', 'verified');
 					$_SESSION['message'] = 'Registration successful.';
 					//send email here
-					$msg= "http://localhost:8080/camagru_research/email-varification.php?vercode=$vercode";
-					if (mail('rhobbs@student.wethinkcode.co.za', 'Verfication email', $msg))
-					{
-						echo "XXX";
-						header("location: email-varification.php?vercode='mail sent'"); 
-					}
-					else
-					{
-						echo "Mail returned false<br>";
-					}
+					// $msg= "http://localhost:8080/camagru_research/email-varification.php?vercode=$vercode";
+					// if (mail('rhobbs@student.wethinkcode.co.za', 'Verfication email', $msg))
+					// {
+					// 	echo "XXX";
+					// 	header("location: email-varification.php?vercode='mail sent'"); 
+					// }
+					// else
+					// {
+					// 	echo "Mail returned false<br>";
+					// }
 				}
 				catch (PDOExeption $e)
 				{
@@ -89,7 +86,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 		<span>Password:</span><input type="password" placeholder="password" name="passwd" required/><br />
 		<span>Confirm password:</span><input type="password" placeholder="confirm" name="confirm-passwd" required/><br />
 		<label>Choose a profile pic</label><input type="file" name="profile-pic" accept="image/*" /><br />
-		<input type="submit" name="submit" value="Register" />
+		<input type="submit" name="submit-signup" value="Register" />
 	</form>
 	<h1>Sign in</h1>
 	<form action="authenticate.php">
