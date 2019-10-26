@@ -26,7 +26,7 @@ try
 				`passwd` VARCHAR(255) NOT NULL , 
 				`email` VARCHAR(50) NOT NULL ,
 				`verified` BOOLEAN NOT NULL DEFAULT FALSE, 
-				`verification` VARCHAR(255) NOT NULL,
+				`verification` VARCHAR(255) DEFAULT NULL,
 				`profile-pic` VARCHAR(255) NOT NULL,
 				`notifications` BOOLEAN NOT NULL DEFAULT TRUE , 
 				PRIMARY KEY (`id`)) ENGINE = InnoDB ";
@@ -43,7 +43,7 @@ try
 				PRIMARY KEY (`id`)) ENGINE = InnoDB";
 	$stmt = $conn->prepare($createtab);
 	$stmt->execute();
-	echo "Tables Created.<br>";
+	echo "Tables Created<br>";
 }
 catch (PDOException $e) 
 {

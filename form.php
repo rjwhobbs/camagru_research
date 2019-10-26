@@ -29,12 +29,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 				$_SESSION['profile-pic'] = $profile_pic_path;
 				try
 				{
-					//$sql = "INSERT INTO users (username, passwd, email, `profile-pic` ) VALUES (?, ?, ?, ?)";
+					$sql = "INSERT INTO users (username, passwd, email, `profile-pic` ) VALUES (?, ?, ?, ?)";
 					$stmt = $conn->prepare($sql);
-					$sql = $conn->prepare("INSERT INTO users (username, passwd, email, `profile-pic` ) VALUES (?, ?, ?, ?)");	
+					//$sql = $conn->prepare("INSERT INTO users (username, passwd, email, `profile-pic` ) VALUES (?, ?, ?, ?)");	
 					$arr = array($username, $passwd, $email, $profile_pic_path);
 					//print_r($arr);
-					$sql->execute($arr);
+					$stmt->execute($arr);
 					//echo "here"	;	
 					$vercode=hash('sha1', 'verified');
 					$_SESSION['message'] = 'Registration successful.';
