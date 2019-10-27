@@ -18,6 +18,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 		{
 			$errors['username'] = 'Username required';
 		}
+		$query = 'SELECT `username` FROM `users` WHERE `username` = ?';
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$username]);
+		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+		if ($result) // is this a safe way to check for duplicate emails?
+		{
+			$errors['username'] = 'Username already exits';
+		}
+		$stmt = NULL;
+		$result = NULL;
 		if (empty($email))
 		{
 			$errors['email'] = 'Email required';
@@ -41,6 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 			$errors['email'] = 'Email address already exits';
 		}
 		$stmt = NULL; // is this neccessary?
+		$result = NULL;
 		$passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
 		$profile_pic_path = 'images/'.$_FILES['profile-pic']['name'];
 		if (preg_match("!image!", $_FILES['profile-pic']['type']))
