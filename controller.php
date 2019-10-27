@@ -67,7 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 		$errors['passwd'] = 'Passwords don\'t match';
 	}
 
-	//Profile pic upload checks
+	//Profile pic upload check (What if 2 users upload different images but with the same name, problem)
 	if (preg_match("!image!", $_FILES['profile-pic']['type']) === FALSE) // This looks unreliable, let's try exif_image()
 	{
 		$errors['image'] = 'Please only upload a valid image';
@@ -94,14 +94,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 		}
 		catch (PDOExeption $e)
 		{
-			echo $e;
-			$_SESSION['message'] = 'Sorry registration failed';
+			echo $e->getMessage();
+			$_SESSION['message'] = 'Sorry, registration failed';
 		}
+		$_SESSION['message'] = 'Registration successful';
+		$_SESSION['username'] = $username;
 	}
 	else
 	{
-		echo "XXXXXXXXXX<br>";
-		echo count($errors).'<br>';
+		$_SESSION['message'] = 'Registration failed';
 	}
 }
 ?>
