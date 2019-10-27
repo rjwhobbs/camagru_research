@@ -7,6 +7,7 @@ $errors = array(); //Does this kind of declare really make it availabe to the fi
 $errors['username'] = ""; 
 $errors['email'] = ""; 
 $errors['passwd'] = "";
+$errors['validimage'] = "";
 $_SESSION['message'] = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 {
@@ -61,8 +62,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	}
 	$passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
 	$profile_pic_path = 'images/'.$_FILES['profile-pic']['name'];
-	if (preg_match("!image!", $_FILES['profile-pic']['type']))
+	if (preg_match("!image!", $_FILES['profile-pic']['type']) === FALSE) // This looks unreliable, let's try exif_image()
 	{
+		$errors['validimage'] = 'Please only upload a valid image';
+	}
 		if (copy($_FILES['profile-pic']['tmp_name'], $profile_pic_path))
 		{
 			$_SESSION['username'] = $username;
@@ -87,10 +90,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 		{
 			$_SESSION['message'] = 'File upload failed.';
 		}
-	}
-	else
-	{
-		$_SESSION['message'] = 'Please only upload a valid image file.';
-	}
+	// }
+	// else
+	// {
+	// 	$_SESSION['message'] = 'Please only upload a valid image file.';
+	// }
 }
 ?>
