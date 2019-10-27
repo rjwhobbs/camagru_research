@@ -16,7 +16,7 @@ require_once ('./controller.php');
 		<li><?= $errors['username']?></li>
 		<li><?= $errors['email']?></li>
 		<li><?= $errors['passwd']?></li>
-		<li><?= $errors['validimage']?></li>
+		<li><?= $errors['image']?></li>
 	</div>
 	<!-- Success comes here -->
 	<div><?= $_SESSION['message'] ?></div>

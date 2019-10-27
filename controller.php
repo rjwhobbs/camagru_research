@@ -4,16 +4,18 @@
 session_start();
 require ('./connection.php');
 $errors = array(); //Does this kind of declare really make it availabe to the files that require it? 
-$errors['username'] = ""; 
-$errors['email'] = ""; 
-$errors['passwd'] = "";
-$errors['validimage'] = "";
+// $errors['username'] = ""; 
+// $errors['email'] = ""; 
+// $errors['passwd'] = "";
+// $errors['image'] = "";
 $_SESSION['message'] = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 {
 	
 	$username = $_POST['username'];
 	$email = $_POST['email'];
+	$profile_pic_path = 'images/'.$_FILES['profile-pic']['name'];
+	//Username checks
 	if (empty($username))
 	{
 		$errors['username'] = 'Username required';
@@ -28,6 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	}
 	$stmt = NULL;
 	$result = NULL;
+	
+	//email checks
 	if (empty($email))
 	{
 		$errors['email'] = 'Email required';
@@ -48,6 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	}
 	$stmt = NULL; // is this neccessary?
 	$result = NULL;
+
+	//Password checks
 	if (empty($_POST['passwd']))
 	{
 		$errors['passwd'] = 'Password required';
@@ -60,40 +66,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	{
 		$errors['passwd'] = 'Passwords don\'t match';
 	}
-	$passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
-	$profile_pic_path = 'images/'.$_FILES['profile-pic']['name'];
+
+	//Profile pic upload checks
 	if (preg_match("!image!", $_FILES['profile-pic']['type']) === FALSE) // This looks unreliable, let's try exif_image()
 	{
-		$errors['validimage'] = 'Please only upload a valid image';
+		$errors['image'] = 'Please only upload a valid image';
 	}
-		if (copy($_FILES['profile-pic']['tmp_name'], $profile_pic_path))
+	else if (copy($_FILES['profile-pic']['tmp_name'], $profile_pic_path) === FALSE)
+	{
+		$errors['image'] = 'Image upload failed';
+	}
+	// $_SESSION['username'] = $username;
+	// $_SESSION['profile-pic'] = $profile_pic_path;
+
+	if (count($errors) === 0)
+	{		
+		$passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
+		try
 		{
-			$_SESSION['username'] = $username;
-			$_SESSION['profile-pic'] = $profile_pic_path;
-			try
-			{
-				$sql = "INSERT INTO users (username, passwd, email, `profile-pic` ) VALUES (?, ?, ?, ?)";
-				$stmt = $conn->prepare($sql);
-				$arr = array($username, $passwd, $email, $profile_pic_path);
-				$stmt->execute($arr);
-				//$vercode=hash('sha1', 'verified');
-				$_SESSION['message'] = 'Registration successful.';
-				//send email here
-			}
-			catch (PDOExeption $e)
-			{
-				echo $e;
-				$_SESSION['message'] = 'Sorry registration failed.';
-			}
+			$sql = "INSERT INTO users (username, passwd, email, `profile-pic` ) VALUES (?, ?, ?, ?)";
+			$stmt = $conn->prepare($sql);
+			$arr = array($username, $passwd, $email, $profile_pic_path);
+			$stmt->execute($arr);
+			//$vercode=hash('sha1', 'verified');
+			$_SESSION['message'] = 'Registration successful.';
+			//send email here
 		}
-		else
+		catch (PDOExeption $e)
 		{
-			$_SESSION['message'] = 'File upload failed.';
+			echo $e;
+			$_SESSION['message'] = 'Sorry registration failed';
 		}
-	// }
-	// else
-	// {
-	// 	$_SESSION['message'] = 'Please only upload a valid image file.';
-	// }
+	}
+	else
+	{
+		echo "XXXXXXXXXX<br>";
+		echo count($errors).'<br>';
+	}
 }
 ?>
