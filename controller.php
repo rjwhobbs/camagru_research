@@ -30,6 +30,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 		{
 			$errors['passwd'] = 'Password required';
 		}
+		// Check duplicate emails
+		// Should we add unique constraint to DB aswell?
+		$query = 'SELECT `email` FROM `users` WHERE `email` = ?';
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$email]);
+		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+		if ($result) // is this a safe way to check for duplicate emails?
+		{
+			$errors['email'] = 'Email address already exits';
+		}
+		$stmt = NULL; // is this neccessary?
 		$passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
 		$profile_pic_path = 'images/'.$_FILES['profile-pic']['name'];
 		if (preg_match("!image!", $_FILES['profile-pic']['type']))

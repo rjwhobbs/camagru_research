@@ -19,9 +19,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 	{
 		echo $e->getMessage();
 	}
-	if($info === FALSE)
+	if ($info === FALSE)
 	{
-		$_SESSION['message'] = "Incorrect username or password, please try again."; // can someone use this message to figure out if they have a correct username?
+		$_SESSION['message'] = "Incorrect username or password, please try again."; 
 	}
 	else
 	{

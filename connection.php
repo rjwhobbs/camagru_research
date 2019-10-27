@@ -8,6 +8,6 @@ try
 }
 catch (PDOExeption $e)
 {
-	echo $e->getMessage;
+	echo $e->getMessage; // do I need to call die here if connection fails?
 }
 ?>
