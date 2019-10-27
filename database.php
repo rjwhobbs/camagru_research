@@ -49,5 +49,5 @@ catch (PDOException $e)
 {
 	echo $e->getMessage();
 }
-
+$conn = NULL; //NULL or unset?
 ?>

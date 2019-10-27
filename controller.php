@@ -1,24 +1,35 @@
 <?php
+// I still can't see how the main page calls this, 
+// does it call again when clicking submit in the post form
 session_start();
-require_once('./setup.php');
+require ('./connection.php');
+$errors = array(); //Does this kind of declare really make it availabe to the files that require it? 
+$errors['username'] = ""; 
+$errors['email'] = ""; 
+$errors['passwd'] = "";
 $_SESSION['message'] = "";
-try
-{
-	$conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
-	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	
-}
-catch (PDOExeption $e)
-{
-	echo $e->getMessage;
-}
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 {
-	//var_dump($_FILES); die;
 	if ($_POST['passwd'] == $_POST['confirm-passwd'])
 	{
 		$username = $_POST['username'];
 		$email = $_POST['email'];
+		if (empty($username))
+		{
+			$errors['username'] = 'Username required';
+		}
+		if (empty($email))
+		{
+			$errors['email'] = 'Email required';
+		}
+		else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+		{
+			$errors['email'] = 'Valid email required';
+		}
+		if (empty($_POST['passwd']))
+		{
+			$errors['passwd'] = 'Password required';
+		}
 		$passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
 		$profile_pic_path = 'images/'.$_FILES['profile-pic']['name'];
 		if (preg_match("!image!", $_FILES['profile-pic']['type']))

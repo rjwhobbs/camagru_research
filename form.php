@@ -11,12 +11,14 @@ require_once ('./controller.php');
 </head>
 <body>
 	<h1>Create an account</h1>
+	<!-- Errors will come here -->
 	<div>
-		<li></li>
+		<li><?= $errors['username']?></li>
 	</div>
+	<!-- Success comes here -->
+	<div><?= $_SESSION['message'] ?></div>
 	<form  action="form.php" method="POST" autocomplete="off" enctype="multipart/form-data">
-		<div><?= $_SESSION['message'] ?></div>
-		<span>Username:</span><input type="text" placeholder="username" name="username" required/><br />
+		<span>Username:</span><input type="text" placeholder="username" name="username" /><br />
 		<span>Email:</span><input type="text" placeholder="email address" name="email" required/><br />
 		<span>Password:</span><input type="password" placeholder="password" name="passwd" required/><br />
 		<span>Confirm password:</span><input type="password" placeholder="confirm" name="confirm-passwd" required/><br />
