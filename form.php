@@ -13,9 +13,9 @@ require_once ('./controller.php');
 	<h1>Sign Up</h1>
 	<!-- Errors will come here -->
 	<div>
-		<?php if (count($errors) > 0):?>
+		<?php if (count($errors) > 0): ?>
 		<?php foreach ($errors as $error)?>
-		<li><?php echo $error; ?></li>
+			<li><?php echo $error; ?></li>
 		<?php endif ; ?>
 	</div>
 	<!-- Success comes here -->

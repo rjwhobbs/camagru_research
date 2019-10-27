@@ -99,6 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 		}
 		$_SESSION['message'] = 'Registration successful';
 		$_SESSION['username'] = $username;
+		header("location: home.php");
+		exit();
 	}
 	else
 	{
