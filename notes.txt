@@ -6,4 +6,5 @@ SELECT * FROM `prac` ORDER BY `prac`.`id` ASC ;
 UPDATE `prac` SET `is_published` = '0' WHERE `prac`.`id` = 2;
 INSERT INTO `prac` (`id`, `title`, `body`, `author`, `is_published`, `created_at`) VALUES (NULL, 'Post4', 'Blah blah bla', 'Max', '1', CURRENT_TIMESTAMP);
 ALTER TABLE `users` ADD `profile-pic` VARCHAR(100) NOT NULL AFTER `notifications`; 
-ALTER TABLE `users` CHANGE `passwd` `passwd` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL; 
+ALTER TABLE `users` CHANGE `passwd` `passwd` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL;
+UPDATE `users` SET `verified` = '1' WHERE `users`.`id` = 17;  

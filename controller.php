@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	}
 	else if (empty($_POST['confirm-passwd']))	
 	{
-		$errors['passwd'] = 'Confirmfeild empty';
+		$errors['passwd'] = 'Confirm feild empty';
 	}
 	else if ($_POST['passwd'] != $_POST['confirm-passwd'])
 	{
@@ -126,7 +126,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 	}
 	if ($info === FALSE)
 	{
-		$_SESSION['message'] = "Incorrect username or password, please try again."; 
+		$_SESSION['message'] = "Incorrect username or password, please try again."; //this needs to errors[]; 
 	}
 	else
 	{
