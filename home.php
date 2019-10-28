@@ -1,5 +1,5 @@
 <?php
-require_once ('./controller.php');
+require_once ('./controller.php'); // will this call the controller again?
 ?>
 <!DOCTYPE html>
 <html lang="en">
