@@ -77,13 +77,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	// $_SESSION['profile-pic'] = $profile_pic_path;
 
 	if (count($errors) === 0)
-	{		
+	{
+		$bytes = random_bytes(16);	
+		$verification_code = bin2hex($bytes);	
 		$passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
 		try
 		{
-			$sql = "INSERT INTO users (username, passwd, email, `profile-pic` ) VALUES (?, ?, ?, ?)";
+			$sql = 'INSERT INTO users (`username`, `passwd`, `email`, `verification` ,`profile-pic` ) VALUES (?, ?, ?, ?, ?)';
 			$stmt = $conn->prepare($sql);
-			$arr = array($username, $passwd, $email, $profile_pic_path);
+			$arr = array($username, $passwd, $email, $verification_code, $profile_pic_path);
 			$stmt->execute($arr);
 			//$vercode=hash('sha1', 'verified');
 			$_SESSION['message'] = 'Registration successful.';
