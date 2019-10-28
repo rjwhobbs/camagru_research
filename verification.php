@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['vcode']))
 			$query = 'UPDATE `users` SET `verified` = ? , `verification` = ? WHERE `id` = ?';
 			$stmt = $conn->prepare($query);
 			$stmt->execute([1, NULL, $res['id']]);
+			unset($stmt);
+			unset($res);
 		}
 		else
 		{

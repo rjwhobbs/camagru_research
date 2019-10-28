@@ -101,8 +101,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 								click on the link provided to validate your account';
 		$_SESSION['username'] = $username;
 		mail_verification_code($email, $verification_code);
-		header("location: home.php");
-		exit(); // Why is exit necessary here?
+		header("location: signin.php");
+		//exit(); // Why is exit necessary here?
 	}
 	else
 	{
@@ -115,7 +115,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 	$username = $_POST['username'];
 	try
 	{
-		$sql = "SELECT `passwd` FROM `users` WHERE `username` = ?";
+		$sql = "SELECT * FROM `users` WHERE `username` = ?";
 		$stmt = $conn->prepare($sql);
 		$stmt->execute([$username]);
 		$info = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -128,7 +128,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 	{
 		$_SESSION['message'] = "Incorrect username or password, please try again."; //this needs to errors[]; 
 	}
-	else
+	if ($info['verified'] == 1) // Why can't i use === 
 	{
 		if (password_verify($_POST['passwd'], $info['passwd']))
 		{
@@ -141,6 +141,10 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 		{
 			$_SESSION['message'] = "Incorrect username or password, please try again.";
 		}
+	}
+	else
+	{
+		$_SESSION['message'] = "Sorry, your account has not been verified";
 	}
 }
 ?>

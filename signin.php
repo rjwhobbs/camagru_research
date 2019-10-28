@@ -11,11 +11,11 @@ require_once ('./controller.php');
 </head>
 <body>
 	<h1>Sign in</h1>
+	<div><?= $_SESSION['message'] ?></div>
 	<form action="signin.php" method="POST">
 		<span>Username:</span><input type="text" placeholder="username" name="username" required/><br>
 		<span>Password:</span><input type="text" placeholder="password" name="passwd" required/><br>
 		<input type="submit" name="submit-signin" value="Sign in">
 	</form>
-	<div><?= $_SESSION['message'] ?></div>
 </body>
 </html>
