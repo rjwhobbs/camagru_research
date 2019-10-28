@@ -24,11 +24,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	$stmt = $conn->prepare($query);
 	$stmt->execute([$username]);
 	$result = $stmt->fetch(PDO::FETCH_ASSOC);
-	if ($result) // is this a safe way to check for duplicate emails?
+	if ($result) 
 	{
 		$errors['username'] = 'Username already exits';
 	}
-	$stmt = NULL;
+	$stmt = NULL; // unset or NULL?
 	$result = NULL;
 	
 	//email checks
@@ -68,6 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	}
 
 	//Profile pic upload check (What if 2 users upload different images but with the same name, problem)
+	// If image name exits maybe we can do a 'copy of' concatination to the image name. 
 	if (preg_match("!image!", $_FILES['profile-pic']['type']) === FALSE) // This looks unreliable, let's try exif_image()
 	{
 		$errors['image'] = 'Please only upload a valid image';
@@ -100,11 +101,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 		$_SESSION['message'] = 'Registration successful';
 		$_SESSION['username'] = $username;
 		header("location: home.php");
-		exit();
+		exit(); // Why is exit necessary here?
 	}
 	else
 	{
 		$_SESSION['message'] = 'Registration failed';
 	}
+}
+
+else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
+{
+	echo "XXXXXXXXXXXX";
 }
 ?>
