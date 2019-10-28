@@ -5,9 +5,9 @@ session_start();
 require ('./connection.php');
 include ('./mail_verification_code.php');
 $errors = array(); //Does this kind of declare really make it availabe to the files that require it? 
-$_SESSION['message'] = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 {
+	$_SESSION['message'] = "";
 	
 	$username = $_POST['username'];
 	$email = $_POST['email'];
