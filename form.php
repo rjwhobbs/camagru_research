@@ -29,7 +29,7 @@ require_once ('./controller.php');
 		<input type="submit" name="submit-signup" value="Register" />
 	</form>
 	<h1>Sign in</h1>
-	<form action="authenticate.php">
+	<form action="signin.php">
 		<input type="submit" value="Sign in"/>
 	</form>
 </body>

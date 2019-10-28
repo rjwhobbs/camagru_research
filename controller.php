@@ -3,6 +3,7 @@
 // does it call again when clicking submit in the post form
 session_start();
 require ('./connection.php');
+include ('./mail_verification_code.php');
 $errors = array(); //Does this kind of declare really make it availabe to the files that require it? 
 $_SESSION['message'] = "";
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
@@ -46,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	{
 		$errors['email'] = 'Email address already exits';
 	}
-	$stmt = NULL; // is this neccessary?
+	$stmt = NULL; // is this neccessary? unset might be better
 	$result = NULL;
 
 	//Password checks
@@ -96,8 +97,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 			echo $e->getMessage();
 			$_SESSION['message'] = 'Sorry, registration failed';
 		}
-		$_SESSION['message'] = 'Registration successful';
+		$_SESSION['message'] = 'Registration successful, please check your email and 
+								click on the link provided to validate your account';
 		$_SESSION['username'] = $username;
+		mail_verification_code($email, $verification_code);
 		header("location: home.php");
 		exit(); // Why is exit necessary here?
 	}
