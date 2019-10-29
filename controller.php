@@ -205,13 +205,14 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link']))
 			if (mail_verification_code($info['email'], $verification_code) === FALSE)
 			{
 				$_SESSION['message'] = "Sorry, we were unable to send you the confirmation link,
-				please confirm your name and password and click the resend button or try again later.";
+										please confirm your name and password and click the resend button or try again later.";
+				header("location: signin.php");
 				exit (); // Should I exit here?
 			}
 			else
 			{
 				$_SESSION['message'] = "Email has successfully been resent, 
-										please check your email to confirm your account and then signin.";
+										please check your email to confirm your account and then sign in.";
 				header("location: signin.php");
 				exit(); 
 			}
@@ -220,6 +221,25 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link']))
 		{
 			$_SESSION['message'] = "Incorrect username or password, please try again.";
 		}
+	}
+}
+
+else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
+{
+	$email = $_POST['email'];
+	$query = 'SELECT `id` FROM `users` WHERE `email` = ?';
+	$stmt = $conn->prepare($query);
+	$stmt->execute([$email]);
+	$res = $stmt->fetch(PDO::FETCH_ASSOC);
+	if ($res)
+	{
+		echo "here"
+	}
+	else
+	{
+		$_SESSION['message'] = 'This is an invalid email address, please try again.'; // I'm thinking I should remove this else, people can use this ouput to see if a user is on this site.
+		header('location: forgotpasswd.php'); // Is this necessary here?
+		exit();
 	}
 }
 ?>

@@ -22,8 +22,9 @@ require_once ('./controller.php');
 	</div> <!-- This will need to be unset later , probably here-->
 	<form action="signin.php" method="POST">
 		<span>Username:</span><input type="text" placeholder="username" name="username" required/><br>
-		<span>Password:</span><input type="text" placeholder="password" name="passwd" required/><br>
+		<span>Password:</span><input type="password" placeholder="password" name="passwd" required/><br>
 		<input type="submit" name="submit-signin" value="Sign in">
+		<a href="forgotpasswd.php"><input type="submit" value="Forgot your password?"></a>
 		<input type="submit" name="resend-link" value="Resend link">
 	</form>
 </body>
