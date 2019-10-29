@@ -1,6 +1,6 @@
 <?php
 require ('./controller.php');
-if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['vcode']))
+if (isset($_GET['vcode']))
 {
 	try
 	{
@@ -22,8 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['vcode']))
 		}
 		if (isset($_SESSION['ver']))
 		{
-			echo 'XXXXX';
-			//header('location: form.php');
+			header('location: new_passwd.php');
 		}
 
 	}
@@ -32,4 +31,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['vcode']))
 		echo $e->getMessage();
 	}
 }
-?>
