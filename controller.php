@@ -233,7 +233,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
 	$res = $stmt->fetch(PDO::FETCH_ASSOC);
 	if ($res)
 	{
-		echo "here"
+		echo "here";
 	}
 	else
 	{
