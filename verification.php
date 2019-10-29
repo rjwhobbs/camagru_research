@@ -16,11 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['vcode']))
 			$stmt->execute([1, NULL, $res['id']]);
 			unset($stmt);
 			unset($res);
-			header('location: home.php');
+			$_SESSION['message'] = 'You have successfully verified your account, please signin.'; // Why is this not showing,
+			header('location: signin.php');
 		}
 		else
 		{
-			echo "Not validated";
+			header('location: form.php');
 		}
 
 	}

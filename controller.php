@@ -98,12 +98,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 			echo $e->getMessage();
 			$_SESSION['message'] = 'Sorry, registration failed';
 		}
-		$_SESSION['message'] = 'Registration successful. Please check your email and 
-								click on the link provided to validate your account and signin.';
 		$_SESSION['username'] = $username;
-		mail_verification_code($email, $verification_code); // this needs protection, ie, TRUE FALSE returns
-		header("location: signin.php");
-		exit(); // Why is exit necessary here?
+		if (mail_verification_code($email, $verification_code) === FALSE) // I need a button to send the mail again
+		{
+			$_SESSION['message'] = "Sorry, we were unable to send you the confirmation link,
+									please confirm your name and password and click the resend button 
+									or try again later.";
+			header("location: signin.php");
+			exit (); // Should I exit here?
+		}
+		else
+		{
+			$_SESSION['message'] = 'Registration successful. Please check your email and 
+									click on the link provided to validate your account and signin.';
+			header("location: signin.php");
+			exit(); // Why is exit necessary here?
+		}
 	}
 	else
 	{
@@ -129,7 +139,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 	{
 		$_SESSION['message'] = "Incorrect username or password, please try again."; //this needs to be in errors[]; // follow the flow of the site
 	}
-	if ($info['verified'] == 1) // Why can't i use === 
+	if ($info['verified'] == 1) // ? Why can't i use === 
 	{
 		if (password_verify($_POST['passwd'], $info['passwd']))
 		{
@@ -145,7 +155,71 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 	}
 	else
 	{
-		$_SESSION['message'] = "Sorry, your account has not been verified";
+		$_SESSION['message'] = "Sorry, your account has not been confirmed, 
+								please check your email to confirm your account";
+	}
+}
+
+else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link']))
+{
+	$username = $_POST['username'];
+	try
+	{
+		$sql = "SELECT * FROM `users` WHERE `username` = ?";
+		$stmt = $conn->prepare($sql);
+		$stmt->execute([$username]);
+		$info = $stmt->fetch(PDO::FETCH_ASSOC);
+	}
+	catch (PDOException $e)
+	{
+		echo $e->getMessage();
+	}
+	if ($info === FALSE)
+	{
+		$_SESSION['message'] = "Please fill in the feilds and try again."; //this needs to be in errors[]; // follow the flow of the site
+	}
+	if ($info['verified'] == 1) // ? Why can't i use === 
+	{
+		if (password_verify($_POST['passwd'], $info['passwd']))
+		{
+			$_SESSION['username'] = $username;
+			$_SESSION['message'] = "You are already a user, please signin.";
+			header("location: signin.php");
+			exit(); 
+		}
+		else
+		{
+			$_SESSION['message'] = "Incorrect username or password, please try again.";
+		}
+	}
+	else if ($info['verified'] == 0)
+	{
+		if (password_verify($_POST['passwd'], $info['passwd']))
+		{
+			$bytes = random_bytes(16);	
+			$verification_code = bin2hex($bytes);
+			$query = 'UPDATE `users` SET `verification` = ? WHERE `id` = ?';
+			$stmt = $conn->prepare($query);
+			$stmt->execute([$verification_code, $info['id']]);
+			unset($stmt);
+			if (mail_verification_code($info['email'], $verification_code) === FALSE)
+			{
+				$_SESSION['message'] = "Sorry, we were unable to send you the confirmation link,
+				please confirm your name and password and click the resend button or try again later.";
+				exit (); // Should I exit here?
+			}
+			else
+			{
+				$_SESSION['message'] = "Email has successfully been resent, 
+										please check your email to confirm your account and then signin.";
+				header("location: signin.php");
+				exit(); 
+			}
+		}
+		else
+		{
+			$_SESSION['message'] = "Incorrect username or password, please try again.";
+		}
 	}
 }
 ?>

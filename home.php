@@ -1,6 +1,6 @@
 <?php
 require_once ('./controller.php'); // will this call the controller again?
-if(!isset($_SESSION['username'])) // Some extra protection against unsigned in users
+if(!isset($_SESSION['username'])) // Some extra protection against unsigned in users // How safe is this, can the user some how create their own session var.
 {
 	header("location: form.php");
 	exit();
@@ -16,12 +16,6 @@ if(!isset($_SESSION['username'])) // Some extra protection against unsigned in u
 </head>
 <body>
 	<h1>Welcome</h1>
-	<p><?php
-		if (isset($_SESSION['username']))
-		{
-			echo $_SESSION['username'];
-		}
-		?>
-	</p>
+	<p>Hi <?php echo $_SESSION['username']; ?>, welcome to Camagru.</p>
 </body>
 </html>
