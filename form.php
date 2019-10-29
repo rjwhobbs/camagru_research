@@ -22,7 +22,7 @@ require_once ('./controller.php');
 	<div><?= $_SESSION['message'] ?></div>
 	<form  action="form.php" method="POST" autocomplete="off" enctype="multipart/form-data">
 		<span>Username:</span><input type="text" placeholder="username" name="username" required/><br />
-		<span>Email:</span><input type="text" placeholder="email address" name="email" required/><br />
+		<span>Email:</span><input type="email" placeholder="email address" name="email" required/><br />
 		<span>Password:</span><input type="password" placeholder="password" name="passwd" required/><br />
 		<span>Confirm password:</span><input type="password" placeholder="confirm" name="confirm-passwd" required/><br />
 		<label>Choose a profile pic</label><input type="file" name="profile-pic" accept="image/*" required/><br />
