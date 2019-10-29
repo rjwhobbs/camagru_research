@@ -7,6 +7,7 @@ include ('./mail_verification_code.php');
 $errors = array(); //Does this kind of declare really make it availabe to the files that require it? 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 {
+	//Maybe put some of this into functions
 	$_SESSION['message'] = "";
 	
 	$username = $_POST['username'];
@@ -98,9 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 			$_SESSION['message'] = 'Sorry, registration failed';
 		}
 		$_SESSION['message'] = 'Registration successful. Please check your email and 
-								click on the link provided to validate your account then signin.';
+								click on the link provided to validate your account and signin.';
 		$_SESSION['username'] = $username;
-		mail_verification_code($email, $verification_code);
+		mail_verification_code($email, $verification_code); // this needs protection, ie, TRUE FALSE returns
 		header("location: signin.php");
 		exit(); // Why is exit necessary here?
 	}
@@ -126,7 +127,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 	}
 	if ($info === FALSE)
 	{
-		$_SESSION['message'] = "Incorrect username or password, please try again."; //this needs to errors[]; 
+		$_SESSION['message'] = "Incorrect username or password, please try again."; //this needs to be in errors[]; // follow the flow of the site
 	}
 	if ($info['verified'] == 1) // Why can't i use === 
 	{

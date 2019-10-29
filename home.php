@@ -20,7 +20,6 @@ if(!isset($_SESSION['username'])) // Some extra protection against unsigned in u
 		if (isset($_SESSION['username']))
 		{
 			echo $_SESSION['username'];
-			echo $_SESSION['message'];
 		}
 		?>
 	</p>

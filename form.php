@@ -15,7 +15,7 @@ require_once ('./controller.php');
 	<div>
 		<?php if (count($errors) > 0): ?>
 		<?php foreach ($errors as $error)?>
-			<li><?php echo $error; ?></li>
+			<li><?php echo $error; ?></li> <!-- I'm thinking errors will need to be unset after this -->
 		<?php endif ; ?>
 	</div>
 	<!-- Success comes here -->
