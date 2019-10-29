@@ -227,13 +227,20 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link']))
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
 {
 	$email = $_POST['email'];
-	$query = 'SELECT `id` FROM `users` WHERE `email` = ?';
+	$query = 'SELECT * FROM `users` WHERE `email` = ?';
 	$stmt = $conn->prepare($query);
 	$stmt->execute([$email]);
 	$res = $stmt->fetch(PDO::FETCH_ASSOC);
-	if ($res)
+	if ($res && $res['verified'] == 1)
 	{
-		echo "here";
+		unset($stmt);
+		$bytes = random_bytes(32);	
+		$verification_code = bin2hex($bytes);
+		$query = 'UPDATE `users` SET `verification` = ? WHERE `id` = ?';
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$verification_code, $res['id']]);
+		unset($stmt);
+		unset($verification_code);
 	}
 	else
 	{
