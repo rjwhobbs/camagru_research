@@ -99,7 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 			$_SESSION['message'] = 'Sorry, registration failed';
 		}
 		$_SESSION['username'] = $username;
-		if (mail_verification_code($email, $verification_code) === FALSE) // I need a button to send the mail again
+		if (mail_verification_code($email, $verification_code, USER_VERIFY) === FALSE) // I need a button to send the mail again
 		{
 			$_SESSION['message'] = "Sorry, we were unable to send you the confirmation link,
 									please confirm your name and password and click the resend button 
@@ -202,7 +202,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link']))
 			$stmt = $conn->prepare($query);
 			$stmt->execute([$verification_code, $info['id']]);
 			unset($stmt);
-			if (mail_verification_code($info['email'], $verification_code) === FALSE)
+			if (mail_verification_code($info['email'], $verification_code, USER_VERIFY) === FALSE)
 			{
 				$_SESSION['message'] = "Sorry, we were unable to send you the confirmation link,
 										please confirm your name and password and click the resend button or try again later.";
@@ -239,6 +239,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
 		$query = 'UPDATE `users` SET `verification` = ? WHERE `id` = ?';
 		$stmt = $conn->prepare($query);
 		$stmt->execute([$verification_code, $res['id']]);
+		mail_verification_code($res['email'], $verification_code, PASSWD_VERIFY);
 		unset($stmt);
 		unset($verification_code);
 	}
