@@ -1,5 +1,5 @@
 <?php
-require_once ('./connection.php');
+require_once ('./connection.php'); // Is this necessary
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['vcode']))
 {
 	try
@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['vcode']))
 			$stmt->execute([1, NULL, $res['id']]);
 			unset($stmt);
 			unset($res);
+			header('location: home.php');
 		}
 		else
 		{

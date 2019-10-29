@@ -97,12 +97,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 			echo $e->getMessage();
 			$_SESSION['message'] = 'Sorry, registration failed';
 		}
-		$_SESSION['message'] = 'Registration successful, please check your email and 
-								click on the link provided to validate your account';
+		$_SESSION['message'] = 'Registration successful. Please check your email and 
+								click on the link provided to validate your account then signin.';
 		$_SESSION['username'] = $username;
 		mail_verification_code($email, $verification_code);
 		header("location: signin.php");
-		//exit(); // Why is exit necessary here?
+		exit(); // Why is exit necessary here?
 	}
 	else
 	{
