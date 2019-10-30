@@ -147,7 +147,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 		if (password_verify($_POST['passwd'], $info['passwd']))
 		{
 			$_SESSION['username'] = $username;
-			$_SESSION['message'] = "Sign in successful";
+			$_SESSION['ver_user'] = "Verified";
 			header("location: home.php");
 			exit(); 
 		}
