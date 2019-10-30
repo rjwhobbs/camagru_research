@@ -4,7 +4,13 @@
 session_start();
 require ('./connection.php');
 include ('./mail_verification_code.php');
-$errors = array(); //Does this kind of declare really make it availabe to the files that require it? 
+$errors = array(); //Does this kind of declare really make it availabe to the files that require it?
+$reset_errors = array();
+
+/****************************
+*	SIGN UP
+****************************/
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 {
 	//Maybe put some of this into functions
@@ -13,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	$username = $_POST['username'];
 	$email = $_POST['email'];
 	$profile_pic_path = 'images/'.$_FILES['profile-pic']['name'];
+	
 	//Username checks
 	if (empty($username))
 	{
@@ -121,6 +128,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	}
 }
 
+/****************************
+*	SIGN IN
+****************************/
+
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 {
 	$username = $_POST['username'];
@@ -159,6 +170,10 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 								please check your email to confirm your account";
 	}
 }
+
+/****************************
+*	RESEND LINK
+****************************/
 
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link']))
 {
@@ -224,6 +239,10 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link']))
 	}
 }
 
+/**********************************
+*	REQUEST PASSWORD TO BE CHANGED
+***********************************/
+
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
 {
 	$email = $_POST['email'];
@@ -248,6 +267,23 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
 		$_SESSION['message'] = 'This is an invalid email address, please try again.'; // I'm thinking I should remove this else, people can use this ouput to see if a user is on this site.
 		header('location: forgotpasswd.php'); // Is this necessary here?
 		exit();
+	}
+}
+
+/*********************************************
+*	RESET PASSWORD / LINKS TO NEW_PASSWORD.PHP
+**********************************************/
+
+else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']) && isset($_POST['Reset']))
+{
+	if (!empty($_POST['email']) && !empty($_POST['passwd']) && !empty($_POST['confirm-passwd']))
+	{
+		echo $_SESSION['verification'];
+		unset($_SESSION['verification']);
+	}
+	else
+	{
+		$reset_errors['empty'] = 'Please fill in all the feilds';	
 	}
 }
 ?>

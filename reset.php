@@ -11,18 +11,13 @@ if (isset($_GET['vcode']))
 		if ($res)
 		{
 			unset($stmt);
-			//$query = 'UPDATE `users` SET `verified` = ? , `verification` = ? WHERE `id` = ?';
-			//$stmt = $conn->prepare($query);
-			//$stmt->execute([1, NULL, $res['id']]);
-			//unset($stmt);
+			$_SESSION['verification'] = $res['verification'];
 			unset($res);
-			//$_SESSION['message'] = 'You have successfully verified your account, please signin.'; // Why is this not showing,
-			//header('location: signin.php');
-			$_SESSION['ver'] = "Verified";
-		}
-		if (isset($_SESSION['ver']))
-		{
 			header('location: new_passwd.php');
+		}
+		else
+		{
+			header('location: form.php');
 		}
 
 	}
