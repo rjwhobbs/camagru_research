@@ -5,7 +5,6 @@ session_start();
 require ('./connection.php');
 include ('./mail_verification_code.php');
 $errors = array(); //Does this kind of declare really make it availabe to the files that require it?
-$reset_errors = array();
 
 /****************************
 *	SIGN UP
@@ -19,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	$username = $_POST['username'];
 	$email = $_POST['email'];
 	$profile_pic_path = 'images/'.$_FILES['profile-pic']['name'];
-	
+
 	//Username checks
 	if (empty($username))
 	{
@@ -276,14 +275,23 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
 
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']) && isset($_POST['Reset']))
 {
-	if (!empty($_POST['email']) && !empty($_POST['passwd']) && !empty($_POST['confirm-passwd']))
+	// I want to use an errors array here but it doesn't seem to be printing on the forgotpasswd page. Will try fix this.
+	$error_check = FALSE;
+	if (empty($_POST['email']) || empty($_POST['passwd']) || empty($_POST['confirm-passwd']))
 	{
-		echo $_SESSION['verification'];
-		unset($_SESSION['verification']);
+		$error_check = TRUE;
 	}
-	else
+	if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
 	{
-		$reset_errors['empty'] = 'Please fill in all the feilds';	
+		$error_check = TRUE;
+	}
+	if ($error_check === TRUE)
+	{
+		unset($_SESSION['verification']);
+		$_SESSION['message'] = "There was a problem reseting your password.<br>  
+								Please make sure to fill in all the feilds correctly.<br> 
+								Please enter your email address and try again.";
+		header('location: forgotpasswd.php');
 	}
 }
 ?>

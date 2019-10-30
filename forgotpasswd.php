@@ -15,12 +15,12 @@ require ('./controller.php');
 	</h1>
 	<p>Please enter your email address, check your email and click on the link provided.</p>
 	<div>
-		<?php 	
+		<?php
 				if (!empty($_SESSION['message']))
 				{	
 					echo $_SESSION['message'];
 					unset($_SESSION['message']);
-				} 
+				}
 		?>
 	</div> 
 	<form action="forgotpasswd.php" method="post">
