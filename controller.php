@@ -29,44 +29,42 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 		$errors['username'] = 'Username too short';
 	else if (strlen($username) > 50)
 		$errors['username'] = 'Username too long';
-			
-	$query = 'SELECT `username` FROM `users` WHERE `username` = ?';
-	$stmt = $conn->prepare($query);
-	$stmt->execute([$username]);
-	$result = $stmt->fetch(PDO::FETCH_ASSOC);
-	if ($result) 
+	else
 	{
-		$errors['username'] = 'Username already exits';
-	}
-	$stmt = NULL; // unset or NULL?
-	$result = NULL;
+		$query = 'SELECT `username` FROM `users` WHERE `username` = ?';
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$username]);
+		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+		if ($result) 
+			$errors['username'] = 'Username already exits';
+		$stmt = NULL; // unset or NULL?
+		$result = NULL;
+	}		
 	
 	//email checks
 	if (empty($email))
-	{
 		$errors['email'] = 'Email required';
-	}
 	else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-	{
 		$errors['email'] = 'Valid email required';
-	}
-	// Check duplicate emails
-	// Should we add unique constraint to DB aswell?
-	$query = 'SELECT `email` FROM `users` WHERE `email` = ?';
-	$stmt = $conn->prepare($query);
-	$stmt->execute([$email]);
-	$result = $stmt->fetch(PDO::FETCH_ASSOC);
-	if ($result) // is this a safe way to check for duplicate emails?
+	else if (strlen($email) > 80)
+		$errors['email'] = 'Email address is too long';
+	else
 	{
-		$errors['email'] = 'Email address already exits';
+		$query = 'SELECT `email` FROM `users` WHERE `email` = ?';
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$email]);
+		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+		if ($result) // is this a safe way to check for duplicate emails?
+			$errors['email'] = 'Email address already exits';
+		$stmt = NULL; // is this neccessary? unset might be better
+		$result = NULL;
+		// Should we add unique constraint to DB aswell?
 	}
-	$stmt = NULL; // is this neccessary? unset might be better
-	$result = NULL;
-
+		
 	//Password checks
 	if (empty($_POST['passwd']))
 	{
-		$errors['passwd'] = 'Password required';
+	$errors['passwd'] = 'Password required';
 	}
 	else if (empty($_POST['confirm-passwd']))	
 	{
