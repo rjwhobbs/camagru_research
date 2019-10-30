@@ -5,7 +5,7 @@ try
 	$conn = new PDO('mysql:host='.$DB_HOST, $DB_USER, $DB_PASSWORD);
 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	echo "Connected<br>";
-	$sql = "CREATE DATABASE `$DB_NAME`";
+	$sql = "CREATE DATABASE IF NOT EXISTS `$DB_NAME`";
 	$conn->exec($sql);
 	echo "Database created<br>";
 }
@@ -20,7 +20,7 @@ try
 {
 	$conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$createdb = "CREATE TABLE `research`.`users` 
+	$createdb = "CREATE TABLE IF NOT EXISTS `research`.`users` 
 				( `id` INT NOT NULL AUTO_INCREMENT , 
 				`username` VARCHAR(50) NOT NULL , 
 				`passwd` VARCHAR(255) NOT NULL , 
