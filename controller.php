@@ -7,9 +7,9 @@ include ('./mail_verification_code.php');
 include ('./helpers.php');
 $errors = array(); //Does this kind of declare really make it availabe to the files that require it?
 
-/****************************
-*	SIGN UP
-****************************/
+/******************************
+*	SIGN UP / LINKS TO FORM.PHP
+*******************************/
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 {
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 		$stmt = $conn->prepare($query);
 		$stmt->execute([$email]);
 		$result = $stmt->fetch(PDO::FETCH_ASSOC);
-		if ($result) // is this a safe way to check for duplicate emails?
+		if ($result)
 			$errors['email'] = 'Email address already exits';
 		$stmt = NULL; // is this neccessary? unset might be better
 		$result = NULL;
@@ -63,16 +63,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 		
 	//Password checks
 	if (empty($_POST['passwd']))
-	{
-	$errors['passwd'] = 'Password required';
-	}
+		$errors['passwd'] = 'Password required.';
 	else if (empty($_POST['confirm-passwd']))	
-	{
 		$errors['passwd'] = 'Confirm feild empty';
-	}
 	else if ($_POST['passwd'] != $_POST['confirm-passwd'])
+		$errors['passwd'] = 'Passwords don\'t match.';
+	else if (passwd_check($_POST['passwd']) === FALSE)
 	{
-		$errors['passwd'] = 'Passwords don\'t match';
+		$errors['passwd'] = 'Password must only contain atleast one lower and upper case letter,<br>
+								one number, and be longer than 9 characters.';
 	}
 
 	//Profile pic upload check (What if 2 users upload different images but with the same name, problem)

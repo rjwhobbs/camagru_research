@@ -7,4 +7,19 @@ function username_check($username)
 		return FALSE;
 	return TRUE;
 }
+
+function passwd_check($passwd)
+{
+	if (strlen($passwd) < 9)
+		return FALSE;
+	else if (preg_match('/[a-z]/', $passwd) === 0)
+		return FALSE;
+	else if (preg_match('/[A-Z]/', $passwd) === 0)
+		return FALSE;
+	else if (preg_match('/[0-9]/', $passwd) === 0)
+		return FALSE;
+	else if (preg_match("/^[a-zA-Z0-9]+$/", $passwd) === 0) // No special chars or spaces
+		return FALSE;
+	return TRUE;
+}
 ?>
