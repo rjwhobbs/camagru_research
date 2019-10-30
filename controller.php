@@ -315,6 +315,10 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']
 		$query = 'UPDATE `users` SET `passwd` = ? , `verification` = ? WHERE `id` = ?';
 		$stmt = $conn->prepare($query);
 		$stmt->execute([$new_passwd, NULL, $res['id']]);
+		unset($stmt);
+		unset($_SESSION['verification']);
+		$_SESSION['message'] = "Your password has been reset, please sign in.";
+		header('location: signin.php');
 	}
 }
 ?>
