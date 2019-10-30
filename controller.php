@@ -4,6 +4,7 @@
 session_start();
 require ('./connection.php');
 include ('./mail_verification_code.php');
+include ('./helpers.php');
 $errors = array(); //Does this kind of declare really make it availabe to the files that require it?
 
 /****************************
@@ -21,9 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 
 	//Username checks
 	if (empty($username))
-	{
 		$errors['username'] = 'Username required';
-	}
+	else if (username_check($username) === FALSE)
+		$errors['username'] = 'Username can only be English letters (with or without digits).';
+	else if (strlen($username) < 3)
+		$errors['username'] = 'Username too short';
+	else if (strlen($username) > 50)
+		$errors['username'] = 'Username too long';
+			
 	$query = 'SELECT `username` FROM `users` WHERE `username` = ?';
 	$stmt = $conn->prepare($query);
 	$stmt->execute([$username]);
@@ -315,6 +321,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']
 		$query = 'UPDATE `users` SET `passwd` = ? , `verification` = ? WHERE `id` = ?';
 		$stmt = $conn->prepare($query);
 		$stmt->execute([$new_passwd, NULL, $res['id']]);
+		unset($new_passwd);
 		unset($stmt);
 		unset($_SESSION['verification']);
 		$_SESSION['message'] = "Your password has been reset, please sign in.";

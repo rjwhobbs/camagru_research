@@ -22,9 +22,9 @@ try
 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 	$createdb = "CREATE TABLE `research`.`users` 
 				( `id` INT NOT NULL AUTO_INCREMENT , 
-				`username` VARCHAR(20) NOT NULL , 
+				`username` VARCHAR(50) NOT NULL , 
 				`passwd` VARCHAR(255) NOT NULL , 
-				`email` VARCHAR(50) NOT NULL ,
+				`email` VARCHAR(80) NOT NULL ,
 				`verified` BOOLEAN NOT NULL DEFAULT FALSE, 
 				`verification` VARCHAR(255) DEFAULT NULL,
 				`profile-pic` VARCHAR(255) NOT NULL,

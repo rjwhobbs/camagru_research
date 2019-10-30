@@ -19,7 +19,12 @@ require_once ('./controller.php');
 		<?php endif ; ?>
 	</div>
 	<!-- Success comes here -->
-	<div><?= $_SESSION['message'] ?></div>
+	<div><?php  if (isset($_SESSION['message']))
+				{
+					echo $_SESSION['message'];
+					unset($_SESSION['message']);
+				}
+	?></div>
 	<form  action="form.php" method="POST" autocomplete="off" enctype="multipart/form-data">
 		<span>Username:</span><input type="text" placeholder="username" name="username" required/><br />
 		<span>Email:</span><input type="email" placeholder="email address" name="email" required/><br />
