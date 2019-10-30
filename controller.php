@@ -281,9 +281,25 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']
 	{
 		$error_check = TRUE;
 	}
-	if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
+	else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
 	{
 		$error_check = TRUE;
+	}
+	else if ($_POST['passwd'] !== $_POST['confirm-passwd']) // Still needs strong password checking
+	{
+		$error_check = TRUE;
+	}
+	else if ($error_check === FALSE)
+	{
+		$query = 'SELECT * FROM `users` WHERE `verification` = ? && `email` = ? '; // Also check if user is verified
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$_SESSION['verification'], $_POST['email']]);
+		$res = $stmt->fetch(PDO::FETCH_ASSOC);
+		if (!$res)
+		{
+			$error_check = TRUE;
+		}
+		unset($stmt);
 	}
 	if ($error_check === TRUE)
 	{
@@ -292,6 +308,13 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']
 								Please make sure to fill in all the feilds correctly.<br> 
 								Please enter your email address and try again.";
 		header('location: forgotpasswd.php');
+	}
+	else
+	{
+		$new_passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
+		$query = 'UPDATE `users` SET `passwd` = ? , `verification` = ? WHERE `id` = ?';
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$new_passwd, NULL, $res['id']]);
 	}
 }
 ?>
