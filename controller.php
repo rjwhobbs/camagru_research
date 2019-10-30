@@ -66,26 +66,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 		$errors['passwd'] = 'Password required.';
 	else if (empty($_POST['confirm-passwd']))	
 		$errors['passwd'] = 'Confirm feild empty';
-	else if ($_POST['passwd'] != $_POST['confirm-passwd'])
-		$errors['passwd'] = 'Passwords don\'t match.';
 	else if (passwd_check($_POST['passwd']) === FALSE)
 	{
 		$errors['passwd'] = 'Password must only contain atleast one lower and upper case letter,<br>
 								one number, and be longer than 9 characters.';
 	}
+	else if ($_POST['passwd'] != $_POST['confirm-passwd'])
+		$errors['passwd'] = "Passwords don't match.";
 
 	//Profile pic upload check (What if 2 users upload different images but with the same name, problem)
 	// If image name exits maybe we can do a 'copy of' concatination to the image name. 
 	if (preg_match("!image!", $_FILES['profile-pic']['type']) === FALSE) // This looks unreliable, let's try exif_image()
-	{
 		$errors['image'] = 'Please only upload a valid image';
-	}
 	else if (copy($_FILES['profile-pic']['tmp_name'], $profile_pic_path) === FALSE)
-	{
 		$errors['image'] = 'Image upload failed';
-	}
-	// $_SESSION['username'] = $username;
-	// $_SESSION['profile-pic'] = $profile_pic_path;
 
 	if (count($errors) === 0)
 	{
@@ -125,9 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 		}
 	}
 	else
-	{
 		$_SESSION['message'] = 'Registration failed';
-	}
 }
 
 /****************************
@@ -149,10 +141,8 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 		echo $e->getMessage();
 	}
 	if ($info === FALSE)
-	{
-		$_SESSION['message'] = "Incorrect username or password, please try again."; //this needs to be in errors[]; // follow the flow of the site
-	}
-	if ($info['verified'] == 1) // ? Why can't i use === 
+		$_SESSION['message'] = "Incorrect username or password, please try again."; //this needs to be in errors[]; 
+	else if ($info['verified'] == 1) // ? Why can't i use === 
 	{
 		if (password_verify($_POST['passwd'], $info['passwd']))
 		{
@@ -162,9 +152,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 			exit(); 
 		}
 		else
-		{
 			$_SESSION['message'] = "Incorrect username or password, please try again.";
-		}
 	}
 	else
 	{
