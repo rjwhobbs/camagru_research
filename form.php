@@ -13,13 +13,19 @@ require_once ('./controller.php');
 	<h1>Sign Up</h1>
 	<!-- Errors will come here -->
 	<div>
-		<?php if (count($errors) > 0): ?>
-		<?php foreach ($errors as $error)?>
-			<li><?php echo $error; ?></li> <!-- I'm thinking errors will need to be unset after this -->
-		<?php endif ; ?>
+		<!-- <?php //if (count($errors) > 0): ?>  Why doesn't this print all the errors? -->
+		<?php //foreach ($errors as $error)?>
+			<li><?php //echo $error; ?></li> <!-- I'm thinking errors will need to be unset after this -->
+		<?php //endif ; ?>
 	</div>
 	<!-- Success comes here -->
-	<div><?php  if (isset($_SESSION['message']))
+	<div><?php  
+				if (count($errors) > 0)
+				{
+					foreach ($errors as $error)
+						echo $error.'<br>';
+				}
+				if (isset($_SESSION['message']))
 				{
 					echo $_SESSION['message'];
 					unset($_SESSION['message']);

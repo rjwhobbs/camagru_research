@@ -74,11 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	else if ($_POST['passwd'] != $_POST['confirm-passwd'])
 		$errors['passwd'] = "Passwords don't match.";
 
-	//Profile pic upload check (What if 2 users upload different images but with the same name ? Add a random string to the end of the name.
-	// If image name exits maybe we can do a 'copy of' concatination to the image name. 
-	// if (preg_match('/image/', $_FILES['profile-pic']['type']) === FALSE) // This looks unreliable, let's try exif_image()
-	// 	$errors['image'] = 'Please only upload a valid image';
-	if (image_check($_FILES['profile-pic']['type'], $_FILES['profile-pic']['tmp_name']) === FALSE)
+	//Image checks . Please look at look at the helper function, image_check may need more protection
+	if (image_check($_FILES['profile-pic']['type'], $_FILES['profile-pic']['tmp_name']) === FALSE) 
 		$errors['image'] = 'Please only upload a valid image';	
 	else if (copy($_FILES['profile-pic']['tmp_name'], $profile_pic_path) === FALSE)
 		$errors['image'] = 'Image upload failed';
