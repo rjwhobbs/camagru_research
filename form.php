@@ -24,6 +24,7 @@ require_once ('./controller.php');
 				{
 					foreach ($errors as $error)
 						echo $error.'<br>';
+					unset($errors);
 				}
 				if (isset($_SESSION['message']))
 				{

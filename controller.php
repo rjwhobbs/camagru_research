@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 }
 
 /****************************
-*	SIGN IN
+*	SIGN IN / SIGNIN.PHP
 ****************************/
 
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
@@ -162,8 +162,8 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 	}
 }
 
-/****************************
-*	RESEND LINK
+/***************************
+*	RESEND LINK / SIGNIN.PHP
 ****************************/
 
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link']))
@@ -181,9 +181,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link']))
 		echo $e->getMessage();
 	}
 	if ($info === FALSE)
-	{
 		$_SESSION['message'] = "Please fill in the feilds and try again."; //this needs to be in errors[]; // follow the flow of the site
-	}
 	if ($info['verified'] == 1) // ? Why can't i use === 
 	{
 		if (password_verify($_POST['passwd'], $info['passwd']))
@@ -194,9 +192,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link']))
 			exit(); 
 		}
 		else
-		{
 			$_SESSION['message'] = "Incorrect username or password, please try again.";
-		}
 	}
 	else if ($info['verified'] == 0)
 	{
@@ -224,15 +220,13 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link']))
 			}
 		}
 		else
-		{
 			$_SESSION['message'] = "Incorrect username or password, please try again.";
-		}
 	}
 }
 
-/**********************************
-*	REQUEST PASSWORD TO BE CHANGED
-***********************************/
+/****************************************************
+*	REQUEST PASSWORD TO BE CHANGED / FORGOTPASSWD.PHP 
+*****************************************************/
 
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
 {
@@ -249,7 +243,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
 		$query = 'UPDATE `users` SET `verification` = ? WHERE `id` = ?';
 		$stmt = $conn->prepare($query);
 		$stmt->execute([$verification_code, $res['id']]);
-		mail_verification_code($res['email'], $verification_code, PASSWD_VERIFY);
+		mail_verification_code($res['email'], $verification_code, PASSWD_VERIFY); // Needs protection
 		unset($stmt);
 		unset($verification_code);
 	}
@@ -261,26 +255,20 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
 	}
 }
 
-/*********************************************
-*	RESET PASSWORD / LINKS TO NEW_PASSWORD.PHP
-**********************************************/
+/************************************************
+*	RESET PASSWORD / NEW_PASSWORD.PHP / RESET.PHP
+*************************************************/
 
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']) && isset($_POST['Reset']))
 {
 	// I want to use an errors array here but it doesn't seem to be printing on the forgotpasswd page. Will try fix this.
 	$error_check = FALSE;
 	if (empty($_POST['email']) || empty($_POST['passwd']) || empty($_POST['confirm-passwd']))
-	{
 		$error_check = TRUE;
-	}
 	else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
-	{
 		$error_check = TRUE;
-	}
 	else if ($_POST['passwd'] !== $_POST['confirm-passwd']) // Still needs strong password checking
-	{
 		$error_check = TRUE;
-	}
 	else if ($error_check === FALSE)
 	{
 		$query = 'SELECT * FROM `users` WHERE `verification` = ? && `email` = ? '; // Also check if user is verified
@@ -288,9 +276,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']
 		$stmt->execute([$_SESSION['verification'], $_POST['email']]);
 		$res = $stmt->fetch(PDO::FETCH_ASSOC);
 		if (!$res)
-		{
 			$error_check = TRUE;
-		}
 		unset($stmt);
 	}
 	if ($error_check === TRUE)
