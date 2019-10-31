@@ -22,4 +22,13 @@ function passwd_check($passwd)
 		return FALSE;
 	return TRUE;
 }
+
+function image_check($file, $file_path)
+{
+	if (preg_match('/image/', $file) === FALSE)
+		return FALSE;
+	else if (exif_imagetype($file_path) < 1)
+		return FALSE;
+	return TRUE;
+}
 ?>
