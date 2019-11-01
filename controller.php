@@ -123,9 +123,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 		$_SESSION['message'] = 'Registration failed';
 }
 
-/****************************
-*	SIGN IN / SIGNIN.PHP
-****************************/
+/**********************************
+*	SIGN IN / SIGNIN.PHP / HOME.PHP
+***********************************/
 
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 {
@@ -147,8 +147,8 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 	{
 		if (password_verify($_POST['passwd'], $info['passwd']))
 		{
+			$_SESSION['user_id'] = $info['id']; // This should rather be user ID
 			$_SESSION['username'] = $username;
-			$_SESSION['ver_user'] = "Verified";
 			header("location: home.php");
 			exit(); 
 		}

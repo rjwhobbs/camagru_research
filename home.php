@@ -1,6 +1,6 @@
 <?php
 require_once ('./controller.php'); // will this call the controller again?
-if(!isset($_SESSION['username']) && !isset($_SESSION['ver_user'])) // Some extra protection against unsigned in users // How safe is this, can the user some how create their own session var.
+if(!isset($_SESSION['user_id']) && !isset($_SESSION['username'])) // Some extra protection against unsigned in users // It's probably not the safest way yo do this but it will do for Camagru.
 {
 	header("location: form.php");
 	exit();
