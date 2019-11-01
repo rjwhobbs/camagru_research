@@ -10,12 +10,8 @@ function mail_verification_code($email, $code, $mode)
 	else if ($mode == "PASSWD_VERIFY")
 		$link = 'http://localhost:8080/camagru_research/reset.php?vcode='.$code;
 	if (mail($email, 'Email verification', $link, $headers) === FALSE)
-	{
 		return FALSE;
-	}
 	else
-	{
 		return TRUE;
-	}
 }
 ?>

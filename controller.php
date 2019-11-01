@@ -102,7 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 			echo $e->getMessage();
 			$_SESSION['message'] = 'Sorry, registration failed';
 		}
-		$_SESSION['username'] = $username;
 		if (mail_verification_code($email, $verification_code, USER_VERIFY) === FALSE) // I need a button to send the mail again
 		{
 			$_SESSION['message'] = "Sorry, we were unable to send you the confirmation link,
@@ -147,7 +146,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 	{
 		if (password_verify($_POST['passwd'], $info['passwd']))
 		{
-			$_SESSION['user_id'] = $info['id']; // This should rather be user ID
+			$_SESSION['user_id'] = $info['id'];
 			$_SESSION['username'] = $username;
 			header("location: home.php");
 			exit(); 
@@ -186,7 +185,6 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link']))
 	{
 		if (password_verify($_POST['passwd'], $info['passwd']))
 		{
-			$_SESSION['username'] = $username;
 			$_SESSION['message'] = "You are already a user, please signin.";
 			header("location: signin.php");
 			exit(); 
