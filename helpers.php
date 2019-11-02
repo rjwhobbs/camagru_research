@@ -31,4 +31,11 @@ function image_check($file, $file_path)
 		return FALSE;
 	return TRUE;
 }
+
+function set_notification($value)
+{
+	if ($value)
+		return "on";
+	return "off";
+}
 ?>

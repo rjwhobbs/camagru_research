@@ -8,16 +8,18 @@ require ('./valid_session_check.php');
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Home</title>
+	<title>Profile Page</title>
 </head>
 <body>
-	<h1>Welcome</h1>
-	<p>This page is only to test if a user has successfully logged in.<b>
-		This will eventually be a profile page or pages directed to<br>
-		here will direct to index.php.
-	</p>
-	<p>Hi <?php echo $_SESSION['username']; ?>, welcome to Camagru.</p>
+	<h1>Profile settings for <?= $_SESSION['username']?></h1>
+	<span>Email notifications are <?= $_SESSION['notify']?></span>
+	<?php
+		if ($_SESSION['notify'] == "on")
+			require 'turn_notif_off.html';
+		else if ($_SESSION['notify'] == "off")
+			require 'turn_notif_on.html'
+	?>
+	<br>
 	<a href="signout.php"><input type="submit" value="Sign Out"></a>
-	<a href="profile.php"><input type="submit" value="Go to profile"></a>
 </body>
 </html>

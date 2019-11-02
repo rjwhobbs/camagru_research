@@ -27,5 +27,6 @@ require_once ('./controller.php');
 		<a href="forgotpasswd.php"><input type="submit" value="Forgot your password?"></a>
 		<input type="submit" name="resend-link" value="Resend link">
 	</form>
+	<a href="signout.php"><input type="submit" value="Sign Out"></a>
 </body>
 </html>

@@ -15,7 +15,7 @@ require_once ('./controller.php');
 	<div>
 		<!-- <?php //if (count($errors) > 0): ?>  Why doesn't this print all the errors? -->
 		<?php //foreach ($errors as $error)?>
-			<li><?php //echo $error; ?></li> <!-- I'm thinking errors will need to be unset after this -->
+			<!-- <li><?php //echo $error; ?></li>  I'm thinking errors will need to be unset after this -->
 		<?php //endif ; ?>
 	</div>
 	<!-- Success comes here -->
@@ -44,5 +44,6 @@ require_once ('./controller.php');
 	<form action="signin.php">
 		<input type="submit" value="Sign in"/>
 	</form>
+	<a href="signout.php"><input type="submit" value="Sign Out"></a>
 </body>
 </html>

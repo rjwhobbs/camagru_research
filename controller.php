@@ -148,6 +148,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 		{
 			$_SESSION['user_id'] = $info['id'];
 			$_SESSION['username'] = $username;
+			$_SESSION['notify'] = set_notification($info['notifications']);
 			header("location: home.php");
 			exit(); 
 		}
