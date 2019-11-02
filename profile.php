@@ -17,7 +17,7 @@ require ('./valid_session_check.php');
 		if ($_SESSION['notify'] == "on")
 			require 'turn_notif_off.html';
 		else if ($_SESSION['notify'] == "off")
-			require 'turn_notif_on.html'
+			require 'turn_notif_on.html';
 	?>
 	<br>
 	<a href="signout.php"><input type="submit" value="Sign Out"></a>
