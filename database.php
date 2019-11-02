@@ -27,7 +27,7 @@ try
 				`email` VARCHAR(80) NOT NULL ,
 				`verified` BOOLEAN NOT NULL DEFAULT FALSE, 
 				`verification` VARCHAR(255) DEFAULT NULL,
-				`profile-pic` VARCHAR(255) NOT NULL,
+				`profile-pic` VARCHAR(255) DEFAULT NULL,
 				`notifications` BOOLEAN NOT NULL DEFAULT TRUE , 
 				PRIMARY KEY (`id`)) ENGINE = InnoDB ";
 	$stmt = $conn->prepare($createdb);

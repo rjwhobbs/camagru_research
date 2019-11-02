@@ -74,13 +74,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	else if ($_POST['passwd'] != $_POST['confirm-passwd'])
 		$errors['passwd'] = "Passwords don't match.";
 
-	//Image checks . Please look at look at the helper function, image_check may need more protection
-	if (image_check($_FILES['profile-pic']['type'], $_FILES['profile-pic']['tmp_name']) === FALSE) 
-		$errors['image'] = 'Please only upload a valid image';	
-	else if (copy($_FILES['profile-pic']['tmp_name'], $profile_pic_path) === FALSE)
-		$errors['image'] = 'Image upload failed';
-
-	//var_dump($_FILES); die;
+	//Image checks . Please look at the helper function, image_check may need more protection
+	if (!empty($_FILES['profile-pic']['name']))
+	{
+		if (image_check($_FILES['profile-pic']['type'], $_FILES['profile-pic']['tmp_name']) === FALSE) 
+			$errors['image'] = 'Please only upload a valid image';	
+		else if (copy($_FILES['profile-pic']['tmp_name'], $profile_pic_path) === FALSE)
+			$errors['image'] = 'Image upload failed';
+	}
+	else
+		$profile_pic_path = NULL;
 
 	if (count($errors) === 0)
 	{
@@ -93,9 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 			$stmt = $conn->prepare($sql);
 			$arr = array($username, $passwd, $email, $verification_code, $profile_pic_path);
 			$stmt->execute($arr);
-			//$vercode=hash('sha1', 'verified');
 			$_SESSION['message'] = 'Registration successful.';
-			//send email here
 		}
 		catch (PDOExeption $e)
 		{
@@ -107,14 +108,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 			$_SESSION['message'] = "Sorry, we were unable to send you the confirmation link,
 									please confirm your name and password and click the resend button 
 									or try again later.";
-			header("location: signin.php"); // 1. This should redirect to form.php, message stays.
+			header("location: form.php"); // 1. This should redirect to form.php, message stays.
 			exit (); // Should I exit here?
 		}
 		else
 		{
-			$_SESSION['message'] = 'Registration successful. Please check your email and 
-									click on the link provided to validate your account and signin.';
-			header("location: signin.php");
+			$_SESSION['message'] = "Registration successful. Please check your email and<br>
+									click on the link provided to validate your account and signin.<br>
+									If you didn't receive an email please confrim your details and click resend.<br>";
+			header("location: form.php");
 			exit(); // Why is exit necessary here? // 1. This should redirect to form.php, message stays.
 		}
 	}
@@ -168,29 +170,42 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link'])) //Do i need to unset POSTS?
 {
-	// 1. Resend-link (here) will need to fill the errors array, not session message for errors as it's changing to form.
-	// All checks done in sign up will need to be carried out again, unfortunately if the user entered the wrong email
-	// address they will need to create a whole new account. Maybe I can change the address for them, ie if it's different
-	// from the one in the data base change it in the background, passwords need to comply though. 
 	$username = $_POST['username'];
+	$email = $_POST['email'];
+	if (empty($_POST['username']) || empty($_POST['email']) || empty(['passwd']) || empty(['confirm-passwd']))
+	{
+		$_SESSION['message'] = 'Please fill in all the feilds and try again';
+		header('location: form.php');
+		exit();
+	}
 	try
 	{
 		$sql = "SELECT * FROM `users` WHERE `username` = ?";
 		$stmt = $conn->prepare($sql);
 		$stmt->execute([$username]);
 		$info = $stmt->fetch(PDO::FETCH_ASSOC);
+		unset($stmt);
 	}
 	catch (PDOException $e)
 	{
 		echo $e->getMessage();
 	}
 	if ($info === FALSE)
-		$_SESSION['message'] = "Please fill in the feilds and try again."; //this needs to be in errors[]; // follow the flow of the site
-	if ($info['verified'] == 1) // ? Why can't i use === 
 	{
-		if (password_verify($_POST['passwd'], $info['passwd']))
+		$_SESSION['message'] = "Please fill in all the feilds correctly and try again."; //this needs to be in errors[]; 
+	}
+	else if ($info['verified'] == 1) // ? Why can't i use === 
+	{
+		if ($email != $info['email'])
 		{
-			$_SESSION['message'] = "You are already a user, please signin.";
+			$_SESSION['message'] = 'It seems you entered a different email address from the one you registered
+									with,<br>please make sure to enter the one you registered with.';
+		}
+		else if ($_POST['passwd'] != $_POST['confirm-passwd'])
+			$_SESSION['message'] = "Passwords don't match";
+		else if (password_verify($_POST['passwd'], $info['passwd']))
+		{
+			$_SESSION['message'] = "You are already verified, please signin.";
 			header("location: signin.php");
 			exit(); 
 		}
@@ -199,7 +214,9 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link'])) /
 	}
 	else if ($info['verified'] == 0)
 	{
-		if (password_verify($_POST['passwd'], $info['passwd']))
+		if ($_POST['passwd'] != $_POST['confirm-passwd'])
+			$_SESSION['message'] = "Passwords don't match";
+		else if (password_verify($_POST['passwd'], $info['passwd']))
 		{
 			$bytes = random_bytes(16);	
 			$verification_code = bin2hex($bytes);
@@ -207,19 +224,20 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link'])) /
 			$stmt = $conn->prepare($query);
 			$stmt->execute([$verification_code, $info['id']]);
 			unset($stmt);
-			if (mail_verification_code($info['email'], $verification_code, USER_VERIFY) === FALSE)
+			if ($email != $info['email'])
+			{
+				$_SESSION['message'] = 'It seems you entered a different email from the one you registered
+										with,<br>please make sure to enter the one you registered with.';
+			}
+			else if (mail_verification_code($info['email'], $verification_code, 'USER_VERIFY') === FALSE)
 			{
 				$_SESSION['message'] = "Sorry, we were unable to send you the confirmation link,
-										please confirm your name and password and click the resend button or try again later.";
-				header("location: signin.php");
-				exit (); // Should I exit here?
+										please confirm your details and click the resend button or try again later.";
 			}
 			else
 			{
 				$_SESSION['message'] = "Email has successfully been resent, 
 										please check your email to confirm your account and then sign in.";
-				header("location: signin.php");
-				exit(); 
 			}
 		}
 		else
@@ -258,7 +276,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
 		$query = 'UPDATE `users` SET `verification` = ? WHERE `id` = ?';
 		$stmt = $conn->prepare($query);
 		$stmt->execute([$verification_code, $res['id']]);
-		mail_verification_code($res['email'], $verification_code, PASSWD_VERIFY); // Needs protection
+		mail_verification_code($res['email'], $verification_code, 'PASSWD_VERIFY'); // Needs protection
 		unset($stmt);
 		unset($verification_code);
 	}

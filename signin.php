@@ -1,5 +1,5 @@
 <?php
-require_once ('./controller.php');
+require ('./controller.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,8 +12,8 @@ require_once ('./controller.php');
 <body>
 	<h1>Sign in</h1>
 	<div>
-		<?php 	
-				if (isset ($_SESSION['message']))
+		<?php 	//this isn't showing the mesage, it directs from verification.php
+				if (isset($_SESSION['message']))
 				{	
 					echo $_SESSION['message'];
 					unset($_SESSION['message']);
@@ -25,8 +25,9 @@ require_once ('./controller.php');
 		<span>Password:</span><input type="password" placeholder="password" name="passwd" required/><br>
 		<input type="submit" name="submit-signin" value="Sign in">
 		<a href="forgotpasswd.php"><input type="submit" value="Forgot your password?"></a>
-		<input type="submit" name="resend-link" value="Resend link">
+		<!-- <input type="submit" name="resend-link" value="Resend link"> -->
 	</form>
+	<!-- 1. Signout will have to be in header -->
 	<a href="signout.php"><input type="submit" value="Sign Out"></a>
 </body>
 </html>
