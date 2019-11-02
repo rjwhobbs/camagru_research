@@ -107,7 +107,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 			$_SESSION['message'] = "Sorry, we were unable to send you the confirmation link,
 									please confirm your name and password and click the resend button 
 									or try again later.";
-			header("location: signin.php");
+			header("location: signin.php"); // 1. This should redirect to form.php, message stays.
 			exit (); // Should I exit here?
 		}
 		else
@@ -115,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 			$_SESSION['message'] = 'Registration successful. Please check your email and 
 									click on the link provided to validate your account and signin.';
 			header("location: signin.php");
-			exit(); // Why is exit necessary here?
+			exit(); // Why is exit necessary here? // 1. This should redirect to form.php, message stays.
 		}
 	}
 	else
@@ -155,7 +155,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 		else
 			$_SESSION['message'] = "Incorrect username or password, please try again.";
 	}
-	else
+	else if ($info['verified'] == 0)
 	{
 		$_SESSION['message'] = "Sorry, your account has not been confirmed, 
 								please check your email to confirm your account";
@@ -166,8 +166,12 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 *	RESEND LINK / SIGNIN.PHP
 ****************************/
 
-else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link']))
+else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link'])) //Do i need to unset POSTS?
 {
+	// 1. Resend-link (here) will need to fill the errors array, not session message for errors as it's changing to form.
+	// All checks done in sign up will need to be carried out again, unfortunately if the user entered the wrong email
+	// address they will need to create a whole new account. Maybe I can change the address for them, ie if it's different
+	// from the one in the data base change it in the background, passwords need to comply though. 
 	$username = $_POST['username'];
 	try
 	{
@@ -227,6 +231,18 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link']))
 *	REQUEST PASSWORD TO BE CHANGED / FORGOTPASSWD.PHP 
 *****************************************************/
 
+/*
+Resetting a forgotten password is a bit verbose but here is how it works.
+First, if the user forgot their password they click the forgot password link
+from signin.php. They then enter their email on forgotpasswd.php, controller 
+will send email with vcode if the email exits, email gets sent
+with a get vcode. The user clicks the link that takes them to new_passwd.php. 
+A session var gets set with the vcode on reset.php. New_passwd calls controller
+which verifies the vcode stored in the session var with the email address,
+if the results are true the users passwd gets changed to the new passwd entered 
+in on new_passwd.php and the vcode gets set to NULL
+*/
+
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
 {
 	$email = $_POST['email'];
@@ -268,7 +284,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']
 		$error_check = TRUE;
 	else if ($_POST['passwd'] !== $_POST['confirm-passwd']) // Still needs strong password checking
 		$error_check = TRUE;
-	else if ($error_check === FALSE)
+	else if ($error_check === FALSE) // Makes sure email and vcode match
 	{
 		$query = 'SELECT * FROM `users` WHERE `verification` = ? && `email` = ? '; // Also check if user is verified
 		$stmt = $conn->prepare($query);

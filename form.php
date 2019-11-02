@@ -37,9 +37,11 @@ require_once ('./controller.php');
 		<span>Email:</span><input type="email" placeholder="email address" name="email" required/><br />
 		<span>Password:</span><input type="password" placeholder="password" name="passwd" required/><br />
 		<span>Confirm password:</span><input type="password" placeholder="confirm" name="confirm-passwd" required/><br />
-		<label>Choose a profile pic</label><input type="file" name="profile-pic" accept="image/*" required/><br />
+		<!-- 1. Form will need resend-link post -->
+		<label>Choose a profile pic</label><input type="file" name="profile-pic" accept="image/*" required/><br /> 
 		<input type="submit" name="submit-signup" value="Register" />
 	</form>
+	<!-- 1. Remove the signin link here, will be placed in header -->
 	<h1>Sign in</h1>
 	<form action="signin.php">
 		<input type="submit" value="Sign in"/>
