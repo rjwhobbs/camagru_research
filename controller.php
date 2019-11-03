@@ -191,9 +191,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link'])) /
 		echo $e->getMessage();
 	}
 	if ($info === FALSE)
-	{
 		$_SESSION['message'] = "Please fill in all the feilds correctly and try again."; //this needs to be in errors[]; 
-	}
 	else if ($info['verified'] == 1) // ? Why can't i use === 
 	{
 		if ($email != $info['email'])
