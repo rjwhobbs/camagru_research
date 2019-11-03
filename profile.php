@@ -12,7 +12,6 @@ require ('./header.php');
 		require 'turn_notif_on.html';
 ?>
 <br>
-<!-- <a href="signout.php"><input type="submit" value="Sign Out"></a> -->
 <?php
 require ('./footer.php');
 ?>

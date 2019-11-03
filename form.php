@@ -1,7 +1,8 @@
 <?php
 require_once ('./controller.php');
+require ('./header.php');
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -9,7 +10,7 @@ require_once ('./controller.php');
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Sign In</title>
 </head>
-<body>
+<body> -->
 	<h1>Sign Up</h1>
 	<div><?php  
 				if (count($errors) > 0)
@@ -35,10 +36,10 @@ require_once ('./controller.php');
 		<input type="submit" name="resend-link" value="Resend link">
 	</form>
 	<!-- 1. Remove the signin link here, will be placed in header -->
-	<h1>Sign in</h1>
+	<!-- <h1>Sign in</h1>
 	<form action="signin.php">
 		<input type="submit" value="Sign in"/>
 	</form>
-	<a href="signout.php"><input type="submit" value="Sign Out"></a>
+	<a href="signout.php"><input type="submit" value="Sign Out"></a> -->
 </body>
 </html>

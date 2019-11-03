@@ -151,7 +151,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 			$_SESSION['user_id'] = $info['id'];
 			$_SESSION['username'] = $username;
 			$_SESSION['notify'] = set_notification($info['notifications']);
-			header("location: home.php");
+			header("location: index.php");
 			exit(); 
 		}
 		else
@@ -276,7 +276,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
 		$stmt->execute([$verification_code, $res['id']]);
 		mail_verification_code($res['email'], $verification_code, 'PASSWD_VERIFY'); // Needs protection
 		unset($stmt);
-		unset($verification_code);
+		unset($verification_code); // Should have a message saying email sent
 	}
 	else
 	{
