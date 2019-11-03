@@ -11,9 +11,9 @@ require ('./controller.php');
 </head>
 <body>
 	<form action="new_passwd.php" method="post">
-		<span>Enter your email address:</span><input type="text" name="email" ><br> <!-- PLEASE ADD REQUIRE FOR EXTRA LEVEL -->
-		<span>Enter your new password:</span><input type="password" name="passwd" ><br>
-		<span>Confirm your new password:</span><input type="password" name="confirm-passwd" ><br>
+		<span>Enter your email address:</span><input type="email" name="email" require><br> 
+		<span>Enter your new password:</span><input type="password" name="passwd" require><br>
+		<span>Confirm your new password:</span><input type="password" name="confirm-passwd" require><br>
 		<input type="submit" name="Reset" value="Reset">
 	</form>
 </body>

@@ -314,8 +314,8 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']
 	{
 		unset($_SESSION['verification']);
 		$_SESSION['message'] = "There was a problem reseting your password.<br>  
-								Please make sure to fill in all the feilds correctly.<br> 
-								Please enter your email address and try again.";
+		Please make sure to fill in all the feilds correctly.<br> 
+		Please enter your email address and try again.";
 		header('location: forgotpasswd.php');
 	}
 	else
@@ -331,4 +331,14 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']
 		header('location: signin.php');
 	}
 }
+
+/************************************************
+*	RESET PASSWORD / NEW_PASSWORD.PHP / RESET.PHP
+*************************************************/
+//This is incase a user trys to access this page without getting an email
+
+// else if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['verification']) && isset($_POST['Reset']))
+// {
+// 	$_SESSION['message'] = "Password not changed, please check your email";
+// }
 ?>
