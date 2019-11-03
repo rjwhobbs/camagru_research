@@ -35,11 +35,6 @@ require ('./header.php');
 		<input type="submit" name="submit-signup" value="Register" />
 		<input type="submit" name="resend-link" value="Resend link">
 	</form>
-	<!-- 1. Remove the signin link here, will be placed in header -->
-	<!-- <h1>Sign in</h1>
-	<form action="signin.php">
-		<input type="submit" value="Sign in"/>
-	</form>
-	<a href="signout.php"><input type="submit" value="Sign Out"></a> -->
-</body>
-</html>
+<?php
+require ('./footer.php')
+?>
