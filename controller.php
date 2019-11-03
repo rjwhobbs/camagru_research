@@ -293,11 +293,18 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']) && isset($_POST['Reset']))
 {
 	// I want to use an errors array here but it doesn't seem to be printing on the forgotpasswd page. Will try fix this.
+	$bad_passwd = "";
 	$error_check = FALSE;
 	if (empty($_POST['email']) || empty($_POST['passwd']) || empty($_POST['confirm-passwd']))
 		$error_check = TRUE;
 	else if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
 		$error_check = TRUE;
+	else if (passwd_check($_POST['passwd']) === FALSE)
+	{
+		$error_check = TRUE;
+		$bad_passwd = "Password must only contain atleast one lower and upper case letter,<br>
+		one number, and be longer than 9 characters.";
+	}
 	else if ($_POST['passwd'] !== $_POST['confirm-passwd']) // Still needs strong password checking
 		$error_check = TRUE;
 	else if ($error_check === FALSE) // Makes sure email and vcode match
@@ -314,8 +321,8 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']
 	{
 		unset($_SESSION['verification']);
 		$_SESSION['message'] = "There was a problem reseting your password.<br>  
-		Please make sure to fill in all the feilds correctly.<br> 
-		Please enter your email address and try again.";
+								Please make sure to fill in all the feilds correctly.<br> 
+								Please enter your email address and try again.<br>".$bad_passwd;
 		header('location: forgotpasswd.php');
 	}
 	else
