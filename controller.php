@@ -344,8 +344,9 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']
 *************************************************/
 //This is incase a user trys to access this page without getting an email
 
-// else if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['verification']) && isset($_POST['Reset']))
-// {
-// 	$_SESSION['message'] = "Password not changed, please check your email";
-// }
+else if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['verification']) && isset($_POST['Reset']))
+{
+	$_SESSION['message'] = "It seems you didn't ask for your password to be changed,<br> 
+							please go back to the sign in page.";
+}
 ?>

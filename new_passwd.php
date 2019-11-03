@@ -10,6 +10,15 @@ require ('./controller.php');
 	<title>Reset password</title>
 </head>
 <body>
+	<div>
+		<?php
+			if (!empty($_SESSION['message']))
+			{	
+				echo $_SESSION['message'];
+				unset($_SESSION['message']);
+			}
+		?>
+	</div> 
 	<form action="new_passwd.php" method="post">
 		<span>Enter your email address:</span><input type="email" name="email" require><br> 
 		<span>Enter your new password:</span><input type="password" name="passwd" require><br>
