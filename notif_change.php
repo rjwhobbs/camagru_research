@@ -1,4 +1,5 @@
 <?php
+session_start();
 require ('./controller.php');
 require ('./valid_session_check.php'); 
 

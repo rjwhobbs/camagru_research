@@ -1,4 +1,5 @@
 <?php
+session_start();
 require ('./controller.php'); // Should new_passwd.php come here? Not for now atleast.
 if (isset($_GET['vcode']))
 {

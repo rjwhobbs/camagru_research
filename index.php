@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 require ('./controller.php'); // Why didn't this work? was getting "session already started error"?
 require ('./header.php');
 ?>

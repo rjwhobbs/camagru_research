@@ -1,4 +1,5 @@
 <?php
+session_start();
 require ('./connection.php'); // Is this necessary
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['vcode']))
 {

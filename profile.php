@@ -1,6 +1,7 @@
 <?php
-require_once ('./controller.php'); // will this call the controller again?
+session_start();
 require ('./valid_session_check.php');
+require ('./controller.php'); // will this call the controller again?
 require ('./header.php');
 ?>
 <h1>Profile settings for <?= $_SESSION['username']?></h1>

@@ -1,7 +1,7 @@
 <?php
 // I still can't see how the main page calls this, 
 // does it call again when clicking submit in the post form
-session_start();
+//session_start();
 require ('./connection.php');
 include ('./mail_verification_code.php');
 include ('./helpers.php');

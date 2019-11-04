@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once ('./controller.php'); // will this call the controller again?
 require ('./valid_session_check.php');
 ?>

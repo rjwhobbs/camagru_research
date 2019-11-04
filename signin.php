@@ -1,4 +1,5 @@
 <?php
+session_start();
 require ('./controller.php');
 require ('./form_block.php');
 ?>
