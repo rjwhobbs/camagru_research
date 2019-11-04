@@ -16,6 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	//Maybe put some of this into functions
 	$_SESSION['message'] = "";
 	
+	
 	$username = $_POST['username'];
 	$email = $_POST['email'];
 	$profile_pic_path = 'images/'.$_FILES['profile-pic']['name'];
@@ -87,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 
 	if (count($errors) === 0)
 	{
+		//echo "HERE2";
 		$bytes = random_bytes(16);	
 		$verification_code = bin2hex($bytes);	
 		$passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
@@ -345,6 +347,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']
 *	RESET PASSWORD / NEW_PASSWORD.PHP / RESET.PHP
 *************************************************/
 //This is incase a user trys to access this page without getting an email
+// Can probably take this away once I sort out htaccess
 
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['verification']) && isset($_POST['Reset']))
 {
@@ -360,11 +363,11 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_email']))
 {
 	$email = $_POST['new_email'];
 	if (empty($email))
-	$errors['email'] = 'Email required';
+		$errors['email'] = 'Email required';
 	else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-	$errors['email'] = 'Valid email required';
+		$errors['email'] = 'Valid email required';
 	else if (strlen($email) > 80)
-	$errors['email'] = 'Email address is too long';
+		$errors['email'] = 'Email address is too long';
 	else
 	{
 		$query = 'SELECT `email` FROM `users` WHERE `email` = ?';
@@ -417,12 +420,12 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_username']
 		{ 
 			$errors['username'] = 'Username already exits';
 			if ($result['username'] == $username)
-				$errors['username'] = 'This is already your username';
+			$errors['username'] = 'This is already your username';
 		}
 		$stmt = NULL; // unset or NULL?
 		$result = NULL;
 	}			
-
+	
 	if (empty($errors))
 	{
 		$id = $_SESSION['user_id'];
@@ -433,4 +436,44 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_username']
 		unset($stmt);
 	}
 }
+
+/************************************************
+*	UPDATE PASSWORD FROM PROFILE / PROFILE.PHP
+*************************************************/
+
+
+else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_passwd']))
+{
+	if (empty($_POST['old_passwd']) || empty($_POST['new_passwd']) || empty($_POST['confirm_new_passwd']))
+		$errors['passwd'] = "Feilds can't be empty.";
+	else if (passwd_check($_POST['new_passwd']) === FALSE)
+	{
+		$errors['passwd'] = 'Password must only contain atleast one lower and upper case letter,<br>
+								one number, and be longer than 9 characters.';
+	}
+	else if ($_POST['passwd'] != $_POST['confirm-passwd'])
+		$errors['passwd'] = "Passwords don't match.";
+	
+	if (empty($errors))
+	{
+		$new_passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
+		$id = $_SESSION['user_id'];
+		$sql = "SELECT `passwd` FROM `users` WHERE `id` = ?";
+		$stmt = $conn->prepare($sql);
+		$stmt->execute([$id]);
+		$info = $stmt->fetch(PDO::FETCH_ASSOC);
+		unset($stmt);
+		if (!$info)
+			$errors['passwd'] = "We where unable to change your password, please try again later";
+		else if (password_verify($_POST['old_passwd'], $info['passwd']))
+		{
+			$query = 'UPDATE `users` SET `passwd` = ? WHERE `id` = ?';
+			$stmt = $conn->prepare($query);
+			$stmt->execute([$new_passwd, $id]);
+			unset($stmt);	
+			$_SESSION['message'] = "Password has been updated";
+		}
+	}
+}
+
 ?>
