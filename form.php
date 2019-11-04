@@ -1,5 +1,6 @@
 <?php
 require_once ('./controller.php');
+require ('./form_block.php');
 require ('./header.php');
 ?>
 <!-- <!DOCTYPE html>

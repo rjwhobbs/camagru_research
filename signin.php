@@ -1,5 +1,6 @@
 <?php
 require ('./controller.php');
+require ('./form_block.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
