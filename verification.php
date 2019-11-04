@@ -1,5 +1,5 @@
 <?php
-require_once ('./connection.php'); // Is this necessary
+require ('./connection.php'); // Is this necessary
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['vcode']))
 {
 	try
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['vcode']))
 			$stmt->execute([1, NULL, $res['id']]);
 			unset($stmt);
 			unset($res);
-			$_SESSION['message'] = 'You have successfully verified your account, please signin.'; // Why is this not showing,
+			$_SESSION['message'] = 'You have successfully verified your account, please signin.'; // Why is this not showing?
 			header('location: signin.php');
 		}
 		else

@@ -10,7 +10,12 @@
 	<title>Document</title>
 </head>
 <body>
-	<h1>This will be the header, place holder</h1>
-	<!-- sign out and in needs to be dynamic -->
-	<a href="signin.php"><input type="submit" value="Sign In"></a>
-	<a href="signout.php"><input type="submit" value="Sign Out"></a>
+	<h1>This is the header (place holder)</h1>
+	<?php
+		if (isset($_SESSION['user_id']))
+			require ('./src_signout.html');
+		else
+			require ('./src_signin.html'); 
+	?>
+	<a href="profile.php"><input type="submit" value="Profile"></a>
+	<a href="index.php"><input type="submit" value="Feed"></a>

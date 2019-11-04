@@ -1,7 +1,8 @@
 <?php
 require_once ('./controller.php');
+require ('./header.php');
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -9,16 +10,8 @@ require_once ('./controller.php');
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Sign In</title>
 </head>
-<body>
+<body> -->
 	<h1>Sign Up</h1>
-	<!-- Errors will come here -->
-	<div>
-		<!-- <?php //if (count($errors) > 0): ?>  Why doesn't this print all the errors? -->
-		<?php //foreach ($errors as $error)?>
-			<!-- <li><?php //echo $error; ?></li>  I'm thinking errors will need to be unset after this -->
-		<?php //endif ; ?>
-	</div>
-	<!-- Success comes here -->
 	<div><?php  
 				if (count($errors) > 0)
 				{
@@ -38,14 +31,10 @@ require_once ('./controller.php');
 		<span>Password:</span><input type="password" placeholder="password" name="passwd" required/><br />
 		<span>Confirm password:</span><input type="password" placeholder="confirm" name="confirm-passwd" required/><br />
 		<!-- 1. Form will need resend-link post -->
-		<label>Choose a profile pic</label><input type="file" name="profile-pic" accept="image/*" required/><br /> 
+		<label>Choose a profile pic (optional):</label><input type="file" name="profile-pic" accept="image/*" /><br /> 
 		<input type="submit" name="submit-signup" value="Register" />
+		<input type="submit" name="resend-link" value="Resend link">
 	</form>
-	<!-- 1. Remove the signin link here, will be placed in header -->
-	<h1>Sign in</h1>
-	<form action="signin.php">
-		<input type="submit" value="Sign in"/>
-	</form>
-	<a href="signout.php"><input type="submit" value="Sign Out"></a>
-</body>
-</html>
+<?php
+require ('./footer.php')
+?>

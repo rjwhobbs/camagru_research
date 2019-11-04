@@ -1,7 +1,8 @@
 <?php
 require ('./controller.php');
+require ('./header.php');
 ?>
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -9,7 +10,7 @@ require ('./controller.php');
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>Forgot Password</title>
 </head>
-<body>
+<body> -->
 	<h1>Ah shame, you forgot your password.<br> 
 		Don't worry it even happens to wizards like me.
 	</h1>
