@@ -360,11 +360,11 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_email']))
 {
 	$email = $_POST['new_email'];
 	if (empty($email))
-		$errors['email'] = 'Email required';
+	$errors['email'] = 'Email required';
 	else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
-		$errors['email'] = 'Valid email required';
+	$errors['email'] = 'Valid email required';
 	else if (strlen($email) > 80)
-		$errors['email'] = 'Email address is too long';
+	$errors['email'] = 'Email address is too long';
 	else
 	{
 		$query = 'SELECT `email` FROM `users` WHERE `email` = ?';
@@ -372,11 +372,15 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_email']))
 		$stmt->execute([$email]);
 		$result = $stmt->fetch(PDO::FETCH_ASSOC);
 		if ($result)
+		{
 			$errors['email'] = 'Email address already exits';
+			if ($result['email'] == $email)
+			$errors['email'] = 'This is already your email address';
+		}
 		unset($stmt);
 		unset($result);
 	}
-
+	
 	if (empty($errors))
 	{
 		$id = $_SESSION['user_id'];
@@ -384,6 +388,49 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_email']))
 		$stmt = $conn->prepare($query);
 		$stmt->execute([$email, $id]);
 		$_SESSION['user_email'] = $email;
+		unset($stmt);
+	}
+}
+
+/************************************************
+*	UPDATING USERNAME / PROFILE.PHP
+*************************************************/
+
+else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_username']))
+{
+	$username = $_POST['new_username'];
+	if (empty($username))
+		$errors['username'] = 'Username required';
+	else if (username_check($username) === FALSE)
+		$errors['username'] = 'Username can only be English letters (with or without digits).';
+	else if (strlen($username) < 3)
+		$errors['username'] = 'Username too short';
+	else if (strlen($username) > 50)
+		$errors['username'] = 'Username too long';
+	else
+	{
+		$query = 'SELECT `username` FROM `users` WHERE `username` = ?';
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$username]);
+		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+		if ($result)
+		{ 
+			$errors['username'] = 'Username already exits';
+			if ($result['username'] == $username)
+				$errors['username'] = 'This is already your username';
+		}
+		$stmt = NULL; // unset or NULL?
+		$result = NULL;
+	}			
+
+	if (empty($errors))
+	{
+		$id = $_SESSION['user_id'];
+		$query = 'UPDATE `users` SET `username` = ? WHERE `id` = ?';
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$username, $id]);
+		$_SESSION['username'] = $username;
+		unset($stmt);
 	}
 }
 ?>
