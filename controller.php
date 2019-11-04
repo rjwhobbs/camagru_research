@@ -151,6 +151,8 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 			$_SESSION['user_id'] = $info['id'];
 			$_SESSION['username'] = $username;
 			$_SESSION['notify'] = set_notification($info['notifications']);
+			$_SESSION['user_email'] = $info['email'];
+			unset($info);
 			header("location: index.php");
 			exit(); 
 		}
@@ -348,5 +350,40 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_SESSION['verification'
 {
 	$_SESSION['message'] = "It seems you didn't ask for your password to be changed,<br> 
 							please go back to the sign in page.";
+}
+
+/************************************************
+*	UPDATING EMAIL / PROFILE.PHP
+*************************************************/
+
+else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_email']))
+{
+	$email = $_POST['new_email'];
+	if (empty($email))
+		$errors['email'] = 'Email required';
+	else if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+		$errors['email'] = 'Valid email required';
+	else if (strlen($email) > 80)
+		$errors['email'] = 'Email address is too long';
+	else
+	{
+		$query = 'SELECT `email` FROM `users` WHERE `email` = ?';
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$email]);
+		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+		if ($result)
+			$errors['email'] = 'Email address already exits';
+		unset($stmt);
+		unset($result);
+	}
+
+	if (empty($errors))
+	{
+		$id = $_SESSION['user_id'];
+		$query = 'UPDATE `users` SET `email` = ? WHERE `id` = ?';
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$email, $id]);
+		$_SESSION['user_email'] = $email;
+	}
 }
 ?>
