@@ -40,12 +40,34 @@ navigator.mediaDevices.getUserMedia({video: true, audio: false})
 	}
  }, false);
 
+ //phto button event
  photoButton.addEventListener('click', function(e) {
 	takePicture();
 
 	e.preventDefault();
  }, false);
 
+ //Filter event
+ photoFilter.addEventListener('change', function(e) {
+	//set filter to chosen option
+	filter = e.target.value;
+	//set filter to video
+	video.style.filter = filter;
+	e.preventDefault();
+ })
+
+ clearButton.addEventListener('click', function(e) {
+	 //clear photos
+	 photos.innerHTML = '';
+	 //change filter back to none
+	 filter = 'none';
+	 //set video
+	 video.style.filter = filter;
+	 //Reset select list
+	 photoFilter.selectedIndex = 0;
+ })
+
+ //Take picture from canvas
  function takePicture() {
 	//Create canvas
 	const context = canvas.getContext('2d');
@@ -69,4 +91,26 @@ navigator.mediaDevices.getUserMedia({video: true, audio: false})
 
 	//Add img to photos
 	photos.appendChild(img);
+	//set filter to img
+	img.style.filter = filter;
+
+	let xhttp = new XMLHttpRequest();
+  	xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      console.log(this.responseText);
+	  
+    }
+  };
+  xhttp.open("POST", "../test1.php", true);
+  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xhttp.send("img="+imgUrl);
  }
+
+//  function download(blob){
+// 	// uses the <a download> to download a Blob
+// 	let a = document.createElement('a'); 
+// 	a.href = URL.createObjectURL(blob);
+// 	a.download = 'screenshot.jpg';
+// 	document.body.appendChild(a);
+// 	a.click();
+//   }
