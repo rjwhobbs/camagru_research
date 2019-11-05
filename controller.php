@@ -13,10 +13,9 @@ $errors = array(); //Does this kind of declare really make it availabe to the fi
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 {
-	//Maybe put some of this into functions
+	require ('./form_block.php');
+
 	$_SESSION['message'] = "";
-	
-	
 	$username = $_POST['username'];
 	$email = $_POST['email'];
 	$profile_pic_path = 'images/'.$_FILES['profile-pic']['name'];
