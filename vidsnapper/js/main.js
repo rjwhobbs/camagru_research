@@ -90,6 +90,7 @@ navigator.mediaDevices.getUserMedia({video: true, audio: false})
 	img.setAttribute('src', imgUrl);
 
 	//Add img to photos
+	photos.innerHTML = '';
 	photos.appendChild(img);
 	//set filter to img
 	img.style.filter = filter;
