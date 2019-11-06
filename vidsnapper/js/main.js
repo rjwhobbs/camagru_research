@@ -51,12 +51,10 @@ photoButton.addEventListener('click', function(e)
 
 stickerMenu.addEventListener('change', function(e) {
 	test = e.target.value;
-	//console.log(test);
 	e.preventDefault();
  })
 
 clearButton.addEventListener('click', function(e) {
-	//clear photos
 	photos.innerHTML = '';
 })
 
@@ -78,7 +76,7 @@ function takePicture()
 	//console.log(test);
 	let sticker = document.getElementById(test);
 
-	context.drawImage(sticker, 10, 10);
+	context.drawImage(sticker, 10, 10, canvas.width / 2, canvas.height / 2);
 
 	//Create image from the canvas
 	const imgUrl = canvas.toDataURL('image/png');
@@ -105,12 +103,3 @@ function takePicture()
   	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   	xhttp.send("img="+imgUrl);
 }
-
-//  function download(blob){
-// 	// uses the <a download> to download a Blob
-// 	let a = document.createElement('a'); 
-// 	a.href = URL.createObjectURL(blob);
-// 	a.download = 'screenshot.jpg';
-// 	document.body.appendChild(a);
-// 	a.click();
-//   }
