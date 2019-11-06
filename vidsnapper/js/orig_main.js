@@ -76,10 +76,14 @@ navigator.mediaDevices.getUserMedia({video: true, audio: false})
 		canvas.width = width;
 		canvas.height = height;
 	}
+	context.font = "30px Arial";
+	context.fillText("Hello World", 10, 50); 
 
 	//Draw an of the video on the canvas
 	context.drawImage(video, 0, 0, width, height);
 
+	// Image edit here eg .drawImage("sticker", , , );
+	//let ctx = context.getContext("2d");
 	//Create image from the canvas
 	const imgUrl = canvas.toDataURL('image/png');
 
@@ -99,19 +103,10 @@ navigator.mediaDevices.getUserMedia({video: true, audio: false})
   	xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
       console.log(this.responseText);
-	  
+
     }
   };
   xhttp.open("POST", "../test1.php", true);
   xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xhttp.send("img="+imgUrl);
  }
-
-//  function download(blob){
-// 	// uses the <a download> to download a Blob
-// 	let a = document.createElement('a'); 
-// 	a.href = URL.createObjectURL(blob);
-// 	a.download = 'screenshot.jpg';
-// 	document.body.appendChild(a);
-// 	a.click();
-//   }

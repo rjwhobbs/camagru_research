@@ -1,6 +1,7 @@
 //Global var
 let width = 500,
 	height = 0,
+	test = '',
 	streaming = false;
 
 //DOM  Elements
@@ -9,6 +10,8 @@ const canvas = document.getElementById('canvas');
 const photos = document.getElementById('photos');
 const photoButton = document.getElementById('photo-button');
 const clearButton = document.getElementById('clear-button');
+const stickerMenu = document.getElementById('sticker-menu');
+//const sticker = document.getElementById('sticker1');
 
 //Get Media Stream
 navigator.mediaDevices.getUserMedia({video: true, audio: false})
@@ -46,6 +49,12 @@ photoButton.addEventListener('click', function(e)
 	e.preventDefault();
 }, false);
 
+stickerMenu.addEventListener('change', function(e) {
+	test = e.target.value;
+	//console.log(test);
+	e.preventDefault();
+ })
+
 clearButton.addEventListener('click', function(e) {
 	//clear photos
 	photos.innerHTML = '';
@@ -65,6 +74,11 @@ function takePicture()
 
 	//Draw an of the video on the canvas
 	context.drawImage(video, 0, 0, width, height);
+	
+	//console.log(test);
+	let sticker = document.getElementById(test);
+
+	context.drawImage(sticker, 10, 10);
 
 	//Create image from the canvas
 	const imgUrl = canvas.toDataURL('image/png');
