@@ -74,9 +74,11 @@ function takePicture()
 	context.drawImage(video, 0, 0, width, height);
 	
 	//console.log(test);
-	let sticker = document.getElementById(test);
-
-	context.drawImage(sticker, 10, 10, canvas.width / 2, canvas.height / 2);
+	if (test != '')
+	{
+		let sticker = document.getElementById(test);
+		context.drawImage(sticker, 10, 10, canvas.width / 2, canvas.height / 2);
+	}
 
 	//Create image from the canvas
 	const imgUrl = canvas.toDataURL('image/png');
