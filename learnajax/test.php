@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['fname']))
 {
-	echo "Here";
+	echo "Hello ".$_POST['fname']." ".$_POST['lname'];
 }
 ?>

@@ -101,7 +101,7 @@ function takePicture()
     		console.log(this.responseText);
     	}
   	};
-  	xhttp.open("POST", "../test1.php", true);
+  	xhttp.open("POST", "test1.php", true);
   	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-  	xhttp.send("img="+imgUrl);
+  	xhttp.send("img=" + imgUrl);
 }
