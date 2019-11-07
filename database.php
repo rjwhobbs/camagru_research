@@ -39,6 +39,7 @@ try
 				`user_id` INT NOT NULL, 
 				`creation_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
 				`likes` INT DEFAULT NULL,  
+				`edited` BOOLEAN NOT NULL DEFAULT FALSE, 
 				PRIMARY KEY (`id`)) ENGINE = InnoDB";
 	$stmt = $conn->prepare($createtab);
 	$stmt->execute();
