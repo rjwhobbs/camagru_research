@@ -16,14 +16,22 @@ catch (PDOExeption $e)
 }
 if (isset($_POST['img']))
 {
-	echo "You made it this far\n";
-	echo $_POST['img'];
+	//echo "You made it this far\n";
+	//echo $_POST['img'];
+
+	define('UPLOAD_DIR', 'img/');
+	$img = $_POST['img'];
+	$img = str_replace('data:image/png;base64,', '', $img);
+	$img = str_replace(' ', '+', $img);
+	$data = base64_decode($img);
+	$file = UPLOAD_DIR . uniqid() . '.png';
+	$success = file_put_contents($file, $data);
 	
-	$sql = 'INSERT INTO `images` (`author`, `imagefile`) VALUES (?, ?)';
+	$sql = 'INSERT INTO `images` (`author`, `pic`) VALUES (?, ?)';
 	$stmt = $conn->prepare($sql);
-	$stmt->execute(["test", $_POST['img']]);
+	$stmt->execute(["test", $file]);
 	unset($stmt);	
-	echo "And to here.\n";
+	echo "Success.\n";
 }
 
 ?>

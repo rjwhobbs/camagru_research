@@ -79,7 +79,7 @@ function takePicture()
 		if (this.readyState == 4 && this.status == 200) 
 		{
     		console.log(this.responseText);
-    	}
+		}
   	};
   	xhttp.open("POST", "test1.php", true);
   	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
