@@ -1,4 +1,9 @@
-<!DOCTYPE html>
+<?php
+session_start();
+require ('./valid_session_check.php');
+require ('./header.php');
+?>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
@@ -7,9 +12,9 @@
 	<title>Document</title>
 	<link rel="stylesheet" href="css/style.css">
 </head>
-<body>
+<body> -->
 	<div class="navbar">
-		<h1>Camagru</h1>
+		<h1>Camagru Editor</h1>
 	</div>
 	<div class="top-container">
 		<video id="video">Stream not available...</video><br>
