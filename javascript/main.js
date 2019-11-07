@@ -44,6 +44,9 @@ photoButton.addEventListener('click', function(e)
 {
 	//video.style.display = "none";
 	takePicture();
+	photoButton.style.display = 'none';
+	save.style.display = 'inline';
+	clearButton.style.display = 'inline'
 	e.preventDefault();
 }, false);
 
@@ -54,6 +57,9 @@ stickerMenu.addEventListener('change', function(e) {
 
 clearButton.addEventListener('click', function(e) {
 	photos.innerHTML = '';
+	photoButton.style.display = 'inline';
+	save.style.display = 'none';
+	clearButton.style.display = 'none';
 })
 
 function takePicture() 
@@ -92,6 +98,7 @@ function takePicture()
 
 save.addEventListener('click', function(e)
 {
+	save.style.display = 'none';
 	if (selected == '')
 		selected = 0;
 	else

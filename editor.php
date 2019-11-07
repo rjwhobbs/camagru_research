@@ -21,7 +21,7 @@ require ('./header.php');
 		<button id="photo-button" class="btn btn-dark">
 			Take Photo
 		</button>
-		<button id="save-button" class="btn btn-dark">
+		<button id="save-button" class="btn btn-dark" style="display: none">
 			Save Photo
 		</button>
 		<select id="sticker-menu">
@@ -30,7 +30,7 @@ require ('./header.php');
 			<option value="sticker3">Cookie3</option>
 			<option value="sticker4">Cookie4</option>
 		</select>
-		<button id="clear-button">Clear </button>
+		<button id="clear-button" style="display: none">Clear </button>
 		<canvas id="canvas"></canvas>
 	</div>
 	<div class="bottom-container">
