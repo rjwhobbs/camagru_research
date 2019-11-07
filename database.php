@@ -32,17 +32,27 @@ try
 				PRIMARY KEY (`id`)) ENGINE = InnoDB ";
 	$stmt = $conn->prepare($createdb);
 	$stmt->execute();
-	$stmt = NULL;
-	$createtab = "CREATE TABLE `research`.`images` 
-				(`id` INT NOT NULL AUTO_INCREMENT , 
-				`location` TEXT NOT NULL,
-				`author` VARCHAR(20) NOT NULL, 
+	unset($stmt);
+	$createtab = "CREATE TABLE IF NOT EXISTS `research`.`images` 
+				(`id` INT NOT NULL AUTO_INCREMENT, 
+				`path` VARCHAR(255) NOT NULL,
+				`user_id` INT NOT NULL, 
 				`creation_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
-				`likes` TEXT NOT NULL, 
-				`comments` TEXT NOT NULL, 
+				`likes` INT DEFAULT NULL,  
 				PRIMARY KEY (`id`)) ENGINE = InnoDB";
 	$stmt = $conn->prepare($createtab);
 	$stmt->execute();
+	unset($stmt);
+	$createtab = "CREATE TABLE IF NOT EXISTS `research`.`comments`
+				(`id` INT NOT NULL AUTO_INCREMENT,
+				`comment` TEXT NOT NULL,
+				`image_id` INT NOT NULL,
+				`user_id` INT NOT NULL,
+				`creation_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+				PRIMARY KEY (`id`)) ENGINE = InnoDB"; 
+	$stmt = $conn->prepare($createtab);
+	$stmt->execute();
+	unset($stmt);
 	echo "Tables Created<br>";
 }
 catch (PDOException $e) 
