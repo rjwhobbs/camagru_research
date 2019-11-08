@@ -14,25 +14,34 @@ require ('./header.php');
 		<button id="save-button" class="btn btn-dark" style="display: none">
 			Save Photo
 		</button>
-		<select id="sticker-menu">
+		<button id="clear-button" style="display: none">
+			Clear 
+		</button>
+		<!-- <select id="sticker-menu">
 			<option value="sticker1.png">Cookie1</option>
 			<option value="sticker2.png">Cookie2</option>
 			<option value="sticker3.png">Cookie3</option>
 			<option value="sticker4.png">Cookie4</option>
-		</select>
-		<button id="clear-button" style="display: none">Clear </button>
+		</select> -->
+
+		<br />
+		<input type="radio" name="sticker-menu2" id="sticker1" value="sticker1.png"><label for="sticker1"><img  src="./images/ChocChip.png" width="100px" height="80px" ></label>
+		<input type="radio" name="sticker-menu2" id="sticker2" value="sticker2.png"><label for="sticker2"><img  src="./images/chocshortbread.png" width="100px" height="80px"></label>
+		<input type="radio" name="sticker-menu2" id="sticker3" value="sticker3.png"><label for="sticker3"><img  src="./images/peanut.png" width="100px" height="80px"></label>
+		<input type="radio" name="sticker-menu2" id="sticker4" value="sticker4.png"><label for="sticker4"><img src="./images/shortbread.png" width="100px" height="80px"></label>
+
+
 		<canvas id="canvas"></canvas>
 	</div>
 	<div class="bottom-container">
 		<div id="photos"></div>
 	</div>
-	<div class="stickers">
-		<img id="sticker1" src="./images/ChocChip.png" width="100px" height="80px" >
-		<img id="sticker2" src="./images/chocshortbread.png" width="100px" height="80px">
-		<img id="sticker3" src="./images/peanut.png" width="100px" height="80px">
-		<img id="sticker4" src="./images/shortbread.png" width="100px" height="80px">
-	</div>
+	<!-- <div class="stickers">
+		<img  src="./images/ChocChip.png" width="100px" height="80px" >
+		<img  src="./images/chocshortbread.png" width="100px" height="80px">
+		<img  src="./images/peanut.png" width="100px" height="80px">
+		<img src="./images/shortbread.png" width="100px" height="80px">
+	</div> -->
 	<script src="javascript/main.js"></script>
-	<P id="test"></P>
 </body>
 </html>

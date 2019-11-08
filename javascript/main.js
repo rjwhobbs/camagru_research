@@ -12,7 +12,8 @@ const canvas = document.getElementById('canvas');
 const photos = document.getElementById('photos');
 const photoButton = document.getElementById('photo-button');
 const clearButton = document.getElementById('clear-button');
-const stickerMenu = document.getElementById('sticker-menu');
+//const stickerMenu = document.getElementById('sticker-menu');
+const stickerMenu2 = document.getElementsByName('sticker-menu2');
 //const sticker = document.getElementById('sticker1');
 
 //Get Media Stream
@@ -50,10 +51,31 @@ photoButton.addEventListener('click', function(e)
 	e.preventDefault();
 }, false);
 
-stickerMenu.addEventListener('change', function(e) {
+stickerMenu2[0].addEventListener('change', function(e) {
 	selected = e.target.value;
 	e.preventDefault();
 })
+
+stickerMenu2[1].addEventListener('change', function(e) {
+	selected = e.target.value;
+	e.preventDefault();
+})
+
+stickerMenu2[2].addEventListener('change', function(e) {
+	selected = e.target.value;
+	e.preventDefault();
+})
+
+stickerMenu2[3].addEventListener('change', function(e) {
+	selected = e.target.value;
+	e.preventDefault();
+})
+
+
+// stickerMenu.addEventListener('change', function(e) {
+// 	selected = e.target.value;
+// 	e.preventDefault();
+// })
 
 clearButton.addEventListener('click', function(e) {
 	photos.innerHTML = '';
@@ -71,15 +93,10 @@ function takePicture()
 		canvas.height = height;
 	}
 	context.drawImage(video, 0, 0, width, height);
-	// if (selected != '')
-	// {
-	// 	let sticker = document.getElementById(selected);
-	// 	context.drawImage(sticker, 10, 10, canvas.width / 2, canvas.height / 2);
-	// }
 	const imgUrl = canvas.toDataURL('image/png');
 	const img = document.createElement('img');
 	img.setAttribute('src', imgUrl);
-	photos.innerHTML = '';
+	photos.innerHTML = ''; 
 	photos.appendChild(img);
 	data = imgUrl;
 }
