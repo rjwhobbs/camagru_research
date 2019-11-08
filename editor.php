@@ -15,10 +15,10 @@ require ('./header.php');
 			Save Photo
 		</button>
 		<select id="sticker-menu">
-			<option value="sticker1">Cookie1</option>
-			<option value="sticker2">Cookie2</option>
-			<option value="sticker3">Cookie3</option>
-			<option value="sticker4">Cookie4</option>
+			<option value="sticker1.png">Cookie1</option>
+			<option value="sticker2.png">Cookie2</option>
+			<option value="sticker3.png">Cookie3</option>
+			<option value="sticker4.png">Cookie4</option>
 		</select>
 		<button id="clear-button" style="display: none">Clear </button>
 		<canvas id="canvas"></canvas>

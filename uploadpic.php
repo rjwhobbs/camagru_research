@@ -24,27 +24,37 @@ require ('./connection.php');
 // 	$stmt->execute([$file, $user_id, $edited]);
 // 	unset($stmt);	
 // }
-if (isset($_POST['img']) && isset($_POST['edited']))
+if (isset($_POST['img']) && !empty($_POST['sticker']))
 {
-	//$photo = imagecreatefrompng("images/test.png");
 	$img = $_POST['img'];
+	$user_id = $_SESSION['user_id'];
+	$sticker_choice = $_POST['sticker'];
+
 	$img = str_replace('data:image/png;base64,', '', $img);
 	$img = str_replace(' ', '+', $img);
 	$data = base64_decode($img);	
 	$upload = imagecreatefromstring($data);
 
-	$sticker = imagecreatefrompng("images/chocchipsmall.png");
-	list($width, $height) = getimagesize("images/chocchipsmall.png");
+	$sticker = imagecreatefrompng("images/$sticker_choice");
+	list($width, $height) = getimagesize("images/$sticker_choice");
 
 	imagecopy($upload, $sticker, 0, 0, 0, 0, $width, $height);
 	$file = "images/"."test".uniqid().".png";
 	$success = imagepng($upload, $file);
 	
+	
+	$sql = 'INSERT INTO `images` (`path`, `user_id`, `edited` ) VALUES (?, ?, ?)';
+	$stmt = $conn->prepare($sql);
+	$stmt->execute([$file, $user_id, 1]);
+	unset($stmt);
+	
+	imagedestroy($upload);
+
 	if ($success === FALSE)
 		echo "Couldn't upload";
 	else
-		echo "Successfully uploaded image.\n";
-
-	imagedestroy($upload);
-}	
+		echo $sticker_choice."\n";
+}
+else
+	echo "Something went wrong\n";	
 ?>

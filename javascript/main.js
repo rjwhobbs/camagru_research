@@ -1,7 +1,7 @@
 //Global var
 let width = 500,
 	height = 0,
-	selected = '',
+	selected = 'none',
 	data = '',
 	streaming = false;
 
@@ -71,11 +71,11 @@ function takePicture()
 		canvas.height = height;
 	}
 	context.drawImage(video, 0, 0, width, height);
-	if (selected != '')
-	{
-		let sticker = document.getElementById(selected);
-		context.drawImage(sticker, 10, 10, canvas.width / 2, canvas.height / 2);
-	}
+	// if (selected != '')
+	// {
+	// 	let sticker = document.getElementById(selected);
+	// 	context.drawImage(sticker, 10, 10, canvas.width / 2, canvas.height / 2);
+	// }
 	const imgUrl = canvas.toDataURL('image/png');
 	const img = document.createElement('img');
 	img.setAttribute('src', imgUrl);
@@ -87,10 +87,6 @@ function takePicture()
 save.addEventListener('click', function(e)
 {
 	save.style.display = 'none';
-	if (selected == '')
-		selected = 0;
-	else
-		selected = 1;
 	
 	let xhttp = new XMLHttpRequest();
 	xhttp.onreadystatechange = function() 
@@ -102,5 +98,5 @@ save.addEventListener('click', function(e)
 	};
   	xhttp.open("POST", "uploadpic.php", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("img=" + data + "&edited=" + selected);
+	xhttp.send("img=" + data + "&sticker=" + selected);
 })
