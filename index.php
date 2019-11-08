@@ -12,8 +12,8 @@ include ('./query_functions.php')
 	$array_size = count($images);
 	while ($i < $array_size)
 	{?>
-		<p></p>
 		<img src=<?php echo $images[$i]['path']; ?>><br>
+		<p>Upload by <?php echo get_image_author_name($images[$i]['user_id']) ?></p>
 		<?php $i++; ?>
 	<?php
 	}
