@@ -396,7 +396,6 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_email']))
 
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_username']))
 {
-	var_dump($_POST); die;
 	$username = $_POST['new_username'];
 	if (empty($username))
 		$errors['username'] = 'Username required';
@@ -429,7 +428,6 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_username']
 		$stmt = $conn->prepare($query);
 		$stmt->execute([$username, $id]);
 		$_SESSION['username'] = $username;
-		//echo $_SESSION['username']; die;
 		unset($stmt);
 	}
 }
