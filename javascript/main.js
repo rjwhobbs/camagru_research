@@ -1,8 +1,9 @@
 //Global var
 let width = 500,
 	height = 0,
-	selected = 'none',
+	selected = '',
 	data = '',
+	takePictureClicked = 0,
 	streaming = false;
 
 //DOM  Elements
@@ -46,27 +47,36 @@ photoButton.addEventListener('click', function(e)
 	//video.style.display = "none";
 	takePicture();
 	photoButton.style.display = 'none';
-	save.style.display = 'inline';
+	if (selected == '')
+		save.style.display = 'none';
 	clearButton.style.display = 'inline'
 	e.preventDefault();
 }, false);
 
 stickerMenu2[0].addEventListener('change', function(e) {
+	if (takePictureClicked == 1)
+		save.style.display = 'inline';
 	selected = e.target.value;
 	e.preventDefault();
 })
 
 stickerMenu2[1].addEventListener('change', function(e) {
+	if (takePictureClicked == 1)
+		save.style.display = 'inline';
 	selected = e.target.value;
 	e.preventDefault();
 })
 
 stickerMenu2[2].addEventListener('change', function(e) {
+	if (takePictureClicked == 1)
+		save.style.display = 'inline';
 	selected = e.target.value;
 	e.preventDefault();
 })
 
 stickerMenu2[3].addEventListener('change', function(e) {
+	if (takePictureClicked == 1)
+		save.style.display = 'inline';
 	selected = e.target.value;
 	e.preventDefault();
 })
@@ -82,10 +92,17 @@ clearButton.addEventListener('click', function(e) {
 	photoButton.style.display = 'inline';
 	save.style.display = 'none';
 	clearButton.style.display = 'none';
+	stickerMenu2[0].checked = false;
+	stickerMenu2[1].checked = false;
+	stickerMenu2[2].checked = false;
+	stickerMenu2[3].checked = false;
+	takePictureClicked = 0;
 })
 
 function takePicture() 
 {
+	takePictureClicked = 1;
+	save.style.display = 'inline';
 	const context = canvas.getContext('2d');
 	if (width && height) 
 	{
@@ -111,6 +128,7 @@ save.addEventListener('click', function(e)
 		if (this.readyState == 4 && this.status == 200) 
 		{
 			console.log(this.responseText);
+			selected = '';
 		}
 	};
   	xhttp.open("POST", "uploadpic.php", true);
