@@ -23,7 +23,6 @@ require ('./header.php');
 	<span>Email:</span><input type="email" placeholder="email address" name="email" required/><br />
 	<span>Password:</span><input type="password" placeholder="password" name="passwd" required/><br />
 	<span>Confirm password:</span><input type="password" placeholder="confirm" name="confirm-passwd" required/><br />
-	<!-- 1. Form will need resend-link post -->
 	<label>Choose a profile pic (optional):</label><input type="file" name="profile-pic" accept="image/*" /><br /> 
 	<input type="submit" name="submit-signup" value="Register" />
 	<input type="submit" name="resend-link" value="Resend link">
