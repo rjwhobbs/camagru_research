@@ -1,7 +1,7 @@
-<?php // Maybe change these tests to OR not AND
+<?php
 if(!isset($_SESSION['user_id']) && !isset($_SESSION['username']) && !isset($_SESSION['notify']) && !isset($_SESSION['user_email']))
 {
 	header("location: form.php");
-	exit(); // Does this even happen?
+	exit();
 }
 ?>
