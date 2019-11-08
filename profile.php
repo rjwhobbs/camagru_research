@@ -18,7 +18,8 @@ require ('./header.php');
 		unset($_SESSION['message']);
 	}
 ?><br>
-<form action="profile.php" method="post">
+<!-- I might have to put each of these inputes into there own form, can I have multiple forms? ish -->
+<form action="profile.php" method="post"> 
 	<span>Your username: <?= $_SESSION['username'].' ' ?></span><br>
 		<input type="text" placeholder="update username" name="new_username">
 			<input type="submit" name="update_username" value="Update"><br>

@@ -1,11 +1,8 @@
 <?php
-// I still can't see how the main page calls this, 
-// does it call again when clicking submit in the post form
-//session_start();
 require ('./connection.php');
 include ('./mail_verification_code.php');
 include ('./helpers.php');
-$errors = array(); //Does this kind of declare really make it availabe to the files that require it?
+$errors = array(); 
 
 /******************************
 *	SIGN UP / LINKS TO FORM.PHP
@@ -87,7 +84,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 
 	if (count($errors) === 0)
 	{
-		//echo "HERE2";
 		$bytes = random_bytes(16);	
 		$verification_code = bin2hex($bytes);	
 		$passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
@@ -104,13 +100,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 			echo $e->getMessage();
 			$_SESSION['message'] = 'Sorry, registration failed';
 		}
-		if (mail_verification_code($email, $verification_code, USER_VERIFY) === FALSE) // I need a button to send the mail again
+		if (mail_verification_code($email, $verification_code, USER_VERIFY) === FALSE)
 		{
 			$_SESSION['message'] = "Sorry, we were unable to send you the confirmation link,
 									please confirm your name and password and click the resend button 
 									or try again later.";
-			header("location: form.php"); // 1. This should redirect to form.php, message stays.
-			exit (); // Should I exit here?
+			header("location: form.php");
+			exit ();
 		}
 		else
 		{
@@ -118,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 									click on the link provided to validate your account and signin.<br>
 									If you didn't receive an email please confrim your details and click resend.<br>";
 			header("location: form.php");
-			exit(); // Why is exit necessary here? // 1. This should redirect to form.php, message stays.
+			exit();
 		}
 	}
 	else
@@ -171,7 +167,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signin']))
 *	RESEND LINK / SIGNIN.PHP
 ****************************/
 
-else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link'])) //Do i need to unset POSTS?
+else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['resend-link'])) //Do i need to unset POSTS
 {
 	$username = $_POST['username'];
 	$email = $_POST['email'];
@@ -400,6 +396,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_email']))
 
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_username']))
 {
+	var_dump($_POST); die;
 	$username = $_POST['new_username'];
 	if (empty($username))
 		$errors['username'] = 'Username required';
@@ -419,19 +416,20 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_username']
 		{ 
 			$errors['username'] = 'Username already exits';
 			if ($result['username'] == $username)
-			$errors['username'] = 'This is already your username';
+				$errors['username'] = 'This is already your username';
 		}
 		$stmt = NULL; // unset or NULL?
 		$result = NULL;
 	}			
 	
 	if (empty($errors))
-	{
+	{	
 		$id = $_SESSION['user_id'];
 		$query = 'UPDATE `users` SET `username` = ? WHERE `id` = ?';
 		$stmt = $conn->prepare($query);
 		$stmt->execute([$username, $id]);
 		$_SESSION['username'] = $username;
+		//echo $_SESSION['username']; die;
 		unset($stmt);
 	}
 }

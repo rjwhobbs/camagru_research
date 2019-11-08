@@ -21,9 +21,9 @@ if (isset($_POST['img']) && !empty($_POST['sticker']))
 	$success = imagepng($upload, $file);
 	
 	
-	$sql = 'INSERT INTO `images` (`path`, `user_id`, `edited` ) VALUES (?, ?, ?)'; // remove edited from table creation!!!!!!!!
+	$sql = 'INSERT INTO `images` (`path`, `user_id`) VALUES (?, ?)'; // remove edited from table creation!!!!!!!!
 	$stmt = $conn->prepare($sql);
-	$stmt->execute([$file, $user_id, 1]);
+	$stmt->execute([$file, $user_id]);
 	unset($stmt);
 	
 	imagedestroy($upload);
