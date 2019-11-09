@@ -335,6 +335,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']
 		unset($_SESSION['verification']);
 		$_SESSION['message'] = "Your password has been reset, please sign in.";
 		header('location: signin.php');
+		exit();
 	}
 }
 

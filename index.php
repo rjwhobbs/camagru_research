@@ -12,13 +12,14 @@ include ('./query_functions.php');
 	$array_size = count($images);
 	while ($i < $array_size)
 	{?>
-		<img src=<?php echo $images[$i]['path']; ?>><br>
-		<p>Upload by <?php echo get_image_author_name($images[$i]['user_id']) ?></p>
-		<!-- Comments need to be done with AJAX, but how? seperate page? -->
-		<form action="index.php" id="commentform">
-  			<input type="submit" name="add_comment" value="Comment">
-		</form>
-		<textarea rows="4" cols="50" name="comment" form="commentform" placeholder="Comment here"></textarea><br>
+		<div class="indexfeed">
+			<img src=<?php echo $images[$i]['path']; ?>><br>
+			<p>Upload by <?php echo get_image_author_name($images[$i]['user_id']) ?></p>
+			<form action="comment.php" method="post">
+				<input type="hidden" name="image" value=<?php echo $images[$i]['path'] ?>>
+				<input type="submit" name="add_comment" value="Comment">
+			</form><br>
+		</div><br>
 		<?php $i++; ?>
 	<?php
 	}
