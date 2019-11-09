@@ -2,11 +2,17 @@
 session_start();
 require ('./controller.php');
 require ('./header.php');
-include ('./query_functions.php');
+//include ('./query_functions.php');
 ?>
 <h1>This is Camagru.</h1>
 <h2>Feed will come here.</h2>
 <?php
+	if (count($errors) > 0)
+	{
+		foreach ($errors as $error)
+			echo $error.'<br>';
+		unset($errors);
+	}
 	if (isset($_SESSION['message']))
 	{
 		echo $_SESSION['message'];

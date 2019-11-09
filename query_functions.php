@@ -42,4 +42,15 @@ function verify_image_id($id)
 	else
 		return FALSE;
 }
+
+function get_image_comments($image_id)
+{
+	require ('./connection.php');
+	$query = 'SELECT * FROM `comments` WHERE `image_id` = ? ORDER BY `comments`.`creation_date` DESC ';
+	$stmt = $conn->prepare($query);
+	$stmt->execute([$image_id]);
+	$array = $stmt->fetchAll(PDO::FETCH_ASSOC); // error handling?
+	unset($stmt); // is unsetting stmt here necessary, will closing the func unset it?
+	return $array;	
+}
 ?>

@@ -487,14 +487,22 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_comment']) &&
 		$errors['comment'] = "Comments can't be empty.";
 	if (verify_image_id($image_id) === FALSE)
 		$errors['image'] = "Your comment could not be processed at this time, please try again later.";
-	$len = strlen($comment);
-	$query = "INSERT INTO `comments` (`comment`, `image_id`, `user_id`) VALUES (?, ?, ?)";
-	$stmt = $conn->prepare($query);
-	$stmt->bindParam(1, $comment, PDO::PARAM_STR, $len);
-	$stmt->bindParam(2, $image_id, PDO::PARAM_INT);
-	$stmt->bindParam(3, $user_id, PDO::PARAM_INT);
-	$stmt->execute();
-	exit();
+
+	if (count($errors) === 0)
+	{
+		$len = strlen($comment);
+		$query = "INSERT INTO `comments` (`comment`, `image_id`, `user_id`) VALUES (?, ?, ?)";
+		$stmt = $conn->prepare($query);
+		$stmt->bindParam(1, $comment, PDO::PARAM_STR, $len);
+		$stmt->bindParam(2, $image_id, PDO::PARAM_INT);
+		$stmt->bindParam(3, $user_id, PDO::PARAM_INT);
+		$stmt->execute();
+	}
+	else
+	{
+		header('location: comment.php');
+		exit();
+	}
 }
 
 
