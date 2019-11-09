@@ -24,4 +24,22 @@ function get_image_author_name($id)
 	else
 		return "";
 }
+
+function verify_image_id($id)
+{
+	if ($id > 0)
+	{
+		require ('./connection.php');
+		$query = 'SELECT `path` FROM `images` WHERE `id` = ?';
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$id]);
+		$res = $stmt->fetch(PDO::FETCH_ASSOC);
+		if (!$res)
+			return FALSE;
+		else
+			return TRUE;
+	}
+	else
+		return FALSE;
+}
 ?>
