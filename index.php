@@ -14,6 +14,7 @@ include ('./query_functions.php');
 	{?>
 		<img src=<?php echo $images[$i]['path']; ?>><br>
 		<p>Upload by <?php echo get_image_author_name($images[$i]['user_id']) ?></p>
+		<!-- Comments need to be done with AJAX, but how? seperate page? -->
 		<form action="index.php" id="commentform">
   			<input type="submit" name="add_comment" value="Comment">
 		</form>
