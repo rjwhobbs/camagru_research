@@ -472,4 +472,14 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_passwd']))
 	}
 }
 
+/************************************************
+*	COMMENT ADDER / COMMENT.PHP
+*************************************************/
+
+else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comment']))
+{
+	echo $_POST['comment'];
+}
+
+
 ?>

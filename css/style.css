@@ -7,3 +7,8 @@
 {
 	border: 1px solid lightcyan;
 }
+
+textarea
+{
+	border: none;
+}
