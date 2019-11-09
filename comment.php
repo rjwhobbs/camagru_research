@@ -38,8 +38,8 @@ if (count($errors) > 0)// An array that's not printing
 	<?php
 	while ($i < $array_size)
 	{?>
-		<span><?php echo get_comment_author($comments_array[$i]['user_id']).": "?></span>
-	 	<span><?php echo $comments_array[$i]['comment']; ?></span><br>
+		<span><?php echo get_comment_author($comments_array[$i]['user_id']).": "?></span><br>
+	 	<span><?php echo $comments_array[$i]['comment']; ?></span><br><br>
 		<?php $i++; ?>	
 	<?php
 	}

@@ -482,6 +482,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_comment']) &&
 	$comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
 	$image_id = filter_var($_SESSION['image_id'], FILTER_SANITIZE_NUMBER_INT); // user has access to this var;
 	$user_id = $_SESSION['user_id'];
+	$comment = trim($comment); // Will this leak like in c?
 	
 	if (empty($comment))
 		$errors['comment'] = "Comments can't be empty.";
@@ -490,6 +491,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_comment']) &&
 
 	if (count($errors) === 0)
 	{
+		$comment = wordwrap($comment, 50, '<br />', TRUE);
 		$len = strlen($comment);
 		$query = "INSERT INTO `comments` (`comment`, `image_id`, `user_id`) VALUES (?, ?, ?)";
 		$stmt = $conn->prepare($query);
