@@ -476,9 +476,14 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_passwd']))
 *	COMMENT ADDER / COMMENT.PHP
 *************************************************/
 
-else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['comment']))
+else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_comment']) && isset($_POST['comment']))
 {
-	echo $_POST['comment'];
+	$comment = $_POST['comment'];
+	if (empty($comment))
+		$errors['comment'] = "Comments can't be empty.";
+
+	$query = "INSERT INTO `comments` (`comment`, `image_id`, `user_id`) VALUES (?, ?, ?)";
+	
 }
 
 
