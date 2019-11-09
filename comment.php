@@ -30,8 +30,9 @@ if (count($errors) > 0)// An array that's not printing
 }
 ?>
 <div class="indexfeed">
+	<p>Upload by <?php echo get_image_author_from_path($_SESSION['image_src'])?></p>
+	<img src=<?php echo $_SESSION['image_src'] ?>><br>
 	<form action="comment.php" method="post">
-		<img src=<?php echo $_SESSION['image_src'] ?>><br>
 		<textarea rows="1" cols="100" name="comment" placeholder="Comment here..."></textarea>
 		<input type="submit" name="add_comment" value="Add Comment"><br>
 	</form>
