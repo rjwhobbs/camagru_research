@@ -33,6 +33,9 @@ require ('./header.php');
 	<div class="bottom-container">
 		<div id="photos"></div>
 	</div>
+	<div class="thumbnails">
+	
+	</div>
 	<script src="javascript/main.js"></script>
 </body>
 </html>
