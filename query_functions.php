@@ -53,4 +53,19 @@ function get_image_comments($image_id)
 	unset($stmt); // is unsetting stmt here necessary, will closing the func unset it?
 	return $array;	
 }
+
+function get_comment_author($user_id) // So this function does the samething as the last one
+{
+	if ($user_id > 0)
+	{
+		require ('./connection.php');
+		$query = 'SELECT `username` FROM `users` WHERE `id` = ?';
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$user_id]);
+		$res = $stmt->fetch(PDO::FETCH_ASSOC);
+		return $res['username'];
+	}
+	else
+		return "";
+}
 ?>

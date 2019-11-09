@@ -22,7 +22,7 @@ $i = 0;
 <br>
 <h1>Add a comment, or don't.</h1>
 <?php
-if (count($errors) > 0)
+if (count($errors) > 0)// An array that's not printing
 {
 	foreach ($errors as $error)
 		echo $error.'<br>';
@@ -38,13 +38,13 @@ if (count($errors) > 0)
 	<?php
 	while ($i < $array_size)
 	{?>
-		<p><?php echo $comments_array[$i]['comment']; ?></p>
+		<span><?php echo get_comment_author($comments_array[$i]['user_id']).": "?></span>
+	 	<span><?php echo $comments_array[$i]['comment']; ?></span><br>
 		<?php $i++; ?>	
 	<?php
 	}
 	?>
 </div>
-
 <?php
 require ('./footer.php');
 ?>
