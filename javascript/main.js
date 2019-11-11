@@ -7,6 +7,7 @@ takePictureClicked = 0,
 streaming = false;
 
 //DOM  Elements
+
 const save = document.getElementById('save-button');
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');

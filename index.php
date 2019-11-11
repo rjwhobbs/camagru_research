@@ -25,6 +25,10 @@ require ('./header.php');
 	{?>
 		<div class="indexfeed">
 			<img src=<?php echo $images[$i]['path']; ?>><br>
+			<button id=<?php echo $images[$i]['id']?> 
+					value=<?php echo $images[$i]['path']; ?> 
+					onclick="likeFunction(this)">Like+</button>
+			<span id="likesamount"></span>
 			<p>Upload by <?php echo get_image_author_name($images[$i]['user_id']) ?></p>
 			<form action="comment.php" method="post">
 				<input type="hidden" name="image_src" value=<?php echo $images[$i]['path'] ?>>
@@ -36,6 +40,7 @@ require ('./header.php');
 	<?php
 	}
 ?>
+<script src="javascript/helpers.js"></script>
 <?php
 require ('./footer.php');
 ?>
