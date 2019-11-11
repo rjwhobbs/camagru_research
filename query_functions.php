@@ -107,6 +107,7 @@ function get_image_path_by_id($user_id)
 
 function get_image_likes($image_path)
 {
+	
 	require ('./connection.php');
 	$query = 'SELECT `likes` FROM `images` WHERE `path` = ?';
 	$stmt = $conn->prepare($query);

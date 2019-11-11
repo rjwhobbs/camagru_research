@@ -35,12 +35,20 @@ if (isset($_POST['likes']) && isset($_POST['image_path']) && isset($_POST['image
 				$stmt->execute([$likes, $image_id]);
 				unset($stmt);
 				
+				$query = "INSERT INTO `likes` (`user_id`, `image_id`, `liked`)
+							VALUE (?, ?, ?)";
+				$stmt = $conn->prepare($query);
+				$stmt->execute([$user_id, $image_id, 1]);
+				echo $likes;
 			}
-			//else print likes
+			else
+				echo get_image_likes($image_path);
 		}
-		//else print out amount of likes 
+		else
+			echo get_image_likes($image_path);
 	}
-	//else print out amount of likes
+	else
+		echo get_image_likes($image_path);
 }
 else
 	echo "Something went wrong with likes";

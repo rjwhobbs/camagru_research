@@ -28,7 +28,8 @@ require ('./header.php');
 			<button id=<?php echo $images[$i]['id']?> 
 					value=<?php echo $images[$i]['path']; ?> 
 					onclick="likeFunction(this)">
-					<?php echo get_image_likes($images[$i]['path']); ?> Like+</button>
+					<?php echo get_image_likes($images[$i]['path']); ?> 
+					Like+</button>
 			<!-- <span id="likesamount"></span> -->
 			<p>Upload by <?php echo get_image_author_name($images[$i]['user_id']) ?></p>
 			<form action="comment.php" method="post">
