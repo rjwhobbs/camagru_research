@@ -5,18 +5,19 @@ let width = 500,
 	data = '',
 	takePictureClicked = 0,
 	streaming = false;
-
-//DOM  Elements
-const save = document.getElementById('save-button');
-const video = document.getElementById('video');
-const canvas = document.getElementById('canvas');
-const photos = document.getElementById('photos');
-const photoButton = document.getElementById('photo-button');
-const clearButton = document.getElementById('clear-button');
-//const stickerMenu = document.getElementById('sticker-menu');
-const stickerMenu2 = document.getElementsByName('sticker-menu2');
-//const sticker = document.getElementById('sticker1');
-
+	
+	//DOM  Elements
+	const save = document.getElementById('save-button');
+	const video = document.getElementById('video');
+	const canvas = document.getElementById('canvas');
+	const photos = document.getElementById('photos');
+	const photoButton = document.getElementById('photo-button');
+	const clearButton = document.getElementById('clear-button');
+	//const stickerMenu = document.getElementById('sticker-menu');
+	const stickerMenu2 = document.getElementsByName('sticker-menu2');
+	//const sticker = document.getElementById('sticker1');
+	const img = document.createElement('img');
+	
 //Get Media Stream
 navigator.mediaDevices.getUserMedia({video: true, audio: false})
 .then(function (stream)	
@@ -111,7 +112,6 @@ function takePicture()
 	}
 	context.drawImage(video, 0, 0, width, height);
 	const imgUrl = canvas.toDataURL('image/png');
-	const img = document.createElement('img');
 	img.setAttribute('src', imgUrl);
 	photos.innerHTML = ''; 
 	photos.appendChild(img);
@@ -127,8 +127,7 @@ save.addEventListener('click', function(e)
 	{
 		if (this.readyState == 4 && this.status == 200) 
 		{
-			console.log(this.responseText);
-			selected = '';
+			img.setAttribute('src', this.responseText);
 		}
 	};
   	xhttp.open("POST", "uploadpic.php", true);

@@ -7,7 +7,7 @@ try
 	echo "Connected<br>";
 	$sql = "CREATE DATABASE IF NOT EXISTS `$DB_NAME`";
 	$conn->exec($sql);
-	echo "Database created<br>";
+	echo "Database created<br>"; 
 }
 catch (PDOException $e) 
 {

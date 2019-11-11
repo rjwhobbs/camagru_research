@@ -18,3 +18,11 @@ textarea
 	width: 10%;
 	height: 10%;
 }
+
+.hide {
+	display: none;
+}
+
+/* .container {
+	display: grid;
+} */

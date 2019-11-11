@@ -8,8 +8,11 @@ require ('./query_functions.php');
 	<div class="navbar">
 		<h1>Camagru Editor</h1>
 	</div>
+	<div class="container">
 	<div class="top-container">
-		<video id="video">Stream not available...</video><br>
+		<video id="video">Stream not available...
+			<h3 class=test>hello</h3>
+		</video><br>
 		<button id="photo-button" class="btn btn-dark">
 			Take Photo
 		</button>
@@ -49,10 +52,16 @@ require ('./query_functions.php');
 			while ($i < $len)
 			{?>
 				<img src=<?php echo $thumbnails[$i]['path']?>>
+				<form action="delete_img.php" method="POST" >
+					<input class="hide" name="path" value=<?php echo '"'.$thumbnails[$i]['path'].'"';?>>
+					<input class="hide" name="id" value=<?php echo $id;?>>
+					<button>Delete</button>
+				</form>
 				<?php $i++; ?>
 			<?php	
 			}
 		?>
+	</div>
 	</div>
 	<script src="javascript/main.js"></script>
 <?php
