@@ -28,6 +28,8 @@ require ('./query_functions.php');
 			<label for="sticker3"><img  src="./images/peanut.png" width="100px" height="80px"></label>
 		<input type="radio" name="sticker-menu2" id="sticker4" value="sticker4.png">
 			<label for="sticker4"><img src="./images/shortbread.png" width="100px" height="80px"></label>
+		<input type="radio" name="sticker-menu2" id="stickernone" value="nosticker">
+			<label for="stickernone">No Sticker</label>
 		<canvas id="canvas"></canvas>
 	</div>
 	<div class="bottom-container">

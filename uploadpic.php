@@ -13,14 +13,16 @@ if (isset($_POST['img']) && !empty($_POST['sticker']))
 	$data = base64_decode($img);	
 	$upload = imagecreatefromstring($data);
 
-	$sticker = imagecreatefrompng("images/$sticker_choice");
-	list($width, $height) = getimagesize("images/$sticker_choice");
+	if ($sticker_choice != 'nosticker')
+	{
+		$sticker = imagecreatefrompng("images/$sticker_choice");
+		list($width, $height) = getimagesize("images/$sticker_choice");
+		imagecopy($upload, $sticker, 0, 0, 0, 0, $width, $height);
+	}
 
-	imagecopy($upload, $sticker, 0, 0, 0, 0, $width, $height);
 	$file = "images/"."test".uniqid().".png";
 	$success = imagepng($upload, $file);
-	
-	
+		
 	$sql = 'INSERT INTO `images` (`path`, `user_id`) VALUES (?, ?)'; // remove edited from table creation!!!!!!!!
 	$stmt = $conn->prepare($sql);
 	$stmt->execute([$file, $user_id]);

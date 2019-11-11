@@ -81,11 +81,12 @@ stickerMenu2[3].addEventListener('change', function(e) {
 	e.preventDefault();
 })
 
-
-// stickerMenu.addEventListener('change', function(e) {
-// 	selected = e.target.value;
-// 	e.preventDefault();
-// })
+stickerMenu2[4].addEventListener('change', function(e) {
+	if (takePictureClicked == 1)
+		save.style.display = 'inline';
+	selected = e.target.value;
+	e.preventDefault();
+})
 
 clearButton.addEventListener('click', function(e) {
 	photos.innerHTML = '';
@@ -96,6 +97,7 @@ clearButton.addEventListener('click', function(e) {
 	stickerMenu2[1].checked = false;
 	stickerMenu2[2].checked = false;
 	stickerMenu2[3].checked = false;
+	stickerMenu2[4].checked = false;
 	takePictureClicked = 0;
 })
 
@@ -127,7 +129,6 @@ save.addEventListener('click', function(e)
 	{
 		if (this.readyState == 4 && this.status == 200) 
 		{
-			console.log(this.responseText);
 			selected = '';
 		}
 	};

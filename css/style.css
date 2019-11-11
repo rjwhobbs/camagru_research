@@ -15,6 +15,12 @@ textarea
 
 .thumbnails img
 {
-	width: 10%;
-	height: 10%;
+	width: 170px;
+	height: 150px;
 }
+
+/* .top-container video
+{
+	width: 50%;
+	height: 50%;
+} */
