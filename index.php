@@ -3,6 +3,7 @@ session_start();
 require ('./controller.php');
 require ('./header.php');
 //include ('./query_functions.php');
+//include ('./helpers.php');
 ?>
 <h1>This is Camagru.</h1>
 <h2>Feed will come here.</h2>
@@ -25,12 +26,23 @@ require ('./header.php');
 	{?>
 		<div class="indexfeed">
 			<img src=<?php echo $images[$i]['path']; ?>><br>
-			<button id=<?php echo $images[$i]['id']?> 
-					value=<?php echo $images[$i]['path']; ?> 
-					onclick="likeFunction(this)">
-					<?php echo get_image_likes($images[$i]['path']); ?> 
-					Like+</button>
-			<!-- <span id="likesamount"></span> -->
+			<?php 
+			if (isset($_SESSION['user_id']) && isset($_SESSION['username']))
+			{?>
+				<button id=<?php echo $images[$i]['id']?> 
+						value=<?php echo $images[$i]['path']; ?> 
+						onclick="likeFunction(this)">
+						<?php echo get_image_likes($images[$i]['path']); ?> 
+						Like+</button>
+			<?php
+			}
+			else
+			{?>
+				<button><?php echo get_image_likes($images[$i]['path']); ?> 
+				Like+</button>
+			<?php	
+			}
+			?>
 			<p>Upload by <?php echo get_image_author_name($images[$i]['user_id']) ?></p>
 			<form action="comment.php" method="post">
 				<input type="hidden" name="image_src" value=<?php echo $images[$i]['path'] ?>>

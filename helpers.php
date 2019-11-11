@@ -38,5 +38,13 @@ function set_notification($value)
 		return "on";
 	return "off";
 }
+
+// function session_check($sess_user_id, $sess_user_name)
+// {
+// 	if (!isset($sess_user_id) || !isset($sess_user_name))
+// 		return FALSE;
+// 	return TRUE;
+// }
 ?>
+
 

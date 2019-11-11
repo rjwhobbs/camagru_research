@@ -1,9 +1,9 @@
 <?php
 session_start();
-require ('./valid_session_check.php');
+//require ('./valid_session_check.php');
 require ('./connection.php');
 include ('./query_functions.php');
-if (isset($_POST['likes']) && isset($_POST['image_path']) && isset($_POST['image_id']))
+if (isset($_POST['likes']) && isset($_POST['image_path']) && isset($_POST['image_id']) && isset($_SESSION['user_id']))
 {
 	//maybe some sanitization?
 	$image_id = $_POST['image_id'];
@@ -51,5 +51,10 @@ if (isset($_POST['likes']) && isset($_POST['image_path']) && isset($_POST['image
 		echo get_image_likes($image_path);
 }
 else
-	echo "Something went wrong with likes";
+{
+	if (isset($_POST['image_path']))
+		echo get_image_likes($_POST['image_path']);
+	else
+		echo "0";
+}
 ?>
