@@ -42,7 +42,10 @@ require ('./query_functions.php');
 			$thumbnails = get_image_path_by_id($id);
 			
 			$i = 0;
-			$len = count($thumbnails);
+			if ($thumbnails !== FALSE)
+				$len = count($thumbnails);
+			else 
+				$len = 0;
 			if ($len > 0)
 			{?>
 				<p>Your photo history: </p><br>

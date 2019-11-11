@@ -53,6 +53,15 @@ try
 	$stmt = $conn->prepare($createtab);
 	$stmt->execute();
 	unset($stmt);
+	$createtab = "CREATE TABLE IF NOT EXISTS $DB_NAME.`likes`
+				(`id` INT NOT NULL AUTO_INCREMENT,
+				`user_id` INT NOT NULL,
+				`image_id` INT NOT NULL,
+				`liked` BOOLEAN NOT NULL DEFAULT FALSE,
+				PRIMARY KEY (`id`)) ENGINE = InnoDB";
+	$stmt = $conn->prepare($createtab);
+	$stmt->execute();
+	unset($stmt);
 	echo "Tables created<br>";
 }
 catch (PDOException $e) 
