@@ -3,3 +3,18 @@
 	display: none;
 }
 
+.indexfeed
+{
+	border: 1px solid lightcyan;
+}
+
+textarea
+{
+	border: none;
+}
+
+.thumbnails img
+{
+	width: 10%;
+	height: 10%;
+}

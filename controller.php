@@ -2,6 +2,7 @@
 require ('./connection.php');
 include ('./mail_verification_code.php');
 include ('./helpers.php');
+include ('./query_functions.php');
 $errors = array(); 
 
 /******************************
@@ -335,6 +336,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['verification']
 		unset($_SESSION['verification']);
 		$_SESSION['message'] = "Your password has been reset, please sign in.";
 		header('location: signin.php');
+		exit();
 	}
 }
 
@@ -470,5 +472,40 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_passwd']))
 		}
 	}
 }
+
+/************************************************
+*	COMMENT ADDER / COMMENT.PHP
+*************************************************/
+
+else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_comment']) && isset($_POST['comment']) && !empty($_SESSION['image_id']))
+{
+	$comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
+	$image_id = filter_var($_SESSION['image_id'], FILTER_SANITIZE_NUMBER_INT); // user has access to this var;
+	$user_id = $_SESSION['user_id'];
+	$comment = trim($comment); // Will this leak like in c?
+	
+	if (empty($comment))
+		$errors['comment'] = "Comments can't be empty.";
+	if (verify_image_id($image_id) === FALSE)
+		$errors['image'] = "Your comment could not be processed at this time, please try again later.";
+
+	if (count($errors) === 0)
+	{
+		$comment = wordwrap($comment, 50, '<br />', TRUE);
+		$len = strlen($comment);
+		$query = "INSERT INTO `comments` (`comment`, `image_id`, `user_id`) VALUES (?, ?, ?)";
+		$stmt = $conn->prepare($query);
+		$stmt->bindParam(1, $comment, PDO::PARAM_STR, $len);
+		$stmt->bindParam(2, $image_id, PDO::PARAM_INT);
+		$stmt->bindParam(3, $user_id, PDO::PARAM_INT);
+		$stmt->execute();
+	}
+	else
+	{
+		header('location: comment.php');
+		exit();
+	}
+}
+
 
 ?>
