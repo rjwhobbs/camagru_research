@@ -1,10 +1,10 @@
 //Global var
 let width = 500,
-	height = 0,
-	selected = '',
-	data = '',
-	takePictureClicked = 0,
-	streaming = false;
+height = 0,
+selected = '',
+data = '',
+takePictureClicked = 0,
+streaming = false;
 
 //DOM  Elements
 const save = document.getElementById('save-button');
@@ -16,6 +16,7 @@ const clearButton = document.getElementById('clear-button');
 //const stickerMenu = document.getElementById('sticker-menu');
 const stickerMenu2 = document.getElementsByName('sticker-menu2');
 //const sticker = document.getElementById('sticker1');
+const img = document.createElement('img');
 
 //Get Media Stream
 navigator.mediaDevices.getUserMedia({video: true, audio: false})
@@ -113,7 +114,6 @@ function takePicture()
 	}
 	context.drawImage(video, 0, 0, width, height);
 	const imgUrl = canvas.toDataURL('image/png');
-	const img = document.createElement('img');
 	img.setAttribute('src', imgUrl);
 	photos.innerHTML = ''; 
 	photos.appendChild(img);
@@ -129,6 +129,7 @@ save.addEventListener('click', function(e)
 	{
 		if (this.readyState == 4 && this.status == 200) 
 		{
+			img.setAttribute('src', this.responseText);
 			selected = '';
 		}
 	};

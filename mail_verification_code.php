@@ -1,5 +1,4 @@
 <?php
-
 function mail_verification_code($email, $code, $mode)
 {
 	$email_sender = "rhobbs@student.wethinkcode.co.za"; // DELETE ME LATER !!!!!!!!!!

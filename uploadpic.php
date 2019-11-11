@@ -33,7 +33,7 @@ if (isset($_POST['img']) && !empty($_POST['sticker']))
 	if ($success === FALSE)
 		echo "Couldn't upload";
 	else
-		echo $sticker_choice."\n";
+		echo $file;
 }
 else
 	echo "Something went wrong\n";	
