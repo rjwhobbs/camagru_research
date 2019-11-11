@@ -1,3 +1,0 @@
-Options +FollowSymLinks
-RewriteEngine On
-RewriteRule ^folder1/(.*$) http://localhost:8080/Camagru_research/folder2/$1 [R=301,L]
