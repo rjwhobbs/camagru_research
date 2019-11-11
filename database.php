@@ -20,7 +20,7 @@ try
 {
 	$conn = new PDO($DB_DSN, $DB_USER, $DB_PASSWORD);
 	$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-	$createdb = "CREATE TABLE IF NOT EXISTS `research`.`users` 
+	$createdb = "CREATE TABLE IF NOT EXISTS $DB_NAME.`users` 
 				( `id` INT NOT NULL AUTO_INCREMENT , 
 				`username` VARCHAR(50) NOT NULL , 
 				`passwd` VARCHAR(255) NOT NULL , 
@@ -33,7 +33,7 @@ try
 	$stmt = $conn->prepare($createdb);
 	$stmt->execute();
 	unset($stmt);
-	$createtab = "CREATE TABLE IF NOT EXISTS `research`.`images` 
+	$createtab = "CREATE TABLE IF NOT EXISTS $DB_NAME.`images` 
 				(`id` INT NOT NULL AUTO_INCREMENT, 
 				`path` VARCHAR(255) NOT NULL,
 				`user_id` INT NOT NULL, 
@@ -43,7 +43,7 @@ try
 	$stmt = $conn->prepare($createtab);
 	$stmt->execute();
 	unset($stmt);
-	$createtab = "CREATE TABLE IF NOT EXISTS `research`.`comments`
+	$createtab = "CREATE TABLE IF NOT EXISTS $DB_NAME.`comments`
 				(`id` INT NOT NULL AUTO_INCREMENT,
 				`comment` TEXT NOT NULL,
 				`image_id` INT NOT NULL,
@@ -53,7 +53,7 @@ try
 	$stmt = $conn->prepare($createtab);
 	$stmt->execute();
 	unset($stmt);
-	echo "Tables Created<br>";
+	echo "Tables created<br>";
 }
 catch (PDOException $e) 
 {

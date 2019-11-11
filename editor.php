@@ -2,6 +2,8 @@
 session_start();
 require ('./valid_session_check.php'); // STILL NEEDS THUMBNAILS OF PREVIOUSLY TAKEN IMAGES !!!!!!
 require ('./header.php');
+require ('./query_functions.php');
+//require ('./connection.php');
 ?>
 	<div class="navbar">
 		<h1>Camagru Editor</h1>
@@ -30,6 +32,27 @@ require ('./header.php');
 	</div>
 	<div class="bottom-container">
 		<div id="photos"></div>
+	</div>
+	<div class="thumbnails">
+		<?php
+			$id = $_SESSION['user_id'];
+
+			$thumbnails = get_image_path_by_id($id);
+			
+			$i = 0;
+			$len = count($thumbnails);
+			if ($len > 0)
+			{?>
+				<p>Your photo history: </p><br>
+			<?php
+			}
+			while ($i < $len)
+			{?>
+				<img src=<?php echo $thumbnails[$i]['path']?>>
+				<?php $i++; ?>
+			<?php	
+			}
+		?>
 	</div>
 	<script src="javascript/main.js"></script>
 <?php

@@ -86,4 +86,22 @@ function get_image_author_from_path($path)
 	else
 		return "Unknown";
 }
+
+function get_image_path_by_id($user_id)
+{
+	if ($user_id > 0)
+	{
+		require ('./connection.php');
+		$query = 'SELECT * FROM `images` WHERE `user_id` = ? ORDER BY `images`.`creation_date` DESC';
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$user_id]);
+		$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		if ($res)
+			return $res;
+		else
+			return FALSE;
+	}
+	else
+		return FALSE;
+}
 ?>

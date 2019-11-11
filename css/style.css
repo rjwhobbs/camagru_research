@@ -12,3 +12,9 @@ textarea
 {
 	border: none;
 }
+
+.thumbnails img
+{
+	width: 10%;
+	height: 10%;
+}
