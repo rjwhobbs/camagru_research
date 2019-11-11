@@ -104,4 +104,21 @@ function get_image_path_by_id($user_id)
 	else
 		return FALSE;
 }
+
+function get_image_likes($image_path)
+{
+	require ('./connection.php');
+	$query = 'SELECT `likes` FROM `images` WHERE `path` = ?';
+	$stmt = $conn->prepare($query);
+	$stmt->execute([$image_path]);
+	$res = $stmt->fetch(PDO::FETCH_ASSOC);
+	if ($res)
+	{
+		if ($res['likes'] == NULL)
+			return 0;		
+		return $res['likes'];
+	}
+	else
+		return 0;
+}
 ?>
