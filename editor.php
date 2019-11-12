@@ -54,6 +54,11 @@ require ('./query_functions.php');
 			while ($i < $len)
 			{?>
 				<img src=<?php echo $thumbnails[$i]['path']?>>
+				<form action="delete_img.php" method="POST" >
+					<input type="hidden" name="path" value=<?php echo $thumbnails[$i]['path'];?>>
+					<input type="hidden" name="id" value=<?php echo $id;?>>
+					<button>Delete</button>
+				</form>
 				<?php $i++; ?>
 			<?php	
 			}
