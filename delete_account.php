@@ -17,7 +17,7 @@ if (!empty($_POST['check-confirm']) && !empty($_POST['confirm-passwd']) && !empt
 		$res = $stmt->fetch(PDO::FETCH_ASSOC);
 		if ($res)
 		{
-			if (password_verify($passwd, $res['passwd']))
+			if (password_verify($passwd, $res['passwd'])) // Need to check if this will work if the tables are empty
 			{
 				$query = "DELETE FROM `users` WHERE `users`.`id` = ?";
 				$stmt = $conn->prepare($query);

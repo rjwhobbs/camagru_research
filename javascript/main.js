@@ -138,4 +138,5 @@ save.addEventListener('click', function(e)
   	xhttp.open("POST", "uploadpic.php", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("img=" + data + "&sticker=" + selected);
+	
 })
