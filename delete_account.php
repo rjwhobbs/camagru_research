@@ -23,7 +23,7 @@ if (!empty($_POST['check-confirm']) && !empty($_POST['confirm-passwd']) && !empt
 				$stmt = $conn->prepare($query);
 				$stmt->execute([$user_id]);
 				unset($stmt);
-				
+
 				$query = "DELETE FROM `images` WHERE `user_id` = ?";
 				$stmt = $conn->prepare($query);
 				$stmt->execute([$user_id]);
@@ -53,8 +53,7 @@ if (!empty($_POST['check-confirm']) && !empty($_POST['confirm-passwd']) && !empt
 			$_SESSION['message'] = "You entered incorrect details, account not deleted.";
 			header('location: profile.php');
 			exit();
-		}
-		
+		}	
 	}	
 }
 else
