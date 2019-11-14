@@ -7,6 +7,8 @@ if (isset($_POST['img']) && !empty($_POST['sticker']))
 	$img = $_POST['img'];
 	$user_id = $_SESSION['user_id'];
 	$sticker_choice = $_POST['sticker'];
+	$bytes = random_bytes(4);	
+	$rand = bin2hex($bytes);
 
 	$img = str_replace('data:image/png;base64,', '', $img);
 	$img = str_replace(' ', '+', $img);
@@ -20,13 +22,13 @@ if (isset($_POST['img']) && !empty($_POST['sticker']))
 		imagecopy($upload, $sticker, 0, 0, 0, 0, $width, $height);
 	}
 
-	$file = "images/"."test".uniqid().".png";
+	$file = "images/".$rand.uniqid().".png";
 	$success = imagepng($upload, $file);
 		
-	$sql = 'INSERT INTO `images` (`path`, `user_id`) VALUES (?, ?)'; // remove edited from table creation!!!!!!!!
-	$stmt = $conn->prepare($sql);
-	$stmt->execute([$file, $user_id]);
-	unset($stmt);
+	// $sql = 'INSERT INTO `images` (`path`, `user_id`) VALUES (?, ?)'; // remove edited from table creation!!!!!!!!
+	// $stmt = $conn->prepare($sql);
+	// $stmt->execute([$file, $user_id]);
+	// unset($stmt);
 	
 	imagedestroy($upload);
 
@@ -36,5 +38,5 @@ if (isset($_POST['img']) && !empty($_POST['sticker']))
 		echo $file;
 }
 else
-	echo "Something went wrong\n";	
+	echo "Something went wrong\n";	// add ifs to js incase something goes wrong eg if response text is......
 ?>

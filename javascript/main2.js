@@ -46,7 +46,7 @@ photoButton.addEventListener('click', function(e)
 	takePicture();
 	photoButton.style.display = 'none';
 	save.style.display = 'inline';
-	clearButton.style.display = 'inline'
+	clearButton.style.display = 'inline';
 	e.preventDefault();
 }, false);
 

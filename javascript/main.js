@@ -3,6 +3,7 @@ height = 0,
 selected = '',
 data = '',
 takePictureClicked = 0,
+path = '',
 streaming = false;
 
 const save = document.getElementById('save-button');
@@ -47,7 +48,24 @@ photoButton.addEventListener('click', function(e)
 	photoButton.style.display = 'none';
 	if (selected == '')
 		save.style.display = 'none';
-	clearButton.style.display = 'inline'
+	clearButton.style.display = 'inline';
+	////////
+	save.style.display = 'inline';
+	
+	let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() 
+	{
+		if (this.readyState == 4 && this.status == 200) 
+		{
+			path = this.responseText;
+			img.setAttribute('src', path);
+			selected = '';
+		}
+	};
+  	xhttp.open("POST", "uploadpic.php", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("img=" + data + "&sticker=" + selected);
+	////////
 	e.preventDefault();
 }, false);
 
@@ -131,12 +149,12 @@ save.addEventListener('click', function(e)
 	{
 		if (this.readyState == 4 && this.status == 200) 
 		{
-			img.setAttribute('src', this.responseText);
-			selected = '';
+			photos.innerHTML = this.responseText; 
+			//create an element
 		}
 	};
-  	xhttp.open("POST", "uploadpic.php", true);
+  	xhttp.open("POST", "savepic.php", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("img=" + data + "&sticker=" + selected);
+	xhttp.send("path=" + path);
 	
 })
