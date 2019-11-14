@@ -43,12 +43,15 @@ require ('./query_functions.php');
 			$thumbnails = get_image_path_by_id($id);
 			$i = 0;
 			$len = count($thumbnails);
-			if ($len > 0)
+			if ($thumbnails !== FALSE)
 			{?>
+				<?php $len = count($thumbnails) ?>
 				<p>Your photo history: </p><br>
 			<?php
+			} else {
+				$len = 0;
 			}		
-			while ($i < $len)
+			while ($i < $len || $i > 1)
 			{?>
 				<img src=<?php echo $thumbnails[$i]['path']?>>
 				<form action="delete_img.php" method="POST" >
