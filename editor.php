@@ -51,7 +51,7 @@ require ('./query_functions.php');
 			} else {
 				$len = 0;
 			}		
-			while ($i < $len || $i > 1)
+			while ($i < $len)
 			{?>
 				<img src=<?php echo $thumbnails[$i]['path']?>>
 				<form action="delete_img.php" method="POST" >
