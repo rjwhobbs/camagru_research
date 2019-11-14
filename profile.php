@@ -12,7 +12,7 @@ require ('./header.php');
 			echo $error.'<br>';
 		unset($errors);
 	}
-	if (!empty($_SESSION['message']))
+	if (!empty($_SESSION['message'])) 
 	{
 		echo $_SESSION['message'].'<br>';
 		unset($_SESSION['message']);
@@ -38,7 +38,17 @@ require ('./header.php');
 		require 'turn_notif_off.html';
 	else if ($_SESSION['notify'] == "off")
 		require 'turn_notif_on.html';
-?><br>
+?><br><br>
+<form id="delete-account" action="delete_account.php" method="post">
+	<span>Delete your account.<br> 
+			Enter the required feilds and click 'Delete account'. <br>
+			WARNING! This acction cannot be undone!</span><br>
+	<input type="hidden" value=<?= $_SESSION['user_id'] ?> name="delete">
+	<span>I understand</span>
+	<input type="checkbox" value="checked" name="check-confirm"><br>
+	<input style="width: 300px" type="password" placeholder="Enter password to confirm account deletion" name="confirm-passwd"><br>
+</form>
+<button type="submit" form="delete-account">Delete account</button>
 <?php
 require ('./footer.php');
 ?>
