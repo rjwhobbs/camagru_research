@@ -1,12 +1,9 @@
-//Global var
 let width = 500,
 height = 0,
 selected = '',
 data = '',
 takePictureClicked = 0,
 streaming = false;
-
-//DOM  Elements
 
 const save = document.getElementById('save-button');
 const video = document.getElementById('video');
@@ -18,8 +15,7 @@ const clearButton = document.getElementById('clear-button');
 const stickerMenu2 = document.getElementsByName('sticker-menu2');
 //const sticker = document.getElementById('sticker1');
 const img = document.createElement('img');
-
-//Get Media Stream
+ 
 navigator.mediaDevices.getUserMedia({video: true, audio: false})
 .then(function (stream)	
 {
@@ -58,6 +54,7 @@ photoButton.addEventListener('click', function(e)
 stickerMenu2[0].addEventListener('change', function(e) {
 	if (takePictureClicked == 1)
 		save.style.display = 'inline';
+	photoButton.style.display = 'inline';
 	selected = e.target.value;
 	e.preventDefault();
 })
@@ -65,6 +62,7 @@ stickerMenu2[0].addEventListener('change', function(e) {
 stickerMenu2[1].addEventListener('change', function(e) {
 	if (takePictureClicked == 1)
 		save.style.display = 'inline';
+	photoButton.style.display = 'inline';
 	selected = e.target.value;
 	e.preventDefault();
 })
@@ -72,6 +70,7 @@ stickerMenu2[1].addEventListener('change', function(e) {
 stickerMenu2[2].addEventListener('change', function(e) {
 	if (takePictureClicked == 1)
 		save.style.display = 'inline';
+	photoButton.style.display = 'inline';
 	selected = e.target.value;
 	e.preventDefault();
 })
@@ -79,6 +78,7 @@ stickerMenu2[2].addEventListener('change', function(e) {
 stickerMenu2[3].addEventListener('change', function(e) {
 	if (takePictureClicked == 1)
 		save.style.display = 'inline';
+	photoButton.style.display = 'inline';
 	selected = e.target.value;
 	e.preventDefault();
 })
@@ -86,13 +86,14 @@ stickerMenu2[3].addEventListener('change', function(e) {
 stickerMenu2[4].addEventListener('change', function(e) {
 	if (takePictureClicked == 1)
 		save.style.display = 'inline';
+	photoButton.style.display = 'inline';
 	selected = e.target.value;
 	e.preventDefault();
 })
 
 clearButton.addEventListener('click', function(e) {
 	photos.innerHTML = '';
-	photoButton.style.display = 'inline';
+	photoButton.style.display = 'none';
 	save.style.display = 'none';
 	clearButton.style.display = 'none';
 	stickerMenu2[0].checked = false;

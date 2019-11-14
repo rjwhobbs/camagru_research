@@ -16,7 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 	$_SESSION['message'] = "";
 	$username = $_POST['username'];
 	$email = $_POST['email'];
-	$profile_pic_path = 'images/'.$_FILES['profile-pic']['name'];
+	if (!empty($_FILES['profile-pic']['name']))
+		$profile_pic_path = 'images/'.$_FILES['profile-pic']['name'];
 
 	//Username checks
 	if (empty($username))

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require ('./valid_session_check.php'); // STILL NEEDS THUMBNAILS OF PREVIOUSLY TAKEN IMAGES !!!!!!
+require ('./valid_session_check.php');
 require ('./header.php');
 require ('./query_functions.php');
 //require ('./connection.php');
@@ -10,7 +10,7 @@ require ('./query_functions.php');
 	</div>
 	<div class="top-container">
 		<video id="video">Stream not available...</video><br>
-		<button id="photo-button" class="btn btn-dark">
+		<button style="display: none" id="photo-button" class="btn btn-dark">
 			Take Photo
 		</button>
 		<button id="save-button" class="btn btn-dark" style="display: none">
