@@ -101,7 +101,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit-signup']))
 			echo $e->getMessage();
 			$_SESSION['message'] = 'Sorry, registration failed';
 		}
-		if (mail_verification_code($email, $verification_code, USER_VERIFY) === FALSE)
+		if (mail_verification_code($email, $verification_code, USER_VERIFY, $username) === FALSE)
 		{
 			$_SESSION['message'] = "Sorry, we were unable to send you the confirmation link,
 									please confirm your name and password and click the resend button 
