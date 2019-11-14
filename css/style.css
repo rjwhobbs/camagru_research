@@ -15,14 +15,15 @@ textarea
 
 .thumbnails img
 {
-	width: 10%;
-	height: 10%;
+	width: 250px;
+	height: 250px;
 }
 
 .hide {
 	display: none;
 }
 
-/* .container {
+.container {
 	display: grid;
-} */
+	grid-template-columns: auto auto auto;
+}

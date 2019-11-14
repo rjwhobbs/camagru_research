@@ -41,14 +41,13 @@ require ('./query_functions.php');
 			$id = $_SESSION['user_id'];
 
 			$thumbnails = get_image_path_by_id($id);
-			
 			$i = 0;
 			$len = count($thumbnails);
 			if ($len > 0)
 			{?>
 				<p>Your photo history: </p><br>
 			<?php
-			}
+			}		
 			while ($i < $len)
 			{?>
 				<img src=<?php echo $thumbnails[$i]['path']?>>
