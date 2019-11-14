@@ -121,7 +121,7 @@ clearButton.addEventListener('click', function(e) {
 	stickerMenu2[4].checked = false;
 	takePictureClicked = 0;
 
-	if (path.len !== 0)
+	if (path.length > 0)
 	{
 		deleteFromFile();
 	}
