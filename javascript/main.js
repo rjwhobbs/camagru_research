@@ -120,6 +120,16 @@ clearButton.addEventListener('click', function(e) {
 	stickerMenu2[3].checked = false;
 	stickerMenu2[4].checked = false;
 	takePictureClicked = 0;
+
+	if (path.len !== 0)
+	{
+		deleteFromFile();
+	}
+	else
+	{
+		path = '';
+		location.reload();
+	}
 })
 
 function takePicture() 
@@ -150,6 +160,7 @@ save.addEventListener('click', function(e)
 		if (this.readyState == 4 && this.status == 200) 
 		{
 			photos.innerHTML = this.responseText; 
+			path = '';
 			//create an element
 		}
 	};
@@ -158,3 +169,20 @@ save.addEventListener('click', function(e)
 	xhttp.send("path=" + path);
 	
 })
+
+function deleteFromFile()
+{	
+	let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() 
+	{
+		if (this.readyState == 4 && this.status == 200) 
+		{
+			photos.innerHTML = this.responseText; 
+			path = '';
+			//create an element
+		}
+	};
+  	xhttp.open("POST", "delete_pic.php", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("deletepath=" + path);
+}
