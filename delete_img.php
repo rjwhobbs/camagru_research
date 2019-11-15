@@ -8,6 +8,7 @@ if (isset($user_id) && isset($img_path))
 {
 	if ($user_id == $_SESSION['user_id']) 
 	{
+		//trim($img_path);
 		// var_dump ($_SESSION);
 		// var_dump ($_POST); die;
         $query = "DELETE FROM `images` WHERE `path` = ?";
