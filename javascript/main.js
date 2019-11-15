@@ -12,11 +12,9 @@ const canvas = document.getElementById('canvas');
 const photos = document.getElementById('photos');
 const photoButton = document.getElementById('photo-button');
 const clearButton = document.getElementById('clear-button');
-//const stickerMenu = document.getElementById('sticker-menu');
 const stickerMenu2 = document.getElementsByName('sticker-menu2');
-//const sticker = document.getElementById('sticker1');
 const img = document.createElement('img');
- 
+
 navigator.mediaDevices.getUserMedia({video: true, audio: false})
 .then(function (stream)	
 {
