@@ -35,7 +35,7 @@ try
 	unset($stmt);
 	$createtab = "CREATE TABLE IF NOT EXISTS $DB_NAME.`images` 
 				(`id` INT NOT NULL AUTO_INCREMENT, 
-				`path` VARCHAR(255) NOT NULL,
+				`path` TEXT NOT NULL,
 				`user_id` INT NOT NULL, 
 				`creation_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP, 
 				`likes` INT DEFAULT NULL,  
