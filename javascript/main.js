@@ -14,6 +14,7 @@ const photoButton = document.getElementById('photo-button');
 const clearButton = document.getElementById('clear-button');
 const stickerMenu2 = document.getElementsByName('sticker-menu2');
 const img = document.createElement('img');
+//const stickers = document.getElementById('stickers');
 
 navigator.mediaDevices.getUserMedia({video: true, audio: false})
 .then(function (stream)	
@@ -63,6 +64,7 @@ photoButton.addEventListener('click', function(e)
   	xhttp.open("POST", "uploadpic.php", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("img=" + data + "&sticker=" + selected);
+	//stickers.style.display = 'none';
 	////////
 	e.preventDefault();
 }, false);
@@ -164,6 +166,7 @@ stickerMenu2[3].addEventListener('change', function(e) {
 // })
 
 clearButton.addEventListener('click', function(e) {
+	//stickers.style.display = 'inline';
 	photos.innerHTML = '';
 	photoButton.style.display = 'none';
 	save.style.display = 'none';
