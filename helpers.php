@@ -39,12 +39,42 @@ function set_notification($value)
 	return "off";
 }
 
-// function session_check($sess_user_id, $sess_user_name)
-// {
-// 	if (!isset($sess_user_id) || !isset($sess_user_name))
-// 		return FALSE;
-// 	return TRUE;
-// }
+function valid_sticker_check($sticker)
+{
+	if (!empty($sticker))
+	{
+		if ($sticker != "sticker1.png" && $sticker != "sticker2.png" &&
+			$sticker != "sticker3.png"	&& $sticker != "sticker4.png")
+		{	
+			return FALSE;
+		}
+	}
+	else
+	{
+		return FALSE;
+	}
+	return TRUE;
+}
+
+function sticker_array_validator($testarr)
+{
+	$i = 0;
+	$len = count($testarr);
+	if ($len === FALSE)
+		$len = 0; 
+	while ($i <= $len)
+	{
+		if (valid_sticker_check($testarr[$i]) === FALSE)
+		{
+			unset($testarr[$i]);
+			$testarr = array_values($testarr);
+			$i--;
+			$len--;
+		}
+		$i++;
+	}
+	return $testarr;
+}
 ?>
 
 

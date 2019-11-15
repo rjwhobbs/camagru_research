@@ -14,7 +14,7 @@
 		{?>
 			<a href="signout.php"><input type="submit" value="Sign Out"></a>
 			<a href="profile.php"><input type="submit" value="Profile"></a> 
-			<a href="editor.php"><input type="submit" value="Camara Editor"></a> 
+			<a href="editor.php"><input type="submit" value="Camera Editor"></a> 
 		<?php 
 		} 
 		else 
