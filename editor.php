@@ -17,7 +17,7 @@ require ('./query_functions.php');
 			Save Photo
 		</button>
 		<button id="clear-button" style="display: none">
-			Clear 
+			Try again
 		</button>
 		<br>
 		<input type="radio" name="sticker-menu2" id="sticker1" value="sticker1.png">

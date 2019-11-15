@@ -3,6 +3,7 @@ height = 0,
 selected = '',
 data = '',
 takePictureClicked = 0,
+path = '',
 streaming = false;
 
 const save = document.getElementById('save-button');
@@ -11,11 +12,9 @@ const canvas = document.getElementById('canvas');
 const photos = document.getElementById('photos');
 const photoButton = document.getElementById('photo-button');
 const clearButton = document.getElementById('clear-button');
-//const stickerMenu = document.getElementById('sticker-menu');
 const stickerMenu2 = document.getElementsByName('sticker-menu2');
-//const sticker = document.getElementById('sticker1');
 const img = document.createElement('img');
- 
+
 navigator.mediaDevices.getUserMedia({video: true, audio: false})
 .then(function (stream)	
 {
@@ -47,7 +46,24 @@ photoButton.addEventListener('click', function(e)
 	photoButton.style.display = 'none';
 	if (selected == '')
 		save.style.display = 'none';
-	clearButton.style.display = 'inline'
+	clearButton.style.display = 'inline';
+	////////
+	save.style.display = 'inline';
+	
+	let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() 
+	{
+		if (this.readyState == 4 && this.status == 200) 
+		{
+			path = this.responseText;
+			img.setAttribute('src', path);
+			selected = '';
+		}
+	};
+  	xhttp.open("POST", "uploadpic.php", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("img=" + data + "&sticker=" + selected);
+	////////
 	e.preventDefault();
 }, false);
 
@@ -102,6 +118,16 @@ clearButton.addEventListener('click', function(e) {
 	stickerMenu2[3].checked = false;
 	stickerMenu2[4].checked = false;
 	takePictureClicked = 0;
+
+	if (path.length > 0)
+	{
+		deleteFromFile();
+	}
+	else
+	{
+		path = '';
+		location.reload();
+	}
 })
 
 function takePicture() 
@@ -131,12 +157,30 @@ save.addEventListener('click', function(e)
 	{
 		if (this.readyState == 4 && this.status == 200) 
 		{
-			img.setAttribute('src', this.responseText);
-			selected = '';
+			photos.innerHTML = this.responseText; 
+			path = '';
+			//create an element
 		}
 	};
-  	xhttp.open("POST", "uploadpic.php", true);
+  	xhttp.open("POST", "savepic.php", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xhttp.send("img=" + data + "&sticker=" + selected);
+	xhttp.send("path=" + path);
 	
 })
+
+function deleteFromFile()
+{	
+	let xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() 
+	{
+		if (this.readyState == 4 && this.status == 200) 
+		{
+			photos.innerHTML = this.responseText; 
+			path = '';
+			//create an element
+		}
+	};
+  	xhttp.open("POST", "delete_pic.php", true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send("deletepath=" + path);
+}
