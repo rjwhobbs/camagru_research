@@ -30,9 +30,6 @@ if (isset($_POST['img']) && !empty($_POST['sticker']))
 	
 	if ($sticker_choice != '')
 	{
-		// $sticker = imagecreatefrompng("images/".$clean_arr[$i]);
-		// list($width, $height) = getimagesize("images/".$clean_arr[$i]);
-		// //imagecopy($upload, $sticker, 0, 0, 0, 0, $width, $height);
 		while ($i < $len && $i < 4)
 		{
 			$sticker = imagecreatefrompng("images/".$clean_arr[$i]);
@@ -63,11 +60,6 @@ if (isset($_POST['img']) && !empty($_POST['sticker']))
 
 	$file = "images/".$rand.uniqid().".png";
 	$success = imagepng($upload, $file);
-		
-	// $sql = 'INSERT INTO `images` (`path`, `user_id`) VALUES (?, ?)'; // remove edited from table creation!!!!!!!!
-	// $stmt = $conn->prepare($sql);
-	// $stmt->execute([$file, $user_id]);
-	// unset($stmt);
 	
 	imagedestroy($upload);
 

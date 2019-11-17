@@ -56,24 +56,24 @@ function valid_sticker_check($sticker)
 	return TRUE;
 }
 
-function sticker_array_validator($testarr)
+function sticker_array_validator($arr)
 {
 	$i = 0;
-	$len = count($testarr);
+	$len = count($arr);
 	if ($len === FALSE)
 		$len = 0; 
-	while ($i <= $len)
+	while ($i < $len)
 	{
-		if (valid_sticker_check($testarr[$i]) === FALSE)
+		if (valid_sticker_check($arr[$i]) === FALSE)
 		{
-			unset($testarr[$i]);
-			$testarr = array_values($testarr);
+			unset($arr[$i]);
+			$arr = array_values($arr);
 			$i--;
 			$len--;
 		}
 		$i++;
 	}
-	return $testarr;
+	return $arr;
 }
 ?>
 
