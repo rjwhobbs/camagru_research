@@ -19,7 +19,7 @@ require ('./query_functions.php');
 			Try again
 		</button>
 		<br>
-		<!-- <div id="stickers"> -->
+		<div id="stickers">
 			<input type="checkbox" name="sticker-menu2" id="sticker1" value="sticker1.png">
 				<label for="sticker1"><img  src="./images/ChocChip.png" width="100px" height="80px" ></label>
 			<input type="checkbox" name="sticker-menu2" id="sticker2" value="sticker2.png">
@@ -30,7 +30,7 @@ require ('./query_functions.php');
 				<label for="sticker4"><img src="./images/shortbread.png" width="100px" height="80px"></label>
 		<!-- <input type="checkbox" name="sticker-menu2" id="stickernone" value="nosticker">
 			<label for="stickernone">No Sticker</label> -->
-		<!-- </div> -->
+		</div>
 		<canvas id="canvas"></canvas>
 	</div>
 	<div>

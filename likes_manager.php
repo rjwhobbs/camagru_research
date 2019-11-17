@@ -53,7 +53,11 @@ if (isset($_POST['likes']) && isset($_POST['image_path']) && isset($_POST['image
 				$stmt->execute([$image_owner_id]);
 				$res = $stmt->fetch(PDO::FETCH_ASSOC);
 
-				mail_like_notif($res['email']);// owner will also receive a notification.
+				if ($res)
+				{
+					if ($res['notifications'] == 1)
+						mail_like_notif($res['email']);// owner will also receive a notification.
+				}
 
 				echo $likes;
 			}

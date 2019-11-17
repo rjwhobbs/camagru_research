@@ -14,7 +14,7 @@ if (!empty($_POST['path']))
 		$stmt->execute([$file, $user_id]);
 		unset($stmt);
 	
-		echo "Image has been saved";
+		echo "Image has been saved, please click \"Try again\" to load your photo history.";
 	}
 	else
 		echo "Sorry, we couldn't save the image";

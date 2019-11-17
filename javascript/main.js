@@ -42,13 +42,12 @@ video.addEventListener('canplay', function(e)
 
 photoButton.addEventListener('click', function(e) 
 {
-	//video.style.display = "none";
 	takePicture();
 	photoButton.style.display = 'none';
 	if (selected == '')
 		save.style.display = 'none';
 	clearButton.style.display = 'inline';
-	////////
+
 	save.style.display = 'inline';
 	
 	let xhttp = new XMLHttpRequest();
@@ -64,8 +63,8 @@ photoButton.addEventListener('click', function(e)
   	xhttp.open("POST", "uploadpic.php", true);
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("img=" + data + "&sticker=" + selected);
-	//stickers.style.display = 'none';
-	////////
+	stickers.style.display = 'none';
+
 	e.preventDefault();
 }, false);
 
@@ -84,7 +83,6 @@ stickerMenu2[0].addEventListener('change', function(e) {
 	selected = selected + e.target.value + ':';
 	if	(stickerMenu2[0].checked == false)
 		selected = selected.replace(/sticker1.png:/g,'');
-	//console.log(selected);
 	e.preventDefault();
 })
 
@@ -103,7 +101,6 @@ stickerMenu2[1].addEventListener('change', function(e) {
 	selected = selected + e.target.value + ':';
 	if	(stickerMenu2[1].checked == false)
 		selected = selected.replace(/sticker2.png:/g,'');
-	//console.log(selected);
 	e.preventDefault();
 })
 
@@ -122,7 +119,6 @@ stickerMenu2[2].addEventListener('change', function(e) {
 	selected = selected + e.target.value + ':';
 	if	(stickerMenu2[2].checked == false)
 		selected = selected.replace(/sticker3.png:/g,'');
-	//console.log(selected);
 	e.preventDefault();
 })
 
@@ -141,32 +137,11 @@ stickerMenu2[3].addEventListener('change', function(e) {
 	selected = selected + e.target.value + ':';
 	if	(stickerMenu2[3].checked == false)
 		selected = selected.replace(/sticker4.png:/g,'');
-	//console.log(selected);
 	e.preventDefault();
 })
 
-// stickerMenu2[4].addEventListener('change', function(e) {
-// 	if (takePictureClicked == 1)
-// 		save.style.display = 'inline';
-// 	photoButton.style.display = 'inline';
-// 	if (stickerMenu2[0].checked == false &&
-// 		stickerMenu2[1].checked == false &&
-// 		stickerMenu2[2].checked == false &&
-// 		stickerMenu2[3].checked == false &&
-// 		stickerMenu2[4].checked == false
-// 		)
-// 		photoButton.style.display = 'none';
-// 	selected = e.target.value;
-// 	e.preventDefault();
-// })
-
-// stickerMenu2[0].addEventListener('change', function(e)
-// {
-	
-// })
-
 clearButton.addEventListener('click', function(e) {
-	//stickers.style.display = 'inline';
+	stickers.style.display = 'inline';
 	photos.innerHTML = '';
 	photoButton.style.display = 'none';
 	save.style.display = 'none';
