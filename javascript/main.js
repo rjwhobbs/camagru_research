@@ -14,8 +14,9 @@ const photoButton = document.getElementById('photo-button');
 const clearButton = document.getElementById('clear-button');
 const stickerMenu2 = document.getElementsByName('sticker-menu2');
 const img = document.createElement('img');
-const imageUpload = document.getElementById('uploadImage')
-//const stickers = document.getElementById('stickers');
+const imageUpload = document.getElementById('uploadImage');
+const imageLable = document.getElementById('imagelable');
+const stickers = document.getElementById('stickers');
 
 navigator.mediaDevices.getUserMedia({video: true, audio: false})
 .then(function (stream)	
@@ -45,6 +46,8 @@ photoButton.addEventListener('click', function(e)
 {
 	takePicture();
 	photoButton.style.display = 'none';
+	imageUpload.style.display = 'none';
+	imageLable.style.display = 'none';
 	if (selected == '')
 		save.style.display = 'none';
 	clearButton.style.display = 'inline';
@@ -73,6 +76,8 @@ stickerMenu2[0].addEventListener('change', function(e) {
 	if (takePictureClicked == 1)
 		save.style.display = 'inline';
 	photoButton.style.display = 'inline';
+	imageUpload.style.display = 'inline';
+	imageLable.style.display = 'inline';
 	if (stickerMenu2[0].checked == false &&
 		stickerMenu2[1].checked == false &&
 		stickerMenu2[2].checked == false &&
@@ -80,6 +85,8 @@ stickerMenu2[0].addEventListener('change', function(e) {
 		)
 	{
 		photoButton.style.display = 'none';
+		imageUpload.style.display = 'none';
+		imageLable.style.display = 'none';
 	}
 	selected = selected + e.target.value + ':';
 	if	(stickerMenu2[0].checked == false)
@@ -91,6 +98,8 @@ stickerMenu2[1].addEventListener('change', function(e) {
 	if (takePictureClicked == 1)
 		save.style.display = 'inline';
 	photoButton.style.display = 'inline';
+	imageUpload.style.display = 'inline';
+	imageLable.style.display = 'inline';
 	if (stickerMenu2[0].checked == false &&
 		stickerMenu2[1].checked == false &&
 		stickerMenu2[2].checked == false &&
@@ -98,6 +107,8 @@ stickerMenu2[1].addEventListener('change', function(e) {
 		)
 	{
 		photoButton.style.display = 'none';
+		imageUpload.style.display = 'none';
+		imageLable.style.display = 'none';
 	}
 	selected = selected + e.target.value + ':';
 	if	(stickerMenu2[1].checked == false)
@@ -109,6 +120,8 @@ stickerMenu2[2].addEventListener('change', function(e) {
 	if (takePictureClicked == 1)
 		save.style.display = 'inline';
 	photoButton.style.display = 'inline';
+	imageUpload.style.display = 'inline';
+	imageLable.style.display = 'inline';
 	if (stickerMenu2[0].checked == false &&
 		stickerMenu2[1].checked == false &&
 		stickerMenu2[2].checked == false &&
@@ -116,6 +129,8 @@ stickerMenu2[2].addEventListener('change', function(e) {
 		)
 	{
 		photoButton.style.display = 'none';
+		imageUpload.style.display = 'none';
+		imageLable.style.display = 'none';
 	}
 	selected = selected + e.target.value + ':';
 	if	(stickerMenu2[2].checked == false)
@@ -127,6 +142,8 @@ stickerMenu2[3].addEventListener('change', function(e) {
 	if (takePictureClicked == 1)
 		save.style.display = 'inline';
 	photoButton.style.display = 'inline';
+	imageUpload.style.display = 'inline';
+	imageLable.style.display = 'inline';
 	if (stickerMenu2[0].checked == false &&
 		stickerMenu2[1].checked == false &&
 		stickerMenu2[2].checked == false &&
@@ -134,6 +151,8 @@ stickerMenu2[3].addEventListener('change', function(e) {
 		)
 	{
 		photoButton.style.display = 'none';
+		imageUpload.style.display = 'none';
+		imageLable.style.display = 'none';
 	}
 	selected = selected + e.target.value + ':';
 	if	(stickerMenu2[3].checked == false)
@@ -145,6 +164,8 @@ clearButton.addEventListener('click', function(e) {
 	stickers.style.display = 'inline';
 	photos.innerHTML = '';
 	photoButton.style.display = 'none';
+	imageUpload.style.display = 'none';
+	imageLable.style.display = 'none';
 	save.style.display = 'none';
 	clearButton.style.display = 'none';
 	stickerMenu2[0].checked = false;
@@ -226,11 +247,13 @@ imageUpload.addEventListener('change', function()
 	let file = this.files[0];
 	let formData = new FormData();
 	formData.append('file', file);
-	formData.append("stickers", selected);
-	// let otherData = new FormData;
-	// other = "words";
-	// otherData.append('filezzz', other);
-
+	formData.append("sticker", selected);
+	
+	clearButton.style.display = 'inline';
+	photoButton.style.display = 'none';
+	imageUpload.style.display = 'none';
+	imageLable.style.display = 'none';
+	save.style.display = 'inline';
 	if(file)
 	{
 		let xhttp = new XMLHttpRequest();
@@ -247,7 +270,6 @@ imageUpload.addEventListener('change', function()
 			}
 		};
 		xhttp.open("POST", "upload_user_pic.php", true);
-		//xhttp.setRequestHeader("Content-type", "multipart/form-data");
 		xhttp.send(formData);
 	}
 });

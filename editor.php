@@ -13,7 +13,8 @@ require ('./query_functions.php');
 			Take Photo
 		</button>
 		<!-- <form action="editor.php" method="post" enctype="multipart/form-data"> -->
-			<label> or upload a pic</label><input id="uploadImage" type="file" name="upload-user" accept="image/*"><br> 
+		<label id="imagelable" style="display: none"> or upload a pic</label>
+		<input id="uploadImage" style="display: none" type="file" name="upload-user" accept="image/*"><br> 
 		<!-- </form> -->
 		<button id="save-button" class="btn btn-dark" style="display: none">
 			Save Photo
@@ -22,7 +23,7 @@ require ('./query_functions.php');
 			Try again
 		</button>
 		<br>
-		<div id="stickers">
+		<div id="stickers" style="display: inline">
 			<input type="checkbox" name="sticker-menu2" id="sticker1" value="sticker1.png">
 				<label for="sticker1"><img  src="./images/ChocChip.png" width="100px" height="80px" ></label>
 			<input type="checkbox" name="sticker-menu2" id="sticker2" value="sticker2.png">

@@ -6,9 +6,9 @@ include ('./helpers.php');
 // var_dump ($_FILES);
 // var_dump ($_POST);
 //echo $_FILES['file'];
-if (!empty($_FILES) && !empty($_POST['stickers']))
+if (!empty($_FILES) && !empty($_POST['sticker']))
 {
-	$sticker_choice = $_POST['stickers'];
+	$sticker_choice = $_POST['sticker'];
 	$bytes = random_bytes(4);	
 	$rand = bin2hex($bytes);
 	$pic_path = "images/".$rand.uniqid().".png";
@@ -21,7 +21,7 @@ if (!empty($_FILES) && !empty($_POST['stickers']))
 	} 
 
 	copy($_FILES['file']['tmp_name'], $pic_path);
-	$upload = imagecreatefrompng($pic_path);
+	$upload = imagecreatefrompng($pic_path); // need to check type of pic
 
 	$sticker_arr = preg_split('/:/', $sticker_choice, NULL, PREG_SPLIT_NO_EMPTY);
 	$clean_arr = array_unique($sticker_arr);
