@@ -13,7 +13,8 @@ if (isset($user_id) && isset($img_path))
         $stmt = $conn->prepare($query);
         $stmt->execute([$img_path]);
 		unset($stmt);
-		unlink($img_path);
+		if ($img_path != "images/error.png")
+			unlink($img_path);
 	}
 	else 
         echo "Sorry can't delete image";

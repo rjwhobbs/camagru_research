@@ -6,13 +6,18 @@ if (!empty($_POST['path']))
 {
 	$file = $_POST['path'];
 	$file = trim($file);
-	$user_id = $_SESSION['user_id'];
-	$sql = 'INSERT INTO `images` (`path`, `user_id`) VALUES (?, ?)'; // remove edited from table creation!!!!!!!!
-	$stmt = $conn->prepare($sql);
-	$stmt->execute([$file, $user_id]);
-	unset($stmt);
-
-	echo "Image has been saved";
+	if ($file != "images/error.png")
+	{
+		$user_id = $_SESSION['user_id'];
+		$sql = 'INSERT INTO `images` (`path`, `user_id`) VALUES (?, ?)'; // remove edited from table creation!!!!!!!!
+		$stmt = $conn->prepare($sql);
+		$stmt->execute([$file, $user_id]);
+		unset($stmt);
+	
+		echo "Image has been saved";
+	}
+	else
+		echo "Sorry, we couldn't save the image";
 }
 else
 	echo "Sorry, we couldn't save the image";

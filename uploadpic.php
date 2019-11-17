@@ -64,10 +64,10 @@ if (isset($_POST['img']) && !empty($_POST['sticker']))
 	imagedestroy($upload);
 
 	if ($success === FALSE)
-		echo "Couldn't upload"; //maybe change this to an error image
+		echo "images/error.png"; //maybe change this to an error image
 	else
 		echo $file;
 }
 else
-	echo "Something went wrong\n";	// add ifs to js incase something goes wrong eg if response text is......
+	echo "images/error.png";	// add ifs to js incase something goes wrong eg if response text is......
 ?>
