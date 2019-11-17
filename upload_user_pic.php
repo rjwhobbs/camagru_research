@@ -3,18 +3,25 @@ session_start();
 require ('./valid_session_check.php');
 require ('./connection.php');
 include ('./helpers.php');
-if (isset($_POST['img']) && !empty($_POST['sticker']))
+// var_dump ($_FILES);
+// var_dump ($_POST);
+//echo $_FILES['file'];
+if (!empty($_FILES) && !empty($_POST['stickers']))
 {
-	$img = $_POST['img'];
-	$user_id = $_SESSION['user_id']; // why is this here
-	$sticker_choice = $_POST['sticker'];
+	$sticker_choice = $_POST['stickers'];
 	$bytes = random_bytes(4);	
 	$rand = bin2hex($bytes);
+	$pic_path = "images/".$rand.uniqid().".png";
 
-	$img = str_replace('data:image/png;base64,', '', $img);
-	$img = str_replace(' ', '+', $img);
-	$data = base64_decode($img);	
-	$upload = imagecreatefromstring($data);
+	if (image_check($_FILES['file']['type'], 
+					$_FILES['file']['tmp_name']) === FALSE)
+	{
+		echo "images/error.png";
+		exit ();
+	} 
+
+	copy($_FILES['file']['tmp_name'], $pic_path);
+	$upload = imagecreatefrompng($pic_path);
 
 	$sticker_arr = preg_split('/:/', $sticker_choice, NULL, PREG_SPLIT_NO_EMPTY);
 	$clean_arr = array_unique($sticker_arr);
@@ -27,7 +34,7 @@ if (isset($_POST['img']) && !empty($_POST['sticker']))
 	if ($len === FALSE)
 		$len = 0;
 	$i = 0;
-	
+
 	if ($sticker_choice != '')
 	{
 		while ($i < $len && $i < 4)
@@ -58,15 +65,8 @@ if (isset($_POST['img']) && !empty($_POST['sticker']))
 		}
 	}
 
-	$file = "images/".$rand.uniqid().".png";
-	$success = imagepng($upload, $file);
-	
-	imagedestroy($upload);
-
-	if ($success === FALSE)
-		echo "images/error.png";
-	else
-		echo $file;
+	$success = imagepng($upload, $pic_path);
+	echo trim($pic_path);
 }
 else
 	echo "images/error.png";

@@ -12,6 +12,9 @@ require ('./query_functions.php');
 		<button style="display: none" id="photo-button" class="btn btn-dark">
 			Take Photo
 		</button>
+		<!-- <form action="editor.php" method="post" enctype="multipart/form-data"> -->
+			<label> or upload a pic</label><input id="uploadImage" type="file" name="upload-user" accept="image/*"><br> 
+		<!-- </form> -->
 		<button id="save-button" class="btn btn-dark" style="display: none">
 			Save Photo
 		</button>
@@ -34,7 +37,8 @@ require ('./query_functions.php');
 		<canvas id="canvas"></canvas>
 	</div>
 	<div>
-		<div id="photos"></div>
+		<div id="photos">
+		</div>
 	</div>
 	<div class="thumbnails">
 		<?php

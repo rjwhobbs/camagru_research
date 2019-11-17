@@ -14,6 +14,7 @@ const photoButton = document.getElementById('photo-button');
 const clearButton = document.getElementById('clear-button');
 const stickerMenu2 = document.getElementsByName('sticker-menu2');
 const img = document.createElement('img');
+const imageUpload = document.getElementById('uploadImage')
 //const stickers = document.getElementById('stickers');
 
 navigator.mediaDevices.getUserMedia({video: true, audio: false})
@@ -176,7 +177,7 @@ function takePicture()
 	}
 	context.drawImage(video, 0, 0, width, height);
 	const imgUrl = canvas.toDataURL('image/png');
-	img.setAttribute('src', imgUrl);
+	//img.setAttribute('src', imgUrl);
 	photos.innerHTML = ''; 
 	photos.appendChild(img);
 	data = imgUrl;
@@ -200,6 +201,7 @@ save.addEventListener('click', function(e)
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("path=" + path);
 	
+	e.preventDefault();
 })
 
 function deleteFromFile()
@@ -218,3 +220,34 @@ function deleteFromFile()
 	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xhttp.send("deletepath=" + path);
 }
+
+imageUpload.addEventListener('change', function() 
+{
+	let file = this.files[0];
+	let formData = new FormData();
+	formData.append('file', file);
+	formData.append("stickers", selected);
+	// let otherData = new FormData;
+	// other = "words";
+	// otherData.append('filezzz', other);
+
+	if(file)
+	{
+		let xhttp = new XMLHttpRequest();
+		xhttp.onreadystatechange = function()
+		{
+			if (this.readyState == 4 && this.status == 200)
+			{
+				path = this.responseText;
+				console.log(path);
+				photos.appendChild(img);
+				img.setAttribute('src', path);
+				selected = '';	
+				imageUpload.value = "";
+			}
+		};
+		xhttp.open("POST", "upload_user_pic.php", true);
+		//xhttp.setRequestHeader("Content-type", "multipart/form-data");
+		xhttp.send(formData);
+	}
+});
