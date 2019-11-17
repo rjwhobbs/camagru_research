@@ -30,6 +30,21 @@ if (!empty($_FILES) && !empty($_POST['stickers']))
 	$mwidth = imagesx($upload);
 	$mheight = imagesy($upload);
 
+	if ($mheight < 500 || $mheight < 375 || $mwidth > 500 || $mheight > 375)
+	{
+		$nwidth = 500;
+		$nheight = 375;
+
+		$temp = imagecreatetruecolor($nwidth, $nheight);
+
+		imagecopyresized($temp, $upload, 0, 0, 0, 0, 
+							$nwidth, $nheight, $mwidth, $mheight);
+		$mwidth = $nwidth;
+		$mheight = $nheight;
+
+		$upload = $temp;
+	}
+
 	$len = count($clean_arr);
 	if ($len === FALSE)
 		$len = 0;
