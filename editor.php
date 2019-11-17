@@ -5,11 +5,9 @@ require ('./header.php');
 require ('./query_functions.php');
 //require ('./connection.php');
 ?>
-	<div class="navbar">
-		<h1>Camera Editor</h1>
-		<h2>Please select a sticker inorder to take a picture.</h2>
-	</div>
-	<div class="top-container">
+	<h1>Camera Editor</h1>
+	<h2>Please select a sticker inorder to take a picture.</h2>
+	<div>
 		<video id="video">Stream not available...</video><br>
 		<button style="display: none" id="photo-button" class="btn btn-dark">
 			Take Photo
@@ -35,7 +33,7 @@ require ('./query_functions.php');
 		<!-- </div> -->
 		<canvas id="canvas"></canvas>
 	</div>
-	<div class="bottom-container">
+	<div>
 		<div id="photos"></div>
 	</div>
 	<div class="thumbnails">
