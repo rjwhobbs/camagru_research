@@ -19,6 +19,19 @@ textarea
 	height: 150px;
 }
 
+@media (max-width:530px)
+{
+	video
+ 	{
+		width: 80%;
+		height: 80%;
+	}
+	img
+	{
+		width: 80%;
+		height: 80%;
+	}	 
+}
 /* .top-container video
 {
 	width: 50%;

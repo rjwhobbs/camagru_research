@@ -8,7 +8,7 @@
 	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-	<h1>This is the header (place holder)</h1>
+	<h1>This is Camagru</h1>
 	<?php
 		if (isset($_SESSION['user_id'])) // This could mirror validation.php
 		{?>
@@ -28,7 +28,7 @@
 	<?php
 		if (isset($_SESSION['user_id']))
 		{?>
-			<span>Logged in as: <?php echo $_SESSION['username']?></span>
+			<br><span>Logged in as: <?php echo $_SESSION['username']?></span>
 		<?php	
 		}
 	?>	
