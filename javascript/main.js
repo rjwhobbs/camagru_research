@@ -262,7 +262,7 @@ imageUpload.addEventListener('change', function()
 			if (this.readyState == 4 && this.status == 200)
 			{
 				path = this.responseText;
-				console.log(path);
+				//console.log(path);
 				photos.appendChild(img);
 				img.setAttribute('src', path);
 				selected = '';	

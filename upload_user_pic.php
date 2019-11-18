@@ -21,7 +21,8 @@ if (!empty($_FILES) && !empty($_POST['sticker']))
 	} 
 
 	copy($_FILES['file']['tmp_name'], $pic_path);
-	$upload = imagecreatefrompng($pic_path); // need to check type of pic
+	$upload = imagecreatefromstring(file_get_contents($pic_path));
+	// $upload = imagecreatefrompng($pic_path); // need to check type of pic
 
 	$sticker_arr = preg_split('/:/', $sticker_choice, NULL, PREG_SPLIT_NO_EMPTY);
 	$clean_arr = array_unique($sticker_arr);
