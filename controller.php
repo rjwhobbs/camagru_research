@@ -503,15 +503,19 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_comment']) &&
 		$stmt->execute();
 
 		$image_owner_id = get_image_owner_id($image_id);
-		if ($_SESSION['user_id'] != $image_owner_id)
+		if ($_SESSION['user_id'] == $image_owner_id)
+			$commenter = "You";
+		else
 		{
-			$notif = get_owner_notif($image_owner_id);
-			if ($notif)
-			{
-				$image_owner_email = get_image_author_email($image_owner_id);
-				if ($image_owner_email)
-					mail_comment_notif($image_owner_email);
-			}
+			$commenter = $_SESSION['username'];
+		}
+
+		$notif = get_owner_notif($image_owner_id);
+		if ($notif)
+		{
+			$image_owner_email = get_image_author_email($image_owner_id);
+			if ($image_owner_email)
+				mail_comment_notif($image_owner_email, $commenter);
 		}
 	}
 	else
