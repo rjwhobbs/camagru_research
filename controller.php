@@ -509,7 +509,6 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_comment']) &&
 			if ($notif)
 			{
 				$image_owner_email = get_image_author_email($image_owner_id);
-				//var_dump($image_owner_email); die;
 				if ($image_owner_email)
 					mail_comment_notif($image_owner_email);
 			}
