@@ -24,10 +24,10 @@ if (isset($_POST['likes']) && isset($_POST['image_path']) && isset($_POST['image
 		{
 			$image_owner_id = $res['user_id'];
 			if ($image_owner_id == $user_id) // user can't like his own image
-			{
-				echo get_image_likes($image_path);
-				exit();
-			}
+				$liker = "You";
+			else
+				$liker = $_SESSION['username'];
+			
 			$query = "SELECT `liked` FROM `likes` WHERE `image_id` = ? 
 						&& `user_id` = ?";
 			$stmt = $conn->prepare($query);
@@ -56,7 +56,7 @@ if (isset($_POST['likes']) && isset($_POST['image_path']) && isset($_POST['image
 				if ($res)
 				{
 					if ($res['notifications'] == 1)
-						mail_like_notif($res['email']);// owner will also receive a notification.
+						mail_like_notif($res['email'], $res['username'],$liker);// owner will also receive a notification.
 				}
 
 				echo $likes;

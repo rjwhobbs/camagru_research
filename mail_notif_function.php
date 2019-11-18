@@ -1,10 +1,16 @@
 <?php
-function mail_like_notif($owner_email)
+function mail_like_notif($owner_email, $user ,$liker)
 {
 	$email_sender = "rhobbs@student.wethinkcode.co.za"; // DELETE ME LATER !!!!!!!!!!
 	//$email_sender = "mikethetrooper@gmail.com"; // DELETE ME LATER !!!!!!!!!!
-	$headers = "From: $email_sender" . "\r\n";
-	$body = "Someone liked one of your pictures on Camagru.";
+
+	$headers = "From: $email_sender"."\r\n";
+	$headers .= "MIME-Version: 1.0\r\n";
+	$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
+
+	$body ='<h3>Hi '.$user.'</h3>';
+	$body .= '<p>'.$liker." liked one of your pictures on Camagru.</p>";
+	
 	mail($owner_email, 'Someone liked your picture', $body, $headers);
 }
 
