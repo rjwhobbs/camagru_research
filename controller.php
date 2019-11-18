@@ -3,6 +3,7 @@ require ('./connection.php');
 include ('./mail_verification_code.php');
 include ('./helpers.php');
 include ('./query_functions.php');
+include ('./mail_notif_function.php');
 $errors = array(); 
 
 /******************************
@@ -500,6 +501,14 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['add_comment']) &&
 		$stmt->bindParam(2, $image_id, PDO::PARAM_INT);
 		$stmt->bindParam(3, $user_id, PDO::PARAM_INT);
 		$stmt->execute();
+
+		$image_owner_id = get_image_owner_id($image_id);
+		if ($_SESSION['user_id'] != $image_owner_id)
+		{
+			$image_owner_email = get_image_author_email($image_id);
+			if ($image_owner_email)
+				mail_comment_notif($image_owner_email);
+		}
 	}
 	else
 	{

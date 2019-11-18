@@ -122,4 +122,37 @@ function get_image_likes($image_path)
 	else
 		return 0;
 }
+
+function get_image_author_email($id)
+{
+	if ($id > 0)
+	{
+		require ('./connection.php');
+		$query = 'SELECT `email` FROM `users` WHERE `id` = ?';
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$id]);
+		$res = $stmt->fetch(PDO::FETCH_ASSOC);
+		return $res['email'];
+	}
+	else
+		return "";
+}
+
+function get_image_owner_id($image_id)
+{
+	if (!empty($image_id))
+	{
+		require ('./connection.php');
+		$query = "SELECT `user_id` FROM `images` WHERE `id` = ?";
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$image_id]);
+		$res = $stmt->fetch(PDO::FETCH_ASSOC);
+		if (!$res)
+			return "";
+		else
+			return $res['user_id'];
+	}
+	else
+		return "";
+}
 ?>
