@@ -5,8 +5,7 @@ require ('./header.php');
 //include ('./query_functions.php');
 //include ('./helpers.php');
 ?>
-<h1>This is Camagru.</h1>
-<h2>Feed will come here.</h2>
+<h2>Camagru feed</h2>
 <?php
 	if (count($errors) > 0)
 	{

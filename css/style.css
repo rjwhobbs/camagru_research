@@ -15,8 +15,14 @@ textarea
 
 .thumbnails img
 {
-	width: 170px;
+	width: 200px;
 	height: 150px;
+}
+
+.image-checkbox img
+{
+	width: 66px;
+	height: 60px;
 }
 
 @media (max-width:530px)
@@ -30,10 +36,10 @@ textarea
 	{
 		width: 80%;
 		height: 80%;
-	}	 
+	}	
+	.image-checkbox img
+	{
+		width: 10%;
+		height: 10%;
+	}
 }
-/* .top-container video
-{
-	width: 50%;
-	height: 50%;
-} */

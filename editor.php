@@ -23,15 +23,15 @@ require ('./query_functions.php');
 			Try again
 		</button>
 		<br>
-		<div id="stickers" style="display: inline">
+		<div id="stickers" style="display: inline" class="image-checkbox">
 			<input type="checkbox" name="sticker-menu2" id="sticker1" value="sticker1.png">
-				<label for="sticker1"><img  src="./images/ChocChip.png" width="100px" height="80px" ></label>
+				<label for="sticker1"><img  src="./images/sticker1.png" ></label>
 			<input type="checkbox" name="sticker-menu2" id="sticker2" value="sticker2.png">
-				<label for="sticker2"><img  src="./images/chocshortbread.png" width="100px" height="80px"></label>
+				<label for="sticker2"><img  src="./images/sticker2.png" ></label>
 			<input type="checkbox" name="sticker-menu2" id="sticker3" value="sticker3.png">
-				<label for="sticker3"><img  src="./images/peanut.png" width="100px" height="80px"></label>
+				<label for="sticker3"><img  src="./images/sticker3.png"></label>
 			<input type="checkbox" name="sticker-menu2" id="sticker4" value="sticker4.png">
-				<label for="sticker4"><img src="./images/shortbread.png" width="100px" height="80px"></label>
+				<label for="sticker4"><img src="./images/sticker4.png" ></label>
 		<!-- <input type="checkbox" name="sticker-menu2" id="stickernone" value="nosticker">
 			<label for="stickernone">No Sticker</label> -->
 		</div>
