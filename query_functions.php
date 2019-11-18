@@ -132,6 +132,7 @@ function get_image_author_email($id)
 		$stmt = $conn->prepare($query);
 		$stmt->execute([$id]);
 		$res = $stmt->fetch(PDO::FETCH_ASSOC);
+		//var_dump($id); die;
 		return $res['email'];
 	}
 	else
@@ -154,5 +155,23 @@ function get_image_owner_id($image_id)
 	}
 	else
 		return "";
+}
+
+function get_owner_notif($user_id)
+{
+	if ($user_id > 0)
+	{
+		require ('./connection.php');
+		$query = "SELECT * FROM `users` WHERE `id` = ?";
+		$stmt = $conn->prepare($query);
+		$stmt->execute([$user_id]);
+		$res = $stmt->fetch(PDO::FETCH_ASSOC);
+		if($res)
+			return $res['notifications'];
+		else 
+			return 0;
+	}
+	else
+		return 0;
 }
 ?>
