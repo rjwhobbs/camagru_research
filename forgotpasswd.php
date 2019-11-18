@@ -3,15 +3,6 @@ session_start();;
 require ('./controller.php');
 require ('./header.php');
 ?>
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<title>Forgot Password</title>
-</head>
-<body> -->
 	<h1>Ah shame, you forgot your password.<br> 
 		Don't worry it even happens to wizards like me.
 	</h1>

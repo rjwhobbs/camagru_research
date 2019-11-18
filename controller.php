@@ -276,7 +276,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['reset-passwd']))
 		$query = 'UPDATE `users` SET `verification` = ? WHERE `id` = ?';
 		$stmt = $conn->prepare($query);
 		$stmt->execute([$verification_code, $res['id']]);
-		mail_verification_code($res['email'], $verification_code, 'PASSWD_VERIFY'); // Needs protection
+		mail_verification_code($res['email'], $verification_code, 'PASSWD_VERIFY', $res['username']);// Protect?
 		unset($stmt);
 		unset($verification_code); // Should have a message saying email sent
 	}
