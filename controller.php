@@ -443,6 +443,7 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_username']
 
 else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_passwd']))
 {
+	//var_dump($_POST); die;
 	if (empty($_POST['old_passwd']) || empty($_POST['new_passwd']) || empty($_POST['confirm_new_passwd']))
 		$errors['passwd'] = "Feilds can't be empty.";
 	else if (passwd_check($_POST['new_passwd']) === FALSE)
@@ -450,12 +451,12 @@ else if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_passwd']))
 		$errors['passwd'] = 'Password must only contain atleast one lower and upper case letter,<br>
 								one number, and be longer than 9 characters.';
 	}
-	else if ($_POST['passwd'] != $_POST['confirm-passwd'])
+	else if ($_POST['new_passwd'] != $_POST['confirm_new_passwd'])
 		$errors['passwd'] = "Passwords don't match.";
 	
 	if (empty($errors))
 	{
-		$new_passwd = password_hash($_POST['passwd'], PASSWORD_BCRYPT);
+		$new_passwd = password_hash($_POST['new_passwd'], PASSWORD_BCRYPT);
 		$id = $_SESSION['user_id'];
 		$sql = "SELECT `passwd` FROM `users` WHERE `id` = ?";
 		$stmt = $conn->prepare($sql);
